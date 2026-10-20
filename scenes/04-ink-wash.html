@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 · 水墨 · 深山藏古寺</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .stage {
+    background:
+      radial-gradient(100% 90% at 38% 30%, #FBF6EC 0%, #F4EFE4 55%, #E9E0D0 100%);
+  }
+  .paper-fiber {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    opacity: .28;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.6' numOctaves='3'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23f)' opacity='.35'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+  .svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; }
+  .mist {
+    position: absolute; left: -10%; width: 120%; height: 150px; z-index: 8;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(244,239,228,0) 0%, rgba(244,239,228,.9) 42%, rgba(244,239,228,.9) 58%, rgba(244,239,228,0) 100%);
+    filter: blur(18px);
+  }
+  .m1 { top: 350px; opacity: .46; }
+  .m2 { top: 468px; opacity: .32; }
+  .title {
+    position: absolute; right: 96px; top: 64px; z-index: 12;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-family: "Songti SC", "STSong", serif;
+    font-size: 42px;
+    letter-spacing: .22em;
+    color: #1A1A1A;
+    opacity: 0;
+  }
+  .sub {
+    position: absolute; left: 92px; top: 92px; z-index: 12;
+    font-family: "Songti SC", "STSong", serif;
+    font-size: 14px; letter-spacing: .36em;
+    color: #8A8175;
+    opacity: 0;
+  }
+  .seal {
+    position: absolute; left: 112px; bottom: 76px; z-index: 12;
+    width: 58px; height: 58px;
+    border: 2px solid #B03A2E;
+    color: #B03A2E;
+    display: grid; place-items: center;
+    font-family: "Songti SC", serif;
+    font-size: 17px; line-height: 1.1;
+    letter-spacing: .04em;
+    opacity: 0;
+    transform: rotate(-2deg);
+  }
+  .drop {
+    position: absolute; z-index: 4; width: 14px; height: 14px;
+    border-radius: 50%; background: #141414;
+    filter: blur(.4px);
+    opacity: 0;
+    transform: translate(-50%, -50%);
+  }
+</style>
+</head>
+<body>
+<div class="stage grain vignette">
+  <div class="paper-fiber"></div>
+
+  <svg class="svg" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <filter id="blur14"><feGaussianBlur stdDeviation="14"/></filter>
+      <filter id="blur9"><feGaussianBlur stdDeviation="9"/></filter>
+      <filter id="blur5"><feGaussianBlur stdDeviation="5"/></filter>
+      <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".02" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>
+    </defs>
+
+    <g id="mountains">
+      <path d="M0 382 C130 300 230 336 330 284 C430 232 530 304 630 262 C730 220 830 302 930 272 C1030 242 1130 304 1280 252 L1280 540 L0 540 Z"
+            fill="#7B8E9C" opacity=".42" filter="url(#blur14)"/>
+      <path d="M0 462 C160 382 282 432 402 382 C522 332 622 422 762 372 C902 322 1042 412 1280 352 L1280 640 L0 640 Z"
+            fill="#2C3E50" opacity=".34" filter="url(#blur9)"/>
+      <path d="M0 566 C180 506 300 546 440 506 C580 466 680 526 820 496 C960 466 1100 526 1280 486 L1280 720 L0 720 Z"
+            fill="#141414" opacity=".25" filter="url(#blur5)"/>
+    </g>
+
+    <!-- gate, half hidden in mist -->
+    <g id="temple" opacity="0">
+      <!-- rear roof -->
+      <path d="M812 374 C840 348 880 344 908 360 L896 369 C878 357 852 355 832 365 L820 376 Z"
+            fill="#141414" opacity=".5"/>
+      <!-- main roof: a band with upturned eaves -->
+      <path d="M736 408 C790 366 856 352 912 374 C928 382 940 392 946 404
+               C934 402 922 396 908 392 C884 384 856 382 830 386 C806 390 784 398 766 410 Z"
+            fill="#141414" opacity=".9"/>
+      <path d="M736 408 C728 404 724 398 726 392" stroke="#141414" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M946 404 C954 400 958 394 956 388" stroke="#141414" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M790 390 C830 374 880 372 916 386" stroke="#141414" stroke-width="2" fill="none" opacity=".55"/>
+      <!-- bracket dots -->
+      <g fill="#141414" opacity=".7">
+        <circle cx="802" cy="408" r="2"/><circle cx="822" cy="406" r="2"/><circle cx="842" cy="405" r="2"/>
+        <circle cx="862" cy="405" r="2"/><circle cx="882" cy="406" r="2"/><circle cx="902" cy="408" r="2"/>
+      </g>
+      <!-- body -->
+      <path d="M786 410 V482 M906 410 V482" stroke="#141414" stroke-width="5" opacity=".85"/>
+      <path d="M766 482 H926" stroke="#141414" stroke-width="5" opacity=".8"/>
+      <path d="M836 482 V436 H856 V482" stroke="#141414" stroke-width="4" opacity=".75"/>
+      <rect x="830" y="418" width="32" height="9" fill="#141414" opacity=".55"/>
+
+    </g>
+    </g>
+
+    <!-- dry brush ridge -->
+    <path id="ridge" pathLength="1" d="M120 600 C260 570 380 590 500 566 C640 538 760 570 900 548 C1010 530 1120 548 1180 540"
+          fill="none" stroke="#141414" stroke-width="5" stroke-linecap="round" opacity=".45" filter="url(#rough)"/>
+
+    <!-- faint steps -->
+    <path d="M880 560 C860 590 840 620 820 660" fill="none" stroke="#141414" stroke-width="3" opacity=".22"/>
+  </svg>
+
+  <div class="mist m1" id="mist1"></div>
+  <div class="mist m2" id="mist2"></div>
+  <div class="drop" id="drop" style="left:300px;top:210px;"></div>
+
+  <div class="sub" id="sub">潭柘寺 · 水墨</div>
+  <div class="title" id="title">深山藏古寺</div>
+  <div class="seal" id="seal">潭<br>柘</div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  const end = mountEndCard("水墨 · INK WASH");
+  const mountains = document.getElementById("mountains");
+  const temple = document.getElementById("temple");
+  const ridge = document.getElementById("ridge");
+  const mist1 = document.getElementById("mist1");
+  const mist2 = document.getElementById("mist2");
+  const drop = document.getElementById("drop");
+  const sub = document.getElementById("sub");
+  const title = document.getElementById("title");
+  const seal = document.getElementById("seal");
+
+  function seek(t) {
+    // ink drop, then mountains emerge
+    const dp = ramp(t, 0.3, 1.1);
+    drop.style.opacity = String(0.55 * (1 - ramp(t, 0.9, 1.0)));
+    drop.style.transform = `translate(-50%, -50%) scale(${0.4 + 5.5 * dp})`;
+    drop.style.filter = `blur(${0.4 + 7 * dp}px)`;
+
+    const mp = ramp(t, 0.9, 2.8);
+    mountains.style.opacity = String(mp);
+    mountains.style.transform = `translateY(${(1 - mp) * 14}px)`;
+
+    // temple fades out of the mist
+    const tp = ramp(t, 3.3, 1.2);
+    temple.style.opacity = String(tp);
+    temple.style.transform = `translateY(${(1 - tp) * 8}px)`;
+
+    // dry brush ridge
+    const rp = easeInOut(clamp((t - 3.8) / 1.6, 0, 1));
+    ridge.style.strokeDasharray = "1";
+    ridge.style.strokeDashoffset = String(1 - rp);
+
+    // mist drifts
+    mist1.style.transform = `translateX(${-40 + 18 * ease(t / 7)}px)`;
+    mist2.style.transform = `translateX(${30 - 16 * ease(t / 7)}px)`;
+    mist1.style.opacity = String(0.36 + 0.12 * ramp(t, 3.5, 1.5));
+    mist2.style.opacity = String(0.24 + 0.12 * ramp(t, 4.0, 1.5));
+
+    sub.style.opacity = String(ramp(t, 1.2, 0.7));
+    title.style.opacity = String(ramp(t, 5.0, 0.9));
+    title.style.transform = `translateY(${(1 - ramp(t, 5.0, 0.9)) * 12}px)`;
+
+    const sp = ramp(t, 6.2, 0.5);
+    seal.style.opacity = String(sp);
+    seal.style.transform = `rotate(-2deg) scale(${0.9 + 0.1 * sp})`;
+
+    end(t);
+  }
+
+  boot(seek, 8);
+</script>
+</body>
+</html>

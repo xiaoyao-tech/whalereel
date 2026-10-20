@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 · 立体纸雕 · 潭柘寺 45s</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  .stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #070504; }
+  .scene {
+    position: absolute; left: 0; top: 0; width: 1280px; height: 720px;
+    transform: scale(1.5); transform-origin: top left; overflow: hidden;
+    background: #0B0705;
+    font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+  }
+
+  /* ---------- the box ---------- */
+  .box {
+    position: absolute; inset: 34px;
+    overflow: hidden;
+    border: 9px solid #3A2418;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 1px #8A5A3C, inset 0 0 44px rgba(255,190,120,.10);
+    background: #1A0F0A;
+  }
+  .cam { position: absolute; inset: 0; transform-origin: 50% 50%; will-change: transform; }
+  .layer { position: absolute; inset: 0; will-change: transform, opacity; }
+  .layer svg { width: 100%; height: 100%; display: block; }
+
+  .sky-a, .sky-b { position: absolute; inset: 0; }
+  .sky-a { background: radial-gradient(62% 58% at 54% 38%, #FFE9C2 0%, #F7C287 20%, #C97A50 46%, #5A2C1E 78%, #1C0F09 100%); }
+  .sky-b { background: radial-gradient(58% 54% at 62% 34%, #F6C98F 0%, #D98C5C 20%, #8E4A34 46%, #3A1A13 78%, #140A07 100%); opacity: 0; }
+  .glow { position: absolute; inset: 0; mix-blend-mode: screen; pointer-events: none;
+          background: radial-gradient(30% 36% at 55% 44%, rgba(255,236,190,.50), transparent 72%); }
+  .halo { position: absolute; inset: 0; mix-blend-mode: screen; opacity: 0; pointer-events: none;
+          background: radial-gradient(12% 14% at 55.5% 76%, rgba(255,186,110,.55), transparent 70%); }
+
+  .layer svg { filter: none; }
+  .gate, .fg, .hall { will-change: transform; }
+
+  /* ---------- actors ---------- */
+  .figure { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 30; opacity: 0; }
+  .figure i { position: absolute; left: -5px; top: -24px; width: 10px; height: 24px; border-radius: 5px 5px 2px 2px; background: #160D08; }
+  .figure b { position: absolute; left: -6px; top: -30px; width: 12px; height: 8px; border-radius: 6px; background: #160D08; }
+  .figure::after { content: ""; position: absolute; left: -9px; top: 0; width: 18px; height: 7px; border-radius: 50%; background: rgba(20,10,6,.30); filter: blur(2px); }
+
+  .dust { position: absolute; inset: 0; z-index: 31; pointer-events: none; }
+  .dust i { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #FFD9A2; }
+
+  .spark { position: absolute; left: 300px; top: 470px; width: 8px; height: 8px; border-radius: 50%; z-index: 40;
+           background: #FFE1AE; box-shadow: 0 0 24px 10px rgba(255,180,90,.55); opacity: 0; }
+  .lamp { position: absolute; left: 55%; top: 76%; width: 6px; height: 6px; border-radius: 50%; z-index: 29;
+          background: #FFC176; box-shadow: 0 0 16px 7px rgba(255,170,90,.45); opacity: 0; }
+
+  /* ---------- type ---------- */
+  .title { position: absolute; left: 76px; top: 62px; z-index: 50; color: #F8E9CE; opacity: 0;
+           text-shadow: 0 3px 18px rgba(40,16,6,.55); }
+  .title b { display: block; font-size: 56px; letter-spacing: .14em; font-weight: 600; }
+  .title small { display: block; margin-top: 8px; font-family: "Helvetica Neue", Arial, sans-serif;
+                 font-size: 10px; letter-spacing: .40em; opacity: .62; }
+  .sub { position: absolute; left: 0; right: 0; bottom: 34px; z-index: 50; text-align: center; opacity: 0;
+         color: #F6E7CC; font-size: 25px; letter-spacing: .06em; }
+  .sub span { display: inline-block; padding: 9px 20px; background: rgba(12,7,4,.62); border-radius: 2px; }
+  .seal { position: absolute; right: 74px; bottom: 58px; z-index: 51; width: 64px; height: 64px;
+          border: 2.5px solid #C0583E; color: #E07A5B; display: grid; place-items: center; opacity: 0;
+          font-size: 20px; line-height: 1.05; letter-spacing: .04em; text-align: center;
+          transform: rotate(-4deg); }
+  .credit { position: absolute; left: 0; right: 0; bottom: 12px; z-index: 52; text-align: center;
+            font-family: "Helvetica Neue", Arial, sans-serif; font-size: 9px; letter-spacing: .34em;
+            color: rgba(246,231,204,.36); opacity: 0; }
+
+  .vignette { position: absolute; inset: 0; z-index: 58; pointer-events: none;
+              background: radial-gradient(120% 100% at 50% 46%, transparent 46%, rgba(14,7,4,.55) 100%); }
+  .warm { position: absolute; inset: 0; z-index: 57; pointer-events: none; mix-blend-mode: soft-light;
+          background: linear-gradient(180deg, rgba(255,196,120,.18), rgba(120,60,30,.10)); }
+  .grain { position: absolute; inset: 0; z-index: 60; pointer-events: none; opacity: .05;
+           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E"); }
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="scene" id="scene">
+  <div class="box" id="box">
+    <div class="sky-a" id="skyA"></div>
+    <div class="sky-b" id="skyB"></div>
+
+    <div class="cam" id="cam">
+      <div class="layer mountain far" id="far">
+        <svg viewBox="0 0 1280 720" preserveAspectRatio="none">
+          <path d="M0 470 L132 392 L268 446 L392 360 L520 438 L648 372 L790 448 L916 380 L1058 452 L1180 396 L1280 440 L1280 720 L0 720 Z"
+                fill="#6B4433" opacity=".55"/>
+        </svg>
+      </div>
+
+      <div class="layer mountain mid" id="mid">
+        <svg viewBox="0 0 1280 720" preserveAspectRatio="none">
+                    <path d="M0 520 L120 452 L250 500 L400 428 L548 506 L700 442 L858 512 L1010 448 L1160 508 L1280 468 L1280 720 L0 720 Z"
+                fill="#452A1F" opacity=".92"/>
+          <defs>
+            <linearGradient id="valley" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2A150E" stop-opacity="0"/>
+              <stop offset=".55" stop-color="#2A150E" stop-opacity=".55"/>
+              <stop offset="1" stop-color="#1A0C07" stop-opacity=".85"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="470" width="1280" height="250" fill="url(#valley)"/>
+        </svg>
+      </div>
+
+      <div class="layer hall" id="hall">
+        <svg viewBox="0 0 1280 720" preserveAspectRatio="none">
+                    <g>
+            <path d="M0 570 L1280 570 L1280 720 L0 720 Z" fill="#2A1A13"/>
+            <!-- main hall -->
+            <ellipse cx="742" cy="572" rx="196" ry="15" fill="#120A06" opacity=".5"/>
+            <rect x="596" y="462" width="292" height="108" fill="#A45A3F"/>
+            <path d="M534 478 Q550 460 584 466 L742 360 L900 466 Q934 460 950 478 L908 490 L742 400 L576 490 Z" fill="#5C2C21"/>
+            <path d="M534 478 Q526 464 536 454 Q554 462 558 474 Z" fill="#5C2C21" opacity=".92"/>
+            <path d="M950 478 Q958 464 948 454 Q930 462 926 474 Z" fill="#5C2C21" opacity=".92"/>
+            <path d="M544 472 L742 356 L940 472" fill="none" stroke="#FFC894" stroke-width="2" opacity=".58"/>
+            <path d="M556 476 L928 476 L920 496 L564 496 Z" fill="#3A1610" opacity=".55"/>
+            <g opacity=".10" stroke="#2A120C" stroke-width="1">
+              <path d="M600 496 V570 M628 496 V570 M656 496 V570 M684 496 V570 M712 496 V570 M740 496 V570 M768 496 V570 M796 496 V570 M824 496 V570 M852 496 V570 M880 496 V570"/>
+            </g>
+            <rect x="708" y="498" width="66" height="72" fill="#2A140E"/>
+            <path d="M708 498 L774 498 L774 570 L708 570 Z" fill="none" stroke="#7C2F22" stroke-width="2" opacity=".7"/>
+            <rect x="714" y="504" width="54" height="66" fill="#1A0C07" opacity=".6"/>
+            <rect x="640" y="502" width="32" height="36" fill="#3A1C14"/>
+            <rect x="812" y="502" width="32" height="36" fill="#3A1C14"/>
+            <g stroke="#5A2A1C" stroke-width="1.4" opacity=".8">
+              <path d="M646 502 V538 M656 502 V538 M666 502 V538 M640 512 H672 M640 524 H672"/>
+              <path d="M818 502 V538 M828 502 V538 M838 502 V538 M812 512 H844 M812 524 H844"/>
+            </g>
+            <rect x="700" y="424" width="84" height="20" fill="#4A1E15" stroke="#C9A77C" stroke-width="1" opacity=".9"/>
+            <rect x="574" y="570" width="336" height="10" fill="#6B4A32" opacity=".55"/>
+            <g id="walker" opacity="0">
+              <ellipse cx="0" cy="1" rx="10" ry="3" fill="#120A06" opacity=".5"/>
+              <path d="M-6 0 L-5 -22 Q0 -27 5 -22 L6 0 Z" fill="#241209" stroke="#C9845A" stroke-width="1.1" stroke-opacity=".65"/>
+              <circle cx="0" cy="-28" r="5.4" fill="#241209" stroke="#C9845A" stroke-width="1.1" stroke-opacity=".65"/>
+            </g>
+            <path d="M622 466 L862 466" stroke="#C9845A" stroke-width="1.1" opacity=".38"/>
+            <!-- stone steps -->
+            <path d="M676 570 L808 570 L794 590 L690 590 Z" fill="#8E6A4B" opacity=".55"/>
+            <path d="M690 590 L794 590 L784 608 L700 608 Z" fill="#8E6A4B" opacity=".40"/>
+            <path d="M700 608 L784 608 L776 624 L708 624 Z" fill="#8E6A4B" opacity=".30"/>
+            <!-- ginkgo -->
+            <g>
+              <path d="M972 570 L980 570 L978 470 L970 470 Z" fill="#3A2418"/>
+              <ellipse cx="974" cy="432" rx="86" ry="66" fill="#4E6E5D" opacity=".95"/>
+              <ellipse cx="922" cy="452" rx="46" ry="36" fill="#5E7A55" opacity=".9"/>
+              <ellipse cx="1024" cy="448" rx="42" ry="34" fill="#5E7A55" opacity=".9"/>
+              <ellipse cx="974" cy="398" rx="52" ry="36" fill="#6B7F4E" opacity=".9"/>
+              <ellipse cx="948" cy="420" rx="30" ry="22" fill="#A8894E" opacity=".45"/>
+              <ellipse cx="1002" cy="436" rx="26" ry="18" fill="#A8894E" opacity=".35"/>
+              <ellipse cx="974" cy="586" rx="70" ry="8" fill="#6B4A2A" opacity=".35"/>
+            </g>
+            <!-- side wall -->
+            <rect x="1080" y="506" width="150" height="64" fill="#7A402E" opacity=".9"/>
+            <path d="M1066 510 L1155 470 L1244 510 L1230 520 L1155 486 L1080 520 Z" fill="#42211A" opacity=".95"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="layer gate" id="gate">
+        <svg viewBox="0 0 1280 720" preserveAspectRatio="none">
+                    <g>
+            <!-- gate foundation -->
+            <path d="M206 570 L530 570 L514 596 L222 596 Z" fill="#7A563C" opacity=".85"/>
+            <!-- pillars -->
+            <rect x="250" y="404" width="20" height="170" fill="#7C2F22"/>
+            <rect x="466" y="404" width="20" height="170" fill="#7C2F22"/>
+            <rect x="338" y="412" width="14" height="164" fill="#6E2A1F" opacity=".85"/>
+            <rect x="388" y="412" width="14" height="164" fill="#6E2A1F" opacity=".85"/>
+            <!-- beam + bracket -->
+            <rect x="234" y="386" width="268" height="24" fill="#8E3A29"/>
+            <path d="M226 386 L368 330 L510 386 L492 396 L368 352 L244 396 Z" fill="#3B1E16"/>
+            <path d="M226 386 L368 330 L510 386" fill="none" stroke="#E3A374" stroke-width="2.2" opacity=".75"/>
+            <!-- upper roof -->
+            <path d="M176 350 Q192 330 226 336 L368 252 L510 336 Q544 330 560 350 L520 356 L368 284 L216 356 Z" fill="#331912"/>
+            <path d="M176 350 Q168 336 178 326 Q196 334 200 346 Z" fill="#331912" opacity=".9"/>
+            <path d="M560 350 Q568 336 558 326 Q540 334 536 346 Z" fill="#331912" opacity=".9"/>
+            <path d="M188 340 L368 248 L548 340" fill="none" stroke="#C9845A" stroke-width="1.2" opacity=".42"/>
+            <path d="M180 344 L196 336 M540 336 L556 344" stroke="#8A4A2E" stroke-width="3" opacity=".5"/>
+            <!-- plaque -->
+            <rect x="332" y="398" width="72" height="22" fill="#4A1E15" stroke="#C9A77C" stroke-width="1" opacity=".9"/>
+            <!-- gate doors -->
+            <rect x="312" y="470" width="24" height="100" fill="#2B150F"/>
+            <rect x="400" y="470" width="24" height="100" fill="#2B150F"/>
+            <path d="M336 470 L400 470 L400 570 L336 570 Z" fill="#1D0E09" opacity=".55"/>
+            <path d="M206 570 L250 570 L250 470 L206 470 Z" fill="#6E3526" opacity=".9"/>
+            <path d="M486 570 L530 570 L530 470 L486 470 Z" fill="#6E3526" opacity=".9"/>
+            <path d="M300 596 L436 596 L432 610 L304 610 Z" fill="#8E6A4B" opacity=".5"/>
+            <path d="M308 610 L428 610 L424 622 L312 622 Z" fill="#8E6A4B" opacity=".38"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="layer fg" id="fg">
+        <svg viewBox="0 0 1280 720" preserveAspectRatio="none">
+          <path d="M0 650 C 90 620, 168 656, 232 696 L0 720 Z" fill="#120A06" opacity=".96"/>
+          <path d="M1280 620 C 1188 604, 1120 646, 1072 700 L1280 720 Z" fill="#150C07" opacity=".92"/>
+          <path d="M1042 720 C 1006 664, 986 620, 962 570" stroke="#170D08" stroke-width="7" fill="none" opacity=".9"/>
+          <g fill="#150C07" opacity=".85">
+            <ellipse cx="948" cy="556" rx="16" ry="9"/>
+            <ellipse cx="964" cy="592" rx="13" ry="7"/>
+            <ellipse cx="980" cy="628" rx="11" ry="6"/>
+          </g>
+        </svg>
+      </div>
+      <div class="halo" id="halo"></div>
+      <div class="lamp" id="lamp"></div>
+      <div class="figure" id="figure"><i></i><b></b></div>
+    </div>
+
+    <div class="glow" id="glow"></div>
+    <div class="dust" id="dust"></div>
+    <div class="spark" id="spark"></div>
+
+    <div class="title" id="title"><b>潭柘寺</b><small>TANZHE TEMPLE · BEIJING</small></div>
+    <div class="sub" id="sub"><span></span></div>
+    <div class="seal" id="seal">潭<br>柘</div>
+    <div class="credit" id="credit">鲸片 · 立体纸雕 · WHALEREEL</div>
+  </div>
+  <div class="warm"></div>
+  <div class="vignette"></div>
+  <div class="grain"></div>
+</div>
+</div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const cam = $("cam"), far = $("far"), mid = $("mid"), hall = $("hall"), gate = $("gate"), fg = $("fg");
+  const box = $("box"), skyA = $("skyA"), skyB = $("skyB"), glow = $("glow"), halo = $("halo");
+  const lamp = $("lamp"), walker = $("walker"), spark = $("spark");
+  const title = $("title"), sub = $("sub"), seal = $("seal"), credit = $("credit");
+
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const ease = (x) => { x = clamp(x, 0, 1); return 1 - Math.pow(1 - x, 3); };
+  const easeInOut = (x) => { x = clamp(x, 0, 1); return x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; };
+  const ramp = (t, start, dur) => ease((t - start) / dur);
+  const mix = (a, b, p) => a + (b - a) * p;
+
+  // deterministic dust
+  const dust = $("dust");
+  const motes = [];
+  for (let i = 0; i < 28; i++) {
+    const el = document.createElement("i");
+    const x = ((i * 137.5) % 1120) + 60;
+    const y = ((i * 89.3) % 520) + 120;
+    el.style.left = x + "px";
+    el.style.top = y + "px";
+    el.style.opacity = String(.18 + ((i * 7) % 10) / 30);
+    dust.appendChild(el);
+    motes.push({ el, phase: i * .7 });
+  }
+
+  // camera keyframes: [time, scale, tx, ty]
+  const KEYS = [
+    [4.6, 1.00, 0, 0],
+    [12.0, 1.05, 0, -3],
+    [20.5, 1.10, -3, -6],
+    [31.8, 1.11, -4, -7],
+    [39.6, 0.94, 0, 14],
+    [45.0, 0.95, 0, 12],
+  ];
+  function camAt(t) {
+    let i = 0;
+    while (i < KEYS.length - 2 && t > KEYS[i + 1][0]) i++;
+    const [t0, s0, x0, y0] = KEYS[i];
+    const [t1, s1, x1, y1] = KEYS[i + 1];
+    const p = easeInOut(clamp((t - t0) / (t1 - t0), 0, 1));
+    return { s: mix(s0, s1, p), x: mix(x0, x1, p), y: mix(y0, y1, p) };
+  }
+
+  const SUBS = [
+    [6.8, 11.0, "北京城西，有一座比城更老的寺"],
+    [14.4, 18.7, "西晋至今，山门开了一千七百多年"],
+    [24.4, 28.1, "一棵银杏，看过无数个秋天"],
+    [34.2, 38.6, "山还是那座山，寺还是那座寺"],
+  ];
+
+  function seek(t) {
+    const c = camAt(t);
+    cam.style.transform = `translate(${c.x}px, ${c.y}px) scale(${c.s})`;
+
+    // parallax inside the camera
+    const d = clamp((c.s - 1) / .88, 0, 1);
+    far.style.transform = `translateY(${2 * d}px)`;
+    mid.style.transform = `translateY(${5 * d}px)`;
+    hall.style.transform = `translateY(${8 * d}px)`;
+    gate.style.transform = `translateY(${-6 * d}px)`;
+    fg.style.transform = `translateY(${18 * d}px)`;
+
+    // pass through the gate: gate and fg fade as we cross it
+    const gone = ramp(t, 13.4, 3.4) * (1 - ramp(t, 34.2, 2.6));
+    gate.style.opacity = String(1 - ramp(t, 15.4, 1.6) * (1 - ramp(t, 34.2, 2.6)));
+    gate.style.transform = `translateY(${230 * gone}px) scale(${1 + .10 * gone})`;
+    fg.style.transform = `translateY(${18 * d + 90 * gone}px)`;
+    fg.style.opacity = String(1 - gone * .9);
+
+    // lights: match -> box lights -> dusk -> lamp
+    const lit = ramp(t, 1.6, 1.8);
+    const dusk = easeInOut(clamp((t - 21.5) / 9.5, 0, 1));
+    skyB.style.opacity = String(dusk * .95);
+    glow.style.opacity = String(lit * (0.62 - .16 * dusk));
+    box.style.background = dusk > .5 ? "#150C08" : "#1A0F0A";
+
+    spark.style.opacity = String(ramp(t, .55, .35) * (1 - ramp(t, 1.5, .9)));
+    spark.style.transform = `scale(${.7 + .9 * ramp(t, .55, 1.2)})`;
+
+    const lampOn = ramp(t, 25.6, 1.4);
+    lamp.style.opacity = String(lampOn);
+    halo.style.opacity = String(lampOn * .85);
+
+    // title
+    const ti = ramp(t, 3.0, 1.2);
+    title.style.opacity = String(ti * (1 - ramp(t, 12.8, 1.4)));
+    title.style.transform = `translateY(${(1 - ti) * 12}px)`;
+
+    // figure walks up the steps (SVG space, so it stays on the ground)
+    const walk = easeInOut(clamp((t - 23.2) / 6.4, 0, 1));
+    const fx = 762 + 44 * walk;
+    const fy = 600 - 34 * walk + Math.sin(walk * 26) * 1.0;
+    walker.setAttribute("transform", `translate(${fx} ${fy})`);
+    walker.setAttribute("opacity", String(ramp(t, 22.8, 1.0) * (1 - ramp(t, 30.8, 1.4))));
+
+    // subtitles
+    let cur = "";
+    for (const [a, b, text] of SUBS) if (t >= a && t < b) cur = text;
+    const sEl = sub.firstElementChild;
+    if (sEl.textContent !== cur) sEl.textContent = cur;
+    sub.style.opacity = cur ? "1" : "0";
+
+    // seal + credit
+    const sp = ramp(t, 40.6, .55);
+    seal.style.opacity = String(sp);
+    seal.style.transform = `rotate(-4deg) scale(${2.2 - 1.2 * sp})`;
+    credit.style.opacity = String(ramp(t, 42.0, 1.2));
+
+    // dust
+    for (const m of motes) {
+      const dy = -14 * ease(clamp(t / 45, 0, 1)) + Math.sin(m.phase + t * .6) * 2.2;
+      m.el.style.transform = `translate(${Math.sin(m.phase + t * .28) * 3.4}px, ${dy}px)`;
+    }
+  }
+
+  window.__duration = 45;
+  window.__seek = seek;
+  window.__preview = 8.2;
+  const run = () => { seek(0); window.__ready = true; };
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(run); setTimeout(run, 700); }
+  else setTimeout(run, 50);
+</script>
+</body>
+</html>

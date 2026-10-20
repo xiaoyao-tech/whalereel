@@ -1,0 +1,234 @@
+{
+  "name": "WhaleReel",
+  "name_zh": "鲸片",
+  "version": "0.2.0",
+  "description": "一句话生成 30–60 秒代码渲染短片，内置六种风格，支持自动推荐或指定风格。",
+  "license": "MIT",
+  "install": "bash scripts/install-harness.sh",
+  "entry": "SKILL.md",
+  "styles": [
+    {
+      "slug": "dossier",
+      "name": "档案卷宗",
+      "en": "Redacted Dossier",
+      "best_for": [
+        "历史人物",
+        "案件复盘",
+        "制度解释",
+        "调查报告",
+        "传记",
+        "企业史"
+      ],
+      "avoid": [
+        "儿童",
+        "快节奏广告",
+        "纯情绪片",
+        "需要真实影像的纪录片"
+      ],
+      "duration": "30-60s",
+      "difficulty": "medium",
+      "palette": [
+        "#EDE3CB",
+        "#F7EFDD",
+        "#1B1611",
+        "#A82E1C",
+        "#15110D",
+        "#8A7A63"
+      ],
+      "signature": "一张米色卷宗纸，涂黑条盖住名字，印章落下时全屏抖一下",
+      "needs": [
+        "3–6 条有出处的事实",
+        "一条时间线",
+        "1–2 个纸上物件",
+        "一句判断句"
+      ],
+      "demo": "renders/cases/dossier.mp4",
+      "preview": "renders/cases/dossier.jpg"
+    },
+    {
+      "slug": "pen-wash",
+      "name": "钢笔淡彩",
+      "en": "Pen & Wash",
+      "best_for": [
+        "情绪",
+        "乡愁",
+        "城市漫游",
+        "人物侧写",
+        "歌曲意象",
+        "品牌抒情片"
+      ],
+      "avoid": [
+        "数据",
+        "参数",
+        "流程",
+        "快节奏解说",
+        "儿童科普"
+      ],
+      "duration": "30-60s",
+      "difficulty": "medium",
+      "palette": [
+        "#F5EEDE",
+        "#2E2622",
+        "#8EA6C4",
+        "#C89274",
+        "#D97757",
+        "#6F8A55"
+      ],
+      "signature": "先只有墨线，一盏灯笼带来第一块颜色，颜色走过哪里，哪里才有色",
+      "needs": [
+        "一个能画出来的地点",
+        "一段可压缩的时间",
+        "一个颜色事件"
+      ],
+      "demo": "renders/cases/pen-wash.mp4",
+      "preview": "renders/cases/pen-wash.jpg"
+    },
+    {
+      "slug": "white-model",
+      "name": "白模投影",
+      "en": "Projection on White Model",
+      "best_for": [
+        "城市",
+        "区域",
+        "园区",
+        "规划",
+        "地理",
+        "人口"
+      ],
+      "avoid": [
+        "情绪故事",
+        "人物特写",
+        "儿童内容",
+        "没有可靠数据的题材"
+      ],
+      "duration": "45-120s",
+      "difficulty": "high",
+      "palette": [
+        "#F3F3F1",
+        "#0C0D10",
+        "#E8A33D",
+        "#5B8DEF",
+        "#C9CDD4",
+        "#1A1C22"
+      ],
+      "signature": "纯白模型在暗房里，投影把数据一层层刷上去，模型不动只有光动",
+      "needs": [
+        "真实建筑轮廓（OSM/开放数据）",
+        "高度或层数",
+        "地形 DEM",
+        "3–6 个有来源的数字",
+        "FACTS.md"
+      ],
+      "demo": "renders/cases/white-model.mp4",
+      "preview": "renders/cases/white-model.jpg"
+    },
+    {
+      "slug": "paper-diorama",
+      "name": "立体纸雕",
+      "en": "Paper Diorama",
+      "best_for": [
+        "景区",
+        "古建",
+        "地标",
+        "节日",
+        "文化品牌"
+      ],
+      "avoid": [
+        "数据",
+        "参数",
+        "快节奏解说",
+        "抽象概念"
+      ],
+      "duration": "45s",
+      "difficulty": "medium",
+      "palette": [
+        "#F3EBDD",
+        "#C9A77C",
+        "#FFB86B",
+        "#4E6E5D",
+        "#B4462F",
+        "#1E1A17"
+      ],
+      "signature": "暖光穿过 5–7 层纸雕，镜头逐层推进",
+      "needs": [
+        "景区/建筑的点位与年代",
+        "一句可引用的地方说法"
+      ],
+      "demo": "renders/01-tanzhe-45s.mp4",
+      "preview": "previews/01-tanzhe-45s.jpg"
+    },
+    {
+      "slug": "whiteboard",
+      "name": "白板讲解",
+      "en": "Whiteboard",
+      "best_for": [
+        "知识",
+        "原理",
+        "流程",
+        "课程",
+        "产品上手"
+      ],
+      "avoid": [
+        "情绪片",
+        "景区宣传",
+        "儿童故事",
+        "高端品牌"
+      ],
+      "duration": "45-60s",
+      "difficulty": "low",
+      "palette": [
+        "#F7F7F2",
+        "#1F2328",
+        "#2F6BFF",
+        "#E4572E",
+        "#FFE08A",
+        "#C0392B"
+      ],
+      "signature": "马克笔逐笔画出结构，最后擦掉干扰项只留结论",
+      "needs": [
+        "一个能被画出来的结构",
+        "一条三步以内的路径",
+        "一个常见误解"
+      ],
+      "demo": "renders/02-whiteboard.mp4",
+      "preview": "previews/02-whiteboard.jpg"
+    },
+    {
+      "slug": "ink-wash",
+      "name": "水墨",
+      "en": "Ink Wash",
+      "best_for": [
+        "山水",
+        "古寺",
+        "诗词",
+        "武侠",
+        "茶香酒",
+        "历史人物"
+      ],
+      "avoid": [
+        "数据",
+        "参数",
+        "流程",
+        "快节奏解说",
+        "儿童内容"
+      ],
+      "duration": "30-60s",
+      "difficulty": "medium",
+      "palette": [
+        "#F4EFE4",
+        "#141414",
+        "#2C3E50",
+        "#8A9BA8",
+        "#A67C52",
+        "#B03A2E"
+      ],
+      "signature": "一滴墨晕成远山，雾里露出一点屋檐",
+      "needs": [
+        "一处景或一句诗",
+        "一个可留白的结尾"
+      ],
+      "demo": "renders/04-ink-wash.mp4",
+      "preview": "previews/04-ink-wash.jpg"
+    }
+  ]
+}

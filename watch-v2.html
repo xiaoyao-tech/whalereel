@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>鲸片 v0.2 · 10 秒风格测试</title>
+<style>
+  :root { --navy:#0B1220; --cream:#F4EFE4; --muted:#9AA1B2; --line:rgba(244,239,228,.12); }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--navy); color:var(--cream); font-family:"PingFang SC","Helvetica Neue",Arial,sans-serif; }
+  .wrap { max-width:1280px; margin:0 auto; padding:32px 24px 56px; }
+  header { display:flex; align-items:baseline; justify-content:space-between; gap:20px; padding-bottom:16px; border-bottom:1px solid var(--line); }
+  h1 { margin:0; font-family:"Songti SC",serif; font-size:28px; font-weight:600; letter-spacing:.1em; }
+  header span { color:var(--muted); font-size:11px; letter-spacing:.18em; }
+  .intro { margin:20px 0 26px; color:var(--muted); font-size:13px; line-height:1.9; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .card { background:#111A2E; border:1px solid var(--line); }
+  .card video { width:100%; display:block; aspect-ratio:16/9; object-fit:cover; background:#000; }
+  .meta { padding:14px 16px 16px; display:flex; justify-content:space-between; gap:14px; align-items:baseline; }
+  .meta b { font-family:"Songti SC",serif; font-size:20px; letter-spacing:.06em; }
+  .meta small { display:block; margin-top:5px; color:var(--muted); font-size:11px; letter-spacing:.12em; }
+  .meta a { color:var(--cream); font-size:11px; opacity:.55; text-decoration:none; white-space:nowrap; }
+  .meta a:hover { opacity:1; }
+  footer { margin-top:30px; padding-top:16px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; line-height:1.8; }
+  @media (max-width:820px) { .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>鲸片 v0.2 · 10 秒风格测试</h1>
+    <span>6 STYLES · 10s EACH · 2.5D PREVIEW</span>
+  </header>
+  <div class="intro">
+    六支 10 秒测试，先看风格和选题，不是 45 秒正片。白模投影和产品拆解目前是 2.5D 近似，最终版会用 Three.js 做投影光和 PBR 爆炸。
+    完整片单见 <a href="PLAN.md" style="color:#E0A15E">PLAN.md</a>。
+  </div>
+
+  <div class="grid">
+    <article class="card">
+      <video src="renders/v2/01-white-model.mp4" poster="previews/v2/01-white-model.jpg" controls autoplay muted loop playsinline></video>
+      <div class="meta"><div><b>01 白模投影</b><small>潭柘寺 · 45s 正片 / 10s 测试</small></div><a href="renders/v2/01-white-model.mp4" download>下载</a></div>
+    </article>
+    <article class="card">
+      <video src="renders/v2/02-whiteboard.mp4" poster="previews/v2/02-whiteboard.jpg" controls autoplay muted loop playsinline></video>
+      <div class="meta"><div><b>02 白板讲解</b><small>AI 为什么会胡说 · 45s / 10s</small></div><a href="renders/v2/02-whiteboard.mp4" download>下载</a></div>
+    </article>
+    <article class="card">
+      <video src="renders/v2/03-teardown.mp4" poster="previews/v2/03-teardown.jpg" controls autoplay muted loop playsinline></video>
+      <div class="meta"><div><b>03 产品拆解</b><small>吹风机 · 40s / 10s</small></div><a href="renders/v2/03-teardown.mp4" download>下载</a></div>
+    </article>
+    <article class="card">
+      <video src="renders/v2/04-ink-wash.mp4" poster="previews/v2/04-ink-wash.jpg" controls autoplay muted loop playsinline></video>
+      <div class="meta"><div><b>04 水墨</b><small>富春山居图 · 40s / 10s</small></div><a href="renders/v2/04-ink-wash.mp4" download>下载</a></div>
+    </article>
+    <article class="card">
+      <video src="renders/v2/05-crayon-book.mp4" poster="previews/v2/05-crayon-book.jpg" controls autoplay muted loop playsinline></video>
+      <div class="meta"><div><b>05 蜡笔绘本</b><small>一颗种子的旅行 · 35s / 10s</small></div><a href="renders/v2/05-crayon-book.mp4" download>下载</a></div>
+    </article>
+    <article class="card">
+      <video src="renders/v2/06-isometric.mp4" poster="previews/v2/06-isometric.jpg" controls autoplay muted loop playsinline></video>
+      <div class="meta"><div><b>06 俯视立体</b><small>包裹 24 小时 · 40s / 10s</small></div><a href="renders/v2/06-isometric.mp4" download>下载</a></div>
+    </article>
+  </div>
+
+  <footer>全部 1280×720 / 24fps / 无声；10 秒测试，用于定风格和节奏。正片会补旁白、音乐、数据来源。</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 · 白模投影 · 北京</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .stage { background: #07090d; }
+  .room {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(70% 60% at 48% 38%, rgba(255,244,222,.09), transparent 62%),
+      radial-gradient(80% 70% at 50% 100%, rgba(255,180,110,.05), transparent 70%),
+      #07090d;
+  }
+  .svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; }
+  .identity {
+    position: absolute; left: 68px; top: 108px; z-index: 10;
+    font-family: "Songti SC", serif; color: #EDE7D9;
+    font-size: 12px; letter-spacing: .14em; line-height: 1.9; opacity: 0;
+  }
+  .identity b { display: block; font-size: 24px; letter-spacing: .12em; margin-bottom: 6px; font-weight: 600; }
+  .readout {
+    position: absolute; left: 68px; top: 310px; z-index: 10;
+    width: 260px; color: #EDE7D9; opacity: 0;
+  }
+  .readout .idx { font: 500 11px/1 "Helvetica Neue", Arial, sans-serif; letter-spacing: .26em; color: #E0A15E; }
+  .readout .name { margin-top: 12px; font-family: "Songti SC", serif; font-size: 30px; letter-spacing: .08em; }
+  .readout .fig { margin-top: 14px; font-family: "Songti SC", serif; font-size: 44px; letter-spacing: .02em; color: #F6F0E3; }
+  .readout .label { margin-top: 8px; font-size: 12px; letter-spacing: .08em; color: #A9A395; }
+  .readout .source {
+    margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(237,231,217,.18);
+    font: 400 10px/1.7 "Helvetica Neue", Arial, sans-serif; letter-spacing: .06em; color: #7F7A70;
+  }
+  .subtitle {
+    position: absolute; left: 50%; bottom: 40px; z-index: 10; transform: translateX(-50%);
+    font-family: "Songti SC", serif; font-size: 20px; letter-spacing: .14em; color: #E8E0D0;
+    text-shadow: 0 2px 12px #000; opacity: 0; white-space: nowrap;
+  }
+  .year {
+    position: absolute; right: 74px; bottom: 44px; z-index: 10;
+    font: 400 12px/1 "SFMono-Regular", Menlo, monospace; letter-spacing: .16em; color: #8E877A; opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div class="stage grain">
+  <div class="room"></div>
+
+  <svg class="svg" id="scene" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="beam" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#FFF1CE" stop-opacity=".26"/>
+        <stop offset=".55" stop-color="#FFD79A" stop-opacity=".07"/>
+        <stop offset="1" stop-color="#FFD79A" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#F4F2EB"/><stop offset="1" stop-color="#D8D3C8"/>
+      </linearGradient>
+      <filter id="soft"><feGaussianBlur stdDeviation="12"/></filter>
+      <radialGradient id="lamp" cx=".5" cy=".5" r=".5">
+        <stop offset="0" stop-color="#FFF7E4" stop-opacity=".9"/><stop offset="1" stop-color="#FFF7E4" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <g id="projector" opacity="0">
+      <rect x="70" y="44" width="54" height="34" rx="4" fill="#1B1D21" stroke="#33363D"/>
+      <circle cx="124" cy="61" r="7" fill="#0A0B0D" stroke="#555962"/>
+      <circle cx="124" cy="61" r="3" fill="#FFE2A8"/>
+      <polygon points="130,60 430,380 760,380" fill="url(#beam)" opacity=".09" style="mix-blend-mode:screen"/>
+    </g>
+
+    <g id="world" transform="translate(640 360) scale(.92) translate(-640 -360)">
+      <g id="mountains"></g>
+      <g id="plateG"></g>
+      <g id="city"></g>
+      <g id="landmarks"></g>
+      <g id="terrain" opacity="0"></g>
+      <g id="roofs" opacity="0"></g>
+      <g id="ringsG"></g>
+      <g id="axisG"></g>
+      <g id="sunG" opacity="0"></g>
+      <g id="pins" opacity="0"></g>
+    </g>
+
+    <circle id="flare" cx="124" cy="61" r="4" fill="url(#lamp)" opacity="0"/>
+  </svg>
+
+  <div class="identity" id="identity"><b>北京</b>1:20000 · 简化城市模型<br>16,410 km² · 非测绘</div>
+
+  <div class="readout" id="readout">
+    <div class="idx" id="idx">01 / TERRAIN</div>
+    <div class="name" id="name">山形</div>
+    <div class="fig" id="fig">—</div>
+    <div class="label" id="label">西北高，东南低</div>
+    <div class="source" id="source">北京市统计局 · 地形</div>
+  </div>
+
+  <div class="subtitle" id="subtitle">先看它坐在什么样的地形里。</div>
+  <div class="year" id="year">1949 → 2024</div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  const end = mountEndCard("白模投影 · WHITE MODEL", 29.0);
+  const NS = "http://www.w3.org/2000/svg";
+  const CX = 640, CY = 360, DX = 55, DY = 27.5;
+  const iso = (x, y) => ({ x: CX + (x - y) * DX, y: CY + (x + y) * DY });
+
+  const mountains = document.getElementById("mountains");
+  const plateG = document.getElementById("plateG");
+  const city = document.getElementById("city");
+  const landmarks = document.getElementById("landmarks");
+  const terrain = document.getElementById("terrain");
+  const ringsG = document.getElementById("ringsG");
+  const axisG = document.getElementById("axisG");
+  const roofs = document.getElementById("roofs");
+  const sunG = document.getElementById("sunG");
+  const pins = document.getElementById("pins");
+
+  // plate
+  plateG.innerHTML = `
+    <polygon points="640,160 1080,380 640,600 200,380" fill="url(#plate)" stroke="#F8F6EF" stroke-width="1.5"/>
+    <polygon points="200,380 640,600 640,616 200,396" fill="#BDB7AA" opacity=".8"/>
+    <polygon points="1080,380 640,600 640,616 1080,396" fill="#A9A294" opacity=".8"/>
+    <ellipse cx="640" cy="620" rx="330" ry="22" fill="#000" opacity=".38"/>`;
+
+  // mountains: white ridges outside / on the north-west edge
+  mountains.innerHTML = `
+    <path d="M150 380 L250 260 L330 320 L420 230 L510 330 L560 300 L560 380 Z" fill="#E9E5DB" stroke="#FFF" stroke-width="1.2" opacity=".9"/>
+    <path d="M250 260 L330 320 L330 380 L250 380 Z" fill="#D4CEC0" opacity=".85"/>
+    <path d="M420 230 L510 330 L510 380 L420 380 Z" fill="#C9C2B2" opacity=".8"/>
+    <path d="M560 300 L640 240 L720 300 L720 380 L560 380 Z" fill="#EFEBE1" stroke="#FFF" stroke-width="1" opacity=".8"/>`;
+
+  // city blocks: deterministic grid, skip landmark zones
+  const blocks = [];
+  const landmarkZones = [
+    (x, y) => Math.abs(x) < 1.0 && Math.abs(y) < 1.1,       // Forbidden City
+    (x, y) => x > 2.6 && x < 4.2 && y > -0.6 && y < 1.2,    // CBD
+    (x, y) => x > -2.2 && x < -0.4 && y < -2.4,             // Olympic
+    (x, y) => x > 0.2 && x < 1.8 && y > 2.4                 // Temple of Heaven
+  ];
+  for (let y = -4; y <= 4; y++) {
+    for (let x = -4; x <= 4; x++) {
+      if (landmarkZones.some(f => f(x, y))) continue;
+      // leave the central axis corridor a little clearer
+      const h = 14 + Math.abs((x * 37 + y * 53 + 11) % 52);
+      blocks.push({ x, y, h, s: 0.34 });
+    }
+  }
+  blocks.sort((a, b) => (a.x + a.y) - (b.x + b.y));
+
+  function block(cx, cy, s, h, top = "#F6F3EC", left = "#DBD5C8", right = "#C9C2B2") {
+    const p = iso(cx, cy);
+    const hw = 2 * s * DX, hd = 2 * s * DY;
+    const ty = p.y - h;
+    const t = `${p.x},${ty - hd} ${p.x + hw},${ty} ${p.x},${ty + hd} ${p.x - hw},${ty}`;
+    const l = `${p.x - hw},${ty} ${p.x},${ty + hd} ${p.x},${p.y + hd} ${p.x - hw},${p.y}`;
+    const r = `${p.x},${ty + hd} ${p.x + hw},${ty} ${p.x + hw},${p.y} ${p.x},${p.y + hd}`;
+    return {
+      svg: `<polygon points="${t}" fill="${top}" stroke="#FFFFFF" stroke-width=".8"/>
+            <polygon points="${l}" fill="${left}"/>
+            <polygon points="${r}" fill="${right}"/>`,
+      top: t, p
+    };
+  }
+
+  for (const b of blocks) {
+    const g = block(b.x, b.y, b.s, b.h);
+    city.innerHTML += g.svg;
+    roofs.innerHTML += `<polygon points="${g.top}" fill="#E0A15E" opacity=".16"/>`;
+  }
+
+  // landmarks
+  const lm = [];
+  // Forbidden City: low wall + three halls
+  lm.push(block(0, 0, 0.85, 20, "#F7F4EC", "#D9D2C4", "#C6BEAD").svg);
+  lm.push(block(0, -0.35, 0.32, 34, "#FBF8F1", "#DED7C8", "#CCC4B3").svg);
+  lm.push(block(0, 0.25, 0.32, 30, "#FBF8F1", "#DED7C8", "#CCC4B3").svg);
+  // CBD towers: China Zun + two
+  lm.push(block(3.5, 0.35, 0.30, 158, "#F8F5EE", "#D8D1C3", "#C5BDAC").svg);
+  lm.push(block(3.0, -0.15, 0.26, 92, "#F8F5EE", "#D8D1C3", "#C5BDAC").svg);
+  lm.push(block(3.9, 0.85, 0.24, 74, "#F8F5EE", "#D8D1C3", "#C5BDAC").svg);
+  // Olympic stadium: an ellipse ring on the plate
+  const o = iso(-1.3, -3.15);
+  lm.push(`<ellipse cx="${o.x}" cy="${o.y}" rx="34" ry="17" fill="none" stroke="#F5F2EA" stroke-width="7"/>
+           <ellipse cx="${o.x}" cy="${o.y}" rx="34" ry="17" fill="none" stroke="#BEB7A8" stroke-width="1.4"/>
+           <ellipse cx="${o.x}" cy="${o.y}" rx="16" ry="8" fill="#E6E1D5" stroke="#FFF"/>`);
+  // Temple of Heaven: circular altar + blue roof
+  const t = iso(1.0, 3.15);
+  lm.push(`<ellipse cx="${t.x}" cy="${t.y}" rx="28" ry="14" fill="#F8F5EE" stroke="#FFF" stroke-width="1.2"/>
+           <ellipse cx="${t.x}" cy="${t.y - 8}" rx="18" ry="9" fill="#6FA3B8" stroke="#8FC3D6" stroke-width="1.2" opacity=".9"/>
+           <ellipse cx="${t.x}" cy="${t.y - 2}" rx="24" ry="12" fill="none" stroke="#D8D1C3" stroke-width="1.2"/>`);
+  landmarks.innerHTML = lm.join("");
+
+  // terrain wash
+  terrain.innerHTML = `<polygon points="640,160 1080,380 640,600 200,380" fill="#4E8B76" opacity=".10"/>
+    <path d="M200 380 L250 260 L330 320 L420 230 L510 330 L640 240 L720 300 L720 380" fill="none" stroke="#8ED3B6" stroke-width="1.5" opacity=".25"/>`;
+
+  // ring roads: plan rectangles projected
+  const ringRadii = [1.15, 1.8, 2.45, 3.1, 3.75];
+  ringRadii.forEach((r, i) => {
+    const a = iso(-r, -r), b = iso(r, -r), c = iso(r, r), d = iso(-r, r);
+    ringsG.innerHTML += `<path class="ring" pathLength="1" d="M${a.x} ${a.y} L${b.x} ${b.y} L${c.x} ${c.y} L${d.x} ${d.y} Z"
+      fill="none" stroke="#F0B36A" stroke-width="${i === 1 ? 2.2 : 1.6}" opacity=".8"
+      stroke-dasharray="1" stroke-dashoffset="1"/>`;
+  });
+
+  // central axis
+  const a1 = iso(0, -4.3), a2 = iso(0, 4.3);
+  axisG.innerHTML = `<path id="axis" pathLength="1" d="M${a1.x} ${a1.y} L${a2.x} ${a2.y}"
+    fill="none" stroke="#F0B36A" stroke-width="4" stroke-dasharray="1" stroke-dashoffset="1" opacity=".9"/>`;
+
+  // sun shadow + sun disc
+  sunG.innerHTML = `<polygon id="shadow" points="800,470 600,620 625,636 825,486" fill="#2F5F9E" opacity=".22" filter="url(#soft)"/>
+    <circle cx="1040" cy="150" r="26" fill="#F6C56E" opacity=".85"/>
+    <circle cx="1040" cy="150" r="44" fill="none" stroke="#F6C56E" stroke-width="1" opacity=".35"/>`;
+
+  // pins
+  const cbd = iso(3.5, 0.35), fc = iso(0, 0), axisP = iso(0, -2.2);
+  pins.innerHTML = `
+    <g font-family="PingFang SC, sans-serif" font-size="13" fill="#F6F0E3">
+      <line x1="${cbd.x}" y1="${cbd.y - 170}" x2="${cbd.x + 20}" y2="${cbd.y - 226}" stroke="#F6F0E3" stroke-width="1" opacity=".55"/>
+      <rect x="${cbd.x + 24}" y="${cbd.y - 240}" width="126" height="26" rx="3" fill="#0B0D12" opacity=".82"/>
+      <text x="${cbd.x + 33}" y="${cbd.y - 222}">中国尊 528 m</text>
+      <line x1="${fc.x}" y1="${fc.y + 34}" x2="${fc.x - 56}" y2="${fc.y + 76}" stroke="#F6F0E3" stroke-width="1" opacity=".45"/>
+      <rect x="${fc.x - 126}" y="${fc.y + 64}" width="66" height="24" rx="3" fill="#0B0D12" opacity=".75"/>
+      <text x="${fc.x - 118}" y="${fc.y + 81}">故宫</text>
+    </g>`;
+
+  const el = id => document.getElementById(id);
+  const projector = el("projector"), flare = el("flare"), identity = el("identity"), readout = el("readout");
+  const idx = el("idx"), name = el("name"), fig = el("fig"), label = el("label"), source = el("source"), subtitle = el("subtitle"), year = el("year");
+
+  const COPY = [
+    { t: 0.0, idx: "01 / TERRAIN", name: "山形", fig: "16,410 km²", label: "西北高，东南低 / 三面环山", source: "北京市统计局 · 地形<br>行政区面积 16,410 km²", sub: "先看它坐在什么样的地形里。" },
+    { t: 10.0, idx: "02 / AXIS", name: "中轴", fig: "7.8 km", label: "15 处遗产要素", source: "国家文物局 / 人民日报 2024-07-28", sub: "一条中轴，穿过整座城。" },
+    { t: 16.5, idx: "03 / SKYLINE", name: "天际线", fig: "528 m", label: "中国尊 / 北京 CBD", source: "china.org.cn（2016）<br>模型为简化 massing", sub: "白色的城，也有自己的高度。" },
+    { t: 21.0, idx: "04 / POPULATION", name: "人口", fig: "420 万", label: "1949 → 2024", source: "北京市 2024 统计公报<br>北京市统计局 2009", sub: "七十五年，从 420 万到 2183 万。" },
+    { t: 26.0, idx: "05 / SUN", name: "光", fig: "14:00", label: "真实日期 / 影长待算", source: "经纬度 + 日期 / NOAA-Meeus", sub: "太阳是唯一不会撒谎的图层。" }
+  ];
+
+  function setCopy(c) {
+    idx.textContent = c.idx; name.textContent = c.name; fig.textContent = c.fig;
+    label.textContent = c.label; source.innerHTML = c.source; subtitle.textContent = c.sub;
+  }
+
+  function seek(t) {
+    const lamp = ramp(t, 0.25, 0.55);
+    projector.style.opacity = String(lamp);
+    flare.setAttribute("r", String(4 + 18 * Math.max(0, 1 - Math.abs(t - 0.8) * 3)));
+    flare.style.opacity = String(Math.max(0, 0.75 - Math.abs(t - 0.8) * 2));
+
+    identity.style.opacity = String(ramp(t, 0.8, 0.7));
+    readout.style.opacity = String(ramp(t, 1.2, 0.6));
+    subtitle.style.opacity = String(ramp(t, 1.2, 0.5));
+    year.style.opacity = String(ramp(t, 21.0, 0.5));
+
+    terrain.style.opacity = String(ramp(t, 4.8, 0.8) * (1 - ramp(t, 10.5, 0.5)));
+
+    // rings + axis
+    const ringEls = Array.from(document.querySelectorAll(".ring"));
+    ringEls.forEach((p, i) => {
+      const q = easeInOut(clamp((t - 10.0 - i * 0.55) / 0.8, 0, 1));
+      p.style.strokeDashoffset = String(1 - q);
+    });
+    const ax = el("axis");
+    const aq = easeInOut(clamp((t - 13.0) / 1.0, 0, 1));
+    ax.style.strokeDashoffset = String(1 - aq);
+
+    roofs.style.opacity = String(ramp(t, 16.5, 0.8));
+    pins.style.opacity = String(ramp(t, 16.8, 0.6));
+
+    // population counter
+    let c = COPY[0];
+    for (const k of COPY) if (t >= k.t) c = k;
+    if (t >= 21.0 && t < 26.0) {
+      const p = easeInOut(clamp((t - 21.2) / 4.0, 0, 1));
+      const n = Math.round(420 + (2183 - 420) * p);
+      c = { ...c, fig: `${n} 万`, label: p < 0.98 ? "1949 → 2024" : "2024 年末常住人口" };
+    }
+    setCopy(c);
+
+    // sun
+    sunG.style.opacity = String(ramp(t, 26.0, 0.7));
+
+    // camera push
+    const p = ease(clamp(t / 28, 0, 1));
+    const scene = document.getElementById("scene");
+    scene.style.transform = `scale(${1 + 0.035 * p})`;
+    scene.style.transformOrigin = "640px 400px";
+
+    end(t);
+  }
+
+  window.__preview = 24.0;
+  boot(seek, 30);
+</script>
+</body>
+</html>

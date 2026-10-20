@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 v2 · 白模投影 · 潭柘寺</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .stage { background: #07090d; }
+  .room {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(70% 60% at 48% 38%, rgba(255,244,222,.10), transparent 62%),
+      radial-gradient(80% 70% at 50% 100%, rgba(255,180,110,.05), transparent 70%),
+      #07090d;
+  }
+  .svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; }
+  .identity {
+    position: absolute; left: 74px; top: 112px; z-index: 10;
+    font-family: "Songti SC", serif; color: #EDE7D9;
+    font-size: 12px; letter-spacing: .16em; line-height: 1.9;
+    opacity: 0;
+  }
+  .identity b { display: block; font-size: 22px; letter-spacing: .12em; margin-bottom: 6px; font-weight: 600; }
+  .readout {
+    position: absolute; left: 74px; top: 320px; z-index: 10;
+    width: 250px; color: #EDE7D9;
+    opacity: 0;
+  }
+  .readout .idx {
+    font: 500 11px/1 "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: .28em; color: #E0A15E;
+  }
+  .readout .name {
+    margin-top: 12px; font-family: "Songti SC", serif;
+    font-size: 30px; letter-spacing: .08em;
+  }
+  .readout .fig {
+    margin-top: 16px; font-family: "Songti SC", serif;
+    font-size: 44px; letter-spacing: .02em; color: #F6F0E3;
+  }
+  .readout .label {
+    margin-top: 8px; font-size: 12px; letter-spacing: .08em; color: #A9A395;
+  }
+  .readout .source {
+    margin-top: 16px; padding-top: 10px; border-top: 1px solid rgba(237,231,217,.18);
+    font: 400 10px/1.7 "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: .08em; color: #7F7A70;
+  }
+  .subtitle {
+    position: absolute; left: 50%; bottom: 42px; z-index: 10;
+    transform: translateX(-50%);
+    font-family: "Songti SC", serif; font-size: 20px;
+    letter-spacing: .14em; color: #E8E0D0;
+    text-shadow: 0 2px 12px #000;
+    opacity: 0; white-space: nowrap;
+  }
+  .year {
+    position: absolute; right: 78px; bottom: 46px; z-index: 10;
+    font: 400 12px/1 "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    letter-spacing: .18em; color: #8E877A;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div class="stage grain">
+  <div class="room"></div>
+
+  <svg class="svg" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="beam" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#FFF1CE" stop-opacity=".28"/>
+        <stop offset=".55" stop-color="#FFD79A" stop-opacity=".08"/>
+        <stop offset="1" stop-color="#FFD79A" stop-opacity="0"/>
+      </linearGradient>
+      <radialGradient id="lamp" cx=".5" cy=".5" r=".5">
+        <stop offset="0" stop-color="#FFF7E4" stop-opacity=".9"/>
+        <stop offset="1" stop-color="#FFF7E4" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#F4F2EB"/>
+        <stop offset="1" stop-color="#D8D3C8"/>
+      </linearGradient>
+      <clipPath id="plateClip">
+        <polygon points="640,300 1000,480 640,660 280,480"/>
+      </clipPath>
+    </defs>
+
+    <!-- projector body + beam -->
+    <g id="projector" opacity="0">
+      <rect x="70" y="44" width="54" height="34" rx="4" fill="#1B1D21" stroke="#33363D"/>
+      <circle cx="124" cy="61" r="7" fill="#0A0B0D" stroke="#555962"/>
+      <circle cx="124" cy="61" r="3" fill="#FFE2A8"/>
+      <polygon points="130,60 420,420 760,420" fill="url(#beam)" opacity=".10" style="mix-blend-mode:screen"/>
+    </g>
+
+    <!-- base / plinth -->
+    <g id="world" transform="translate(640 360) scale(.90) translate(-640 -360)">
+    <ellipse cx="640" cy="664" rx="330" ry="26" fill="#000" opacity=".45"/>
+    <polygon points="300,580 640,660 980,580 640,500" fill="#101218" stroke="#242830"/>
+    <polygon points="640,300 1000,480 640,660 280,480" fill="url(#plate)" stroke="#F8F6EF" stroke-width="1.5"/>
+    <polygon points="280,480 640,660 640,676 280,496" fill="#BDB7AA" opacity=".8"/>
+    <polygon points="1000,480 640,660 640,676 1000,496" fill="#A9A294" opacity=".8"/>
+
+    <!-- white massing model -->
+    <g id="model" opacity="0">
+      <!-- platform -->
+      <polygon points="640,400 880,520 640,640 400,520" fill="#F3F1EA" stroke="#FFFFFF" stroke-width="1.2"/>
+      <polygon points="400,520 640,640 640,656 400,536" fill="#D6D0C3"/>
+      <polygon points="880,520 640,640 640,656 880,536" fill="#C7C0B2"/>
+
+      <!-- rear hall -->
+      <polygon points="780,450 856,488 780,526 704,488" fill="#F7F5EE" stroke="#FFF" stroke-width="1"/>
+      <polygon points="704,488 780,526 780,566 704,528" fill="#D9D4C8"/>
+      <polygon points="780,526 856,488 856,528 780,566" fill="#C9C3B5"/>
+      <polygon points="780,430 870,474 780,518 690,474" fill="#FBF9F3" stroke="#FFF" stroke-width="1.2"/>
+      <path d="M780 430 L780 518" stroke="#DED8CB" stroke-width="1"/>
+
+      <!-- main hall -->
+      <polygon points="640,470 760,530 640,590 520,530" fill="#F8F6EF" stroke="#FFF" stroke-width="1.2"/>
+      <polygon points="520,530 640,590 640,646 520,586" fill="#DBD5C8"/>
+      <polygon points="640,590 760,530 760,586 640,646" fill="#CBC4B5"/>
+      <polygon points="640,438 778,502 640,566 502,502" fill="#FCFAF5" stroke="#FFF" stroke-width="1.4"/>
+      <path d="M640 438 L640 566" stroke="#E3DDD0" stroke-width="1.2"/>
+
+      <!-- gate -->
+      <polygon points="500,520 572,556 500,592 428,556" fill="#F6F3EC" stroke="#FFF"/>
+      <polygon points="428,556 500,592 500,628 428,592" fill="#D8D2C5"/>
+      <polygon points="500,592 572,556 572,592 500,628" fill="#C8C1B2"/>
+      <polygon points="500,494 584,536 500,578 416,536" fill="#FBF9F3" stroke="#FFF" stroke-width="1.2"/>
+
+      <!-- trees: white model cones -->
+      <g fill="#EFEBE1" stroke="#FFF" stroke-width="1">
+        <path d="M430 500 L452 520 L430 540 L408 520 Z"/>
+        <path d="M826 470 L848 490 L826 510 L804 490 Z"/>
+        <path d="M720 566 L740 584 L720 602 L700 584 Z"/>
+      </g>
+    </g>
+
+    <!-- data layers, clipped to plate -->
+    <g clip-path="url(#plateClip)">
+      <g id="terrain" opacity="0">
+        <polygon points="640,320 970,485 640,650 310,485" fill="#4E8B76" opacity=".28"/>
+        <path d="M360 500 C470 450 540 500 640 470 C740 440 820 490 930 450"
+              fill="none" stroke="#8ED3B6" stroke-width="1.4" opacity=".45"/>
+        <path d="M380 530 C490 480 560 530 660 500 C760 470 840 520 950 480"
+              fill="none" stroke="#8ED3B6" stroke-width="1.2" opacity=".3"/>
+      </g>
+      <g id="plan" opacity="0" fill="none" stroke="#F0B36A" stroke-width="2" stroke-linecap="round">
+        <path id="axis" pathLength="1" d="M640 620 L640 420"/>
+        <path id="court1" pathLength="1" d="M470 530 L640 615 L810 530 L640 445 Z"/>
+        <path id="court2" pathLength="1" d="M520 505 L640 565 L760 505 L640 445 Z"/>
+        <path id="gateLine" pathLength="1" d="M430 555 L640 660 L850 555"/>
+      </g>
+      <g id="roofs" opacity="0">
+        <polygon points="640,438 778,502 640,566 502,502" fill="#E0A15E" opacity=".7"/>
+        <polygon points="780,430 870,474 780,518 690,474" fill="#E0A15E" opacity=".55"/>
+        <polygon points="500,494 584,536 500,578 416,536" fill="#E0A15E" opacity=".6"/>
+      </g>
+      <g id="treesLayer" opacity="0" fill="#7ED6A7">
+        <circle cx="430" cy="520" r="7"/>
+        <circle cx="826" cy="490" r="7"/>
+        <circle cx="720" cy="584" r="6"/>
+      </g>
+      <g id="sunLayer" opacity="0">
+        <polygon id="shadow" points="540,600 720,690 900,600 720,510" fill="#2F5F9E" opacity=".38"/>
+      </g>
+    </g>
+    </g>
+
+    <g id="pins" opacity="0" font-family="PingFang SC, sans-serif" font-size="13" fill="#EDE7D9">
+      <path d="M500 588 L470 618" stroke="#EDE7D9" stroke-width="1" opacity=".45"/>
+      <text x="404" y="636">山门</text>
+      <path d="M640 566 L700 592" stroke="#EDE7D9" stroke-width="1" opacity=".45"/>
+      <text x="712" y="602">大雄宝殿</text>
+      <path d="M856 520 L900 548" stroke="#EDE7D9" stroke-width="1" opacity=".45"/>
+      <text x="912" y="558">后山</text>
+    </g>
+
+    <!-- lamp flare -->
+    <circle id="flare" cx="124" cy="61" r="4" fill="url(#lamp)" opacity="0"/>
+  </svg>
+
+  <div class="identity" id="identity"><b>潭柘寺</b>1:500 · 简化模型<br>北京 · 门头沟</div>
+
+  <div class="readout" id="readout">
+    <div class="idx" id="idx">01 / TERRAIN</div>
+    <div class="name" id="name">山形</div>
+    <div class="fig" id="fig">—</div>
+    <div class="label" id="label">等高线 / 示意</div>
+    <div class="source" id="source">数据来源：待补<br>模型：简化 massing，非测绘</div>
+  </div>
+
+  <div class="subtitle" id="subtitle">模型不动，只有光在动。</div>
+  <div class="year" id="year">西晋 · 307 → 2026</div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  const end = mountEndCard("白模投影 · WHITE MODEL");
+  const projector = document.getElementById("projector");
+  const identity = document.getElementById("identity");
+  const readout = document.getElementById("readout");
+  const idx = document.getElementById("idx");
+  const name = document.getElementById("name");
+  const fig = document.getElementById("fig");
+  const label = document.getElementById("label");
+  const source = document.getElementById("source");
+  const subtitle = document.getElementById("subtitle");
+  const year = document.getElementById("year");
+  const terrain = document.getElementById("terrain");
+  const plan = document.getElementById("plan");
+  const roofs = document.getElementById("roofs");
+  const treesLayer = document.getElementById("treesLayer");
+  const sunLayer = document.getElementById("sunLayer");
+  const shadow = document.getElementById("shadow");
+  const model = document.getElementById("model");
+  const flare = document.getElementById("flare");
+  const pins = document.getElementById("pins");
+
+  const planPaths = ["axis", "court1", "court2", "gateLine"].map(id => document.getElementById(id));
+  const COPY = [
+    { t: 1.4, idx: "01 / TERRAIN", name: "山形", fig: "—", label: "等高线 / 示意", source: "数据来源：待补<br>模型：简化 massing，非测绘", sub: "先看它坐在什么样的山里。" },
+    { t: 3.2, idx: "02 / PLAN", name: "院落", fig: "中轴", label: "山门 → 大殿 → 后山", source: "平面：待补<br>面积：按模型计算", sub: "一条中轴，五进院落。" },
+    { t: 5.0, idx: "03 / ROOF", name: "屋顶", fig: "—", label: "模型内建筑 / 屋顶面积", source: "按 footprint 计算<br>不含重建/改建", sub: "屋顶是这座寺最密的一层。" },
+    { t: 6.6, idx: "04 / TREES", name: "古树", fig: "—", label: "帝王树 / 古树点位", source: "树龄待核<br>没有来源不写数字", sub: "一棵树，看过很多个秋天。" },
+    { t: 7.6, idx: "05 / SUN", name: "光", fig: "14:00", label: "真实日期 / 影长待算", source: "经纬度 + 日期<br>NOAA/Meeus", sub: "太阳是唯一不会撒谎的图层。" }
+  ];
+
+  function setReadout(c) {
+    idx.textContent = c.idx;
+    name.textContent = c.name;
+    fig.textContent = c.fig;
+    label.textContent = c.label;
+    source.innerHTML = c.source;
+    subtitle.textContent = c.sub;
+  }
+
+  function seek(t) {
+    // house lights / lamp strike
+    const lamp = ramp(t, 0.25, 0.55);
+    projector.style.opacity = String(lamp);
+    flare.setAttribute("r", String(4 + 18 * Math.max(0, 1 - Math.abs(t - 0.8) * 3)));
+    flare.style.opacity = String(Math.max(0, 0.8 - Math.abs(t - 0.8) * 2));
+
+    const mp = ramp(t, 0.5, 1.0);
+    model.style.opacity = String(mp);
+    model.style.transform = `translateY(${(1 - mp) * 8}px)`;
+
+    identity.style.opacity = String(ramp(t, 0.8, 0.6));
+    readout.style.opacity = String(ramp(t, 1.2, 0.5));
+    subtitle.style.opacity = String(ramp(t, 1.2, 0.5));
+    year.style.opacity = String(ramp(t, 7.4, 0.5));
+    pins.style.opacity = String(ramp(t, 4.6, 0.6));
+
+    // layers
+    terrain.style.opacity = String(ramp(t, 1.3, 0.9) * (1 - ramp(t, 3.0, 0.4)));
+    plan.style.opacity = String(ramp(t, 3.1, 0.7));
+    for (const p of planPaths) {
+      const q = easeInOut(clamp((t - 3.2) / 1.4, 0, 1));
+      p.style.strokeDasharray = "1";
+      p.style.strokeDashoffset = String(1 - q);
+    }
+    roofs.style.opacity = String(ramp(t, 4.9, 0.8));
+    treesLayer.style.opacity = String(ramp(t, 6.4, 0.6));
+    sunLayer.style.opacity = String(ramp(t, 7.4, 0.7));
+    const sp = easeInOut(clamp((t - 7.4) / 1.2, 0, 1));
+    shadow.setAttribute("transform", `translate(${80 - 160 * sp} 0)`);
+
+    // readout copy
+    let c = COPY[0];
+    for (const k of COPY) if (t >= k.t) c = k;
+    setReadout(c);
+
+    // camera push-in
+    const cam = document.getElementById("model").ownerSVGElement;
+    cam.style.transform = `scale(${1 + 0.035 * ease(clamp(t / 8, 0, 1))}) translateY(${-3 * ease(clamp(t / 8, 0, 1))}px)`;
+    cam.style.transformOrigin = "640px 430px";
+
+    end(t);
+  }
+
+  boot(seek, 10);
+</script>
+</body>
+</html>

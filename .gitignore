@@ -1,0 +1,12 @@
+node_modules/
+output/
+.DS_Store
+*.mp4
+!renders/*.mp4
+!renders/cases/*.mp4
+renders/v2/
+renders/v3/
+renders/v4/
+renders/v5/
+*.wav
+*.mov

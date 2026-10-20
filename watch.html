@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>鲸片 · 样片放映室</title>
+<style>
+  :root { --navy:#0B1220; --cream:#F4EFE4; --muted:#9AA1B2; --line:rgba(244,239,228,.12); }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--navy); color:var(--cream);
+    font-family:"PingFang SC","Helvetica Neue",Arial,sans-serif;
+  }
+  .wrap { max-width:1280px; margin:0 auto; padding:34px 24px 60px; }
+  header { display:flex; align-items:baseline; justify-content:space-between; gap:20px; padding-bottom:18px; border-bottom:1px solid var(--line); }
+  h1 { margin:0; font-family:"Songti SC",serif; font-size:30px; font-weight:600; letter-spacing:.1em; }
+  header span { color:var(--muted); font-size:12px; letter-spacing:.14em; }
+  .hero { margin:26px 0 34px; }
+  .hero video { width:100%; display:block; background:#000; border:1px solid var(--line); }
+  .hero p { margin:12px 2px 0; color:var(--muted); font-size:13px; line-height:1.8; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .card { background:#111A2E; border:1px solid var(--line); }
+  .card video { width:100%; display:block; aspect-ratio:16/9; object-fit:cover; background:#000; }
+  .meta { padding:14px 16px 16px; display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+  .meta b { font-family:"Songti SC",serif; font-size:19px; font-weight:600; letter-spacing:.06em; }
+  .meta span { color:var(--muted); font-size:11px; letter-spacing:.14em; }
+  .meta a { color:var(--cream); font-size:11px; opacity:.55; text-decoration:none; }
+  .meta a:hover { opacity:1; }
+  footer { margin-top:34px; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; line-height:1.8; }
+  @media (max-width:820px) { .grid { grid-template-columns:1fr; } h1 { font-size:24px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>鲸片 · 样片放映室</h1>
+    <span>6 STYLES · 8s EACH · NO VIDEO MODEL</span>
+  </header>
+
+  <section class="hero">
+    <video src="renders/00-trailer.mp4" poster="previews/00-trailer.jpg" controls autoplay muted loop playsinline></video>
+    <p>30 秒混剪：片头 3 秒 + 六支各 4 秒 + 片尾 3 秒。下面的六支是完整 8 秒版。</p>
+  </section>
+
+  <section class="grid">
+    <article class="card">
+      <video src="renders/01-paper-diorama.mp4" poster="previews/01-paper-diorama.jpg" controls autoplay muted loop playsinline></video>
+      <div class="meta"><div><b>01 立体纸雕</b><br><span>潭柘寺 · PAPER DIORAMA</span></div><a href="renders/01-paper-diorama.mp4" download>下载</a></div>
+    </article>
+    <article class="card">
+      <video src="renders/02-whiteboard.mp4" poster="previews/02-whiteboard.jpg" controls autoplay muted loop playsinline></video>
+      <div class="meta"><div><b>02 白板讲解</b><br><span>RAG · WHITEBOARD</span></div><a href="renders/02-whiteboard.mp4" download>下载</a></div>
+    </article>
+    <article class="card">
+      <video src="renders/03-one-line.mp4" poster="previews/03-one-line.jpg" controls autoplay muted loop playsinline></video>
+      <div class="meta"><div><b>03 一笔画</b><br><span>拖延 · ONE LINE</span></div><a href="renders/03-one-line.mp4" download>下载</a></div>
+    </article>
+    <article class="card">
+      <video src="renders/04-ink-wash.mp4" poster="previews/04-ink-wash.jpg" controls autoplay muted loop playsinline></video>
+      <div class="meta"><div><b>04 水墨</b><br><span>深山藏古寺 · INK WASH</span></div><a href="renders/04-ink-wash.mp4" download>下载</a></div>
+    </article>
+    <article class="card">
+      <video src="renders/05-crayon-book.mp4" poster="previews/05-crayon-book.jpg" controls autoplay muted loop playsinline></video>
+      <div class="meta"><div><b>05 蜡笔绘本</b><br><span>月亮睡不着 · CRAYON BOOK</span></div><a href="renders/05-crayon-book.mp4" download>下载</a></div>
+    </article>
+    <article class="card">
+      <video src="renders/06-isometric-diorama.mp4" poster="previews/06-isometric-diorama.jpg" controls autoplay muted loop playsinline></video>
+      <div class="meta"><div><b>06 俯视立体</b><br><span>潭柘寺导览 · ISOMETRIC</span></div><a href="renders/06-isometric-diorama.mp4" download>下载</a></div>
+    </article>
+  </section>
+
+  <footer>
+    全部由 HTML/CSS/JS 场景代码渲染，1280×720 / 24fps / 无声。<br>
+    文件在 <code>whalereel/renders/</code>；如果浏览器不自动播放，点视频上的播放键，或点“下载”。
+  </footer>
+</div>
+</body>
+</html>

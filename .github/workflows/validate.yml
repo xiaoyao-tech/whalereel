@@ -1,0 +1,20 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  styles:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate style book
+        run: node scripts/validate-styles.mjs
+      - name: Validate JSON
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('index.json','utf8')); console.log('index.json ok')"
+          node -e "JSON.parse(require('fs').readFileSync('package.json','utf8')); console.log('package.json ok')"

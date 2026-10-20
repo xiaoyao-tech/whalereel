@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 v2 · 蜡笔绘本 · 一颗种子的旅行</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .stage { background: #E7DCC6; }
+  .page {
+    position: absolute; inset: 34px; background: #FBF6EA; border-radius: 3px;
+    box-shadow: 0 20px 55px rgba(60,40,20,.22), inset 0 0 0 1px rgba(120,90,50,.08);
+    overflow: hidden;
+  }
+  .tex {
+    position: absolute; inset: 0; z-index: 30; pointer-events: none; opacity: .2; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23c)' opacity='.6'/%3E%3C/svg%3E");
+  }
+  .title {
+    position: absolute; left: 76px; top: 58px; z-index: 20;
+    font-family: "Kaiti SC", "STKaiti", serif; font-size: 50px; letter-spacing: .05em;
+    color: #3A3328; opacity: 0; transform: rotate(-1deg);
+  }
+  .line {
+    position: absolute; z-index: 20; font-family: "Kaiti SC", "STKaiti", serif;
+    font-size: 22px; letter-spacing: .05em; color: #5A4F3F; opacity: 0;
+  }
+  .l1 { left: 470px; top: 190px; } .l2 { left: 620px; top: 430px; }
+  .l3 { left: 760px; top: 260px; } .l4 { left: 800px; top: 560px; }
+  .svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 5; }
+</style>
+</head>
+<body>
+<div class="stage grain">
+  <div class="page">
+    <div class="tex"></div>
+    <svg class="svg" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <filter id="crayon">
+          <feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+      <g filter="url(#crayon)" stroke-linecap="round" stroke-linejoin="round">
+        <!-- ground line -->
+        <path d="M50 650 C260 636 420 660 620 646 C820 632 1040 656 1230 642"
+              fill="none" stroke="#8B5E3C" stroke-width="5" opacity=".5"/>
+
+        <!-- tree -->
+        <g id="tree" opacity="0">
+          <path d="M220 650 V380" stroke="#8B5E3C" stroke-width="16"/>
+          <path d="M220 500 C180 470 150 440 140 400 M220 470 C260 440 292 414 306 380"
+                fill="none" stroke="#8B5E3C" stroke-width="9"/>
+          <circle cx="210" cy="340" r="86" fill="#5B8C5A" opacity=".92"/>
+          <circle cx="140" cy="376" r="52" fill="#6FA36B" opacity=".9"/>
+          <circle cx="284" cy="372" r="54" fill="#4F7D4E" opacity=".9"/>
+          <circle cx="220" cy="290" r="42" fill="#7CB077" opacity=".85"/>
+        </g>
+
+        <!-- seed -->
+        <g id="seed" opacity="0">
+          <ellipse cx="0" cy="0" rx="18" ry="24" fill="#F2C14E" stroke="#B8862F" stroke-width="5"/>
+          <circle cx="-6" cy="-4" r="2.6" fill="#3A3328"/>
+          <circle cx="6" cy="-4" r="2.6" fill="#3A3328"/>
+          <path d="M-5 6 C0 10 5 10 9 6" fill="none" stroke="#3A3328" stroke-width="3"/>
+          <path d="M14 -10 C22 -18 28 -20 34 -18" fill="none" stroke="#B8862F" stroke-width="3"/>
+        </g>
+
+        <!-- wind -->
+        <g id="wind" opacity="0" stroke="#3B6EA5" stroke-width="6" fill="none">
+          <path d="M330 300 C420 260 500 300 580 270"/>
+          <path d="M360 340 C450 306 520 340 600 316"/>
+          <path d="M390 380 C470 352 540 380 610 360"/>
+        </g>
+
+        <!-- river -->
+        <g id="river" opacity="0">
+          <path d="M430 560 C560 540 700 580 850 552 C980 528 1100 566 1230 548 L1230 640 C1100 656 980 622 850 644 C700 668 560 630 430 646 Z"
+                fill="#6FA3B8" opacity=".72"/>
+          <path d="M470 588 C600 572 720 604 860 582" fill="none" stroke="#BFE0EA" stroke-width="5" opacity=".7"/>
+          <path d="M500 612 C630 596 760 626 900 604" fill="none" stroke="#BFE0EA" stroke-width="4" opacity=".6"/>
+        </g>
+
+        <!-- bird -->
+        <g id="bird" opacity="0" fill="none" stroke="#3A3328" stroke-width="6">
+          <path d="M740 220 C760 200 780 200 800 220"/>
+          <path d="M800 220 C820 200 840 200 860 220"/>
+        </g>
+
+        <!-- sprout -->
+        <g id="sprout" opacity="0">
+          <path d="M870 640 V570" stroke="#5B8C5A" stroke-width="8"/>
+          <path d="M870 590 C840 586 820 566 816 540 C846 544 864 560 870 580" fill="#5B8C5A"/>
+          <path d="M870 606 C900 602 920 582 924 556 C894 560 876 576 870 596" fill="#6FA36B"/>
+          <circle cx="870" cy="560" r="6" fill="#F2C14E" stroke="#B8862F" stroke-width="3"/>
+        </g>
+      </g>
+    </svg>
+
+    <div class="title" id="title">一颗种子的旅行</div>
+    <div class="line l1" id="l1">风带它走</div>
+    <div class="line l2" id="l2">水带它走</div>
+    <div class="line l3" id="l3">鸟带它走</div>
+    <div class="line l4" id="l4">它留在这里</div>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  const end = mountEndCard("蜡笔绘本 · CRAYON BOOK");
+  const title = document.getElementById("title");
+  const tree = document.getElementById("tree");
+  const seed = document.getElementById("seed");
+  const wind = document.getElementById("wind");
+  const river = document.getElementById("river");
+  const bird = document.getElementById("bird");
+  const sprout = document.getElementById("sprout");
+  const l1 = document.getElementById("l1"), l2 = document.getElementById("l2"), l3 = document.getElementById("l3"), l4 = document.getElementById("l4");
+
+  // seed path: tree -> wind -> river -> soil -> sprout
+  const pts = [
+    { t: 1.4, x: 300, y: 300 },
+    { t: 3.0, x: 520, y: 270 },
+    { t: 4.8, x: 680, y: 520 },
+    { t: 6.4, x: 850, y: 560 },
+    { t: 7.4, x: 870, y: 600 }
+  ];
+  function seedPos(t) {
+    if (t <= pts[0].t) return pts[0];
+    for (let i = 1; i < pts.length; i++) {
+      if (t <= pts[i].t) {
+        const a = pts[i - 1], b = pts[i];
+        const p = easeInOut((t - a.t) / (b.t - a.t));
+        return { x: a.x + (b.x - a.x) * p, y: a.y + (b.y - a.y) * p };
+      }
+    }
+    return pts[pts.length - 1];
+  }
+
+  function seek(t) {
+    title.style.opacity = String(ramp(t, 0.3, 0.7));
+    tree.style.opacity = String(ramp(t, 0.8, 0.8));
+    wind.style.opacity = String(ramp(t, 2.0, 0.5) * (1 - ramp(t, 4.2, 0.5)));
+    river.style.opacity = String(ramp(t, 3.6, 0.7));
+    bird.style.opacity = String(ramp(t, 5.2, 0.5) * (1 - ramp(t, 7.0, 0.5)));
+
+    const sp = ramp(t, 0.9, 0.5) * (1 - ramp(t, 7.0, 0.4));
+    seed.style.opacity = String(sp);
+    const p = seedPos(t);
+    seed.setAttribute("transform", `translate(${p.x} ${p.y}) rotate(${Math.sin(t * 5) * 8})`);
+
+    const grow = easeInOut(clamp((t - 7.0) / 1.4, 0, 1));
+    sprout.style.opacity = String(grow);
+    sprout.setAttribute("transform", `translate(870 650) scale(1 ${0.2 + 0.8 * grow}) translate(-870 -650)`);
+
+    l1.style.opacity = String(ramp(t, 2.0, 0.5) * (1 - ramp(t, 3.6, 0.4)));
+    l2.style.opacity = String(ramp(t, 3.8, 0.5) * (1 - ramp(t, 5.2, 0.4)));
+    l3.style.opacity = String(ramp(t, 5.4, 0.5) * (1 - ramp(t, 6.8, 0.4)));
+    l4.style.opacity = String(ramp(t, 7.2, 0.5));
+
+    end(t);
+  }
+
+  boot(seek, 10);
+</script>
+</body>
+</html>

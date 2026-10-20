@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 · 北京老城 · 白模投影 3D</title>
+<style>
+  html, body { margin: 0; background: #06080c; overflow: hidden; }
+  #stage {
+    position: relative; width: 1280px; height: 720px; overflow: hidden;
+    background: #06080c;
+    font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  }
+  #stage::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 30;
+    background: radial-gradient(110% 90% at 50% 45%, transparent 40%, rgba(0,0,0,.68) 100%);
+  }
+  #hud {
+    position: absolute; left: 0; bottom: 0; z-index: 20;
+    color: #F4EFE4; width: 420px;
+    padding: 26px 34px 30px 58px;
+    background: linear-gradient(90deg, rgba(6,8,12,.88) 0%, rgba(6,8,12,.62) 62%, rgba(6,8,12,0) 100%);
+  }
+  #hud .kicker {
+    font: 500 10px/1 "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: .34em; color: #E0A15E; margin-bottom: 16px;
+  }
+  #hud-title {
+    font-family: "Songti SC", "STSong", serif;
+    font-size: 40px; letter-spacing: .1em; line-height: 1.1;
+  }
+  #hud-line {
+    margin-top: 12px; font-family: "Songti SC", serif;
+    font-size: 17px; letter-spacing: .08em; color: #E8E0D0;
+  }
+  #hud-meta {
+    margin-top: 14px; padding-top: 12px;
+    border-top: 1px solid rgba(244,239,228,.18);
+    font: 400 10px/1.8 "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: .06em; color: #8F8A7E;
+  }
+  #hud .foot {
+    position: absolute; right: 58px; top: 54px; left: auto; bottom: auto;
+    font: 400 10px/1.8 "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: .12em; color: #6F6A60; z-index: 20;
+    text-align: right;
+  }
+  .label {
+    padding: 5px 8px;
+    border-left: 2px solid #E0A15E;
+    background: rgba(6,8,12,.72);
+    color: #F4EFE4;
+    font: 12px/1 "PingFang SC", sans-serif;
+    letter-spacing: .1em;
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(0,0,0,.35);
+  }
+  .label b { color: #E0A15E; font-weight: 500; }
+  #endcard {
+    position: absolute; inset: 0; z-index: 40; background: #0B1220;
+    display: grid; place-items: center; text-align: center;
+    color: #F4EFE4; opacity: 0; pointer-events: none;
+  }
+  #endcard .brand { font-family: "Songti SC", serif; font-size: 64px; letter-spacing: .22em; text-indent: .22em; }
+  #endcard .en { margin-top: 14px; font: 400 11px/1 "Helvetica Neue", Arial, sans-serif; letter-spacing: .52em; opacity: .55; }
+  #endcard .style { margin-top: 34px; font-size: 14px; letter-spacing: .18em; opacity: .45; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="hud">
+    <div class="kicker">BEIJING · WHITE MODEL / 3D</div>
+    <div id="hud-title">北京老城</div>
+    <div id="hud-line">1:2000 · OSM footprint</div>
+    <div id="hud-meta">高度：OSM height/levels；缺失按 9m 示意 · 非测绘</div>
+  </div>
+  <div class="foot">
+    REAL FOOTPRINTS · 11,308 BUILDINGS · OSM ODbL
+  </div>
+  <div id="endcard">
+    <div>
+      <div class="brand">鲸片</div>
+      <div class="en">WHALEREEL</div>
+      <div class="style">白模投影 · 北京老城</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  if (new URLSearchParams(location.search).has("clean")) {
+    const hud = document.getElementById("hud");
+    const foot = document.querySelector(".foot");
+    const end = document.getElementById("endcard");
+    if (hud) hud.style.display = "none";
+    if (foot) foot.style.display = "none";
+    if (end) end.style.display = "none";
+  }
+</script>
+<script src="beijing-buildings.js"></script>
+<script src="bundle.js"></script>
+</body>
+</html>

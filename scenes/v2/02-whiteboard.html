@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 v2 · 白板讲解 · AI 幻觉</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .stage { background: #E9E7DF; }
+  .board {
+    position: absolute; inset: 38px;
+    background: #F7F7F2; border-radius: 8px;
+    box-shadow: 0 18px 50px rgba(0,0,0,.16), inset 0 0 0 1px rgba(0,0,0,.06);
+    overflow: hidden;
+  }
+  .board::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(80% 80% at 30% 20%, rgba(255,255,255,.5), transparent 60%);
+  }
+  .hand { font-family: "Kaiti SC", "STKaiti", "Chalkboard SE", serif; color: #1F2328; }
+  .title { position: absolute; left: 74px; top: 64px; font-size: 56px; letter-spacing: .02em; opacity: 0; }
+  .sub { position: absolute; left: 78px; top: 136px; font-size: 22px; color: #4A4F55; opacity: 0; }
+  .line1 { position: absolute; left: 78px; top: 214px; font-size: 34px; opacity: 0; }
+  .token { position: absolute; left: 540px; top: 202px; font-size: 46px; color: #2F6BFF; opacity: 0; }
+  .token::after { content: ""; position: absolute; left: -4px; right: -4px; bottom: 2px; height: 4px; background: #2F6BFF; transform: rotate(-1deg); }
+  .note { position: absolute; left: 80px; top: 292px; font-size: 24px; color: #E4572E; opacity: 0; }
+  .card {
+    position: absolute; right: 86px; top: 176px; width: 300px; min-height: 118px;
+    border: 3px solid #1F2328; border-radius: 4px; padding: 16px 18px;
+    font-size: 21px; line-height: 1.6; background: #FFF;
+    transform: rotate(1.2deg); opacity: 0;
+  }
+  .card small { display: block; margin-top: 8px; font-size: 15px; color: #6A6F76; }
+  .x {
+    position: absolute; right: 92px; top: 168px; width: 76px; height: 76px;
+    opacity: 0; transform: rotate(-8deg);
+  }
+  .x::before, .x::after { content: ""; position: absolute; left: 36px; top: 0; width: 5px; height: 76px; background: #E4572E; border-radius: 3px; }
+  .x::before { transform: rotate(45deg); } .x::after { transform: rotate(-45deg); }
+  .noCheck { position: absolute; right: 104px; top: 322px; font-size: 21px; color: #E4572E; opacity: 0; transform: rotate(-2deg); }
+  .rag { position: absolute; left: 74px; bottom: 108px; width: 900px; height: 150px; opacity: 0; }
+  .rag .box {
+    position: absolute; top: 26px; width: 150px; height: 64px;
+    border: 3px solid #1F2328; border-radius: 4px; display: grid; place-items: center;
+    font-size: 24px; background: #FFF;
+  }
+  .rag .b1 { left: 0; } .rag .b2 { left: 220px; } .rag .b3 { left: 440px; } .rag .b4 { left: 660px; }
+  .rag .arrow { position: absolute; top: 56px; font-size: 30px; color: #1F2328; }
+  .rag .a1 { left: 162px; } .rag .a2 { left: 382px; } .rag .a3 { left: 602px; }
+  .check { position: absolute; right: 84px; bottom: 150px; width: 250px; opacity: 0; }
+  .check h4 { margin: 0 0 10px; font-size: 22px; color: #1F2328; }
+  .check p { margin: 6px 0; font-size: 20px; color: #3A3F45; }
+  .check p b { color: #2E8B57; margin-right: 6px; }
+  .tag { position: absolute; right: 76px; top: 64px; font: 500 11px/1 "Helvetica Neue", Arial, sans-serif; letter-spacing: .32em; color: #9A968A; opacity: 0; }
+</style>
+</head>
+<body>
+<div class="stage grain">
+  <div class="board" id="board">
+    <div class="tag" id="tag">白板讲解 · WHITEBOARD</div>
+    <div class="hand title" id="title">AI 为什么会胡说？</div>
+    <div class="hand sub" id="sub">不是因为它坏，是因为它在猜。</div>
+
+    <div class="hand line1" id="line1">北京是中国的</div>
+    <div class="hand token" id="token">首都</div>
+    <div class="hand note" id="note">它在猜下一个词，不是在查事实。</div>
+
+    <div class="hand card" id="card">某论文指出：<br>“……”<small>—— 看起来很像真的</small></div>
+    <div class="x" id="x"></div>
+    <div class="hand noCheck" id="noCheck">没有核查这一步</div>
+
+    <div class="rag" id="rag">
+      <div class="hand box b1">问题</div>
+      <div class="arrow a1">→</div>
+      <div class="hand box b2">检索</div>
+      <div class="arrow a2">→</div>
+      <div class="hand box b3">来源</div>
+      <div class="arrow a3">→</div>
+      <div class="hand box b4">答案</div>
+      <svg style="position:absolute;inset:0;overflow:visible" viewBox="0 0 900 150" aria-hidden="true">
+        <path id="circle" pathLength="1" d="M198 14 C270 8 370 12 386 60 C398 104 320 122 250 116 C190 110 178 60 198 14"
+              fill="none" stroke="#2F6BFF" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="hand check" id="check">
+      <h4>核验清单</h4>
+      <p><b>✓</b>来源</p>
+      <p><b>✓</b>日期</p>
+      <p><b>✓</b>原文</p>
+    </div>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  const end = mountEndCard("白板讲解 · WHITEBOARD");
+  const el = id => document.getElementById(id);
+  const title = el("title"), sub = el("sub"), line1 = el("line1"), token = el("token"), note = el("note");
+  const card = el("card"), x = el("x"), noCheck = el("noCheck"), rag = el("rag"), check = el("check"), tag = el("tag");
+  const circle = el("circle");
+
+  function seek(t) {
+    tag.style.opacity = String(ramp(t, 0.2, 0.5));
+    title.style.opacity = String(ramp(t, 0.3, 0.7));
+    title.style.transform = `rotate(-1deg) translateY(${(1 - ramp(t, 0.3, 0.7)) * 8}px)`;
+    sub.style.opacity = String(ramp(t, 0.9, 0.6));
+
+    line1.style.opacity = String(ramp(t, 1.2, 0.5));
+    token.style.opacity = String(ramp(t, 1.7, 0.4));
+    token.style.transform = `scale(${0.9 + 0.1 * ramp(t, 1.7, 0.4)})`;
+    note.style.opacity = String(ramp(t, 2.4, 0.5));
+
+    card.style.opacity = String(ramp(t, 3.4, 0.5));
+    card.style.transform = `rotate(1.2deg) translateY(${(1 - ramp(t, 3.4, 0.5)) * 10}px)`;
+    x.style.opacity = String(ramp(t, 4.2, 0.35));
+    x.style.transform = `rotate(-8deg) scale(${0.8 + 0.2 * ramp(t, 4.2, 0.35)})`;
+    noCheck.style.opacity = String(ramp(t, 4.5, 0.4));
+
+    rag.style.opacity = String(ramp(t, 5.4, 0.5));
+    const cp = easeInOut(clamp((t - 5.8) / 0.9, 0, 1));
+    circle.style.strokeDasharray = "1";
+    circle.style.strokeDashoffset = String(1 - cp);
+
+    check.style.opacity = String(ramp(t, 7.4, 0.5));
+    check.style.transform = `translateY(${(1 - ramp(t, 7.4, 0.5)) * 8}px)`;
+
+    // slight camera push
+    const p = ease(clamp(t / 8, 0, 1));
+    document.getElementById("board").style.transform = `scale(${1 + 0.008 * p})`;
+
+    end(t);
+  }
+
+  boot(seek, 10);
+</script>
+</body>
+</html>

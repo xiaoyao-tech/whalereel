@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 · 北京 · 地形</title>
+<style>
+  html, body { margin: 0; background: #07090d; overflow: hidden; }
+  #stage {
+    position: relative; width: 1280px; height: 720px; overflow: hidden;
+    background: #07090d; font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  }
+  #stage::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 30;
+    background: radial-gradient(110% 90% at 50% 45%, transparent 42%, rgba(0,0,0,.6) 100%);
+  }
+  #hud {
+    position: absolute; left: 0; top: 0; z-index: 20; width: 520px;
+    padding: 30px 60px 30px 58px; color: #F4EFE4;
+    background: linear-gradient(90deg, rgba(7,9,13,.94) 0%, rgba(7,9,13,.68) 62%, rgba(7,9,13,0) 100%);
+  }
+  #hud-kicker { font: 500 10px/1 "Helvetica Neue", Arial, sans-serif; letter-spacing: .32em; color: #E0A15E; }
+  #hud-title { margin-top: 14px; font-family: "Songti SC", serif; font-size: 38px; letter-spacing: .1em; line-height: 1.1; }
+  #hud-line { margin-top: 10px; font-family: "Songti SC", serif; font-size: 18px; letter-spacing: .06em; color: #F6F0E3; }
+  #hud-meta { margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(244,239,228,.16); font: 400 10px/1.8 "Helvetica Neue", Arial, sans-serif; color: #8F8A7E; }
+  .label {
+    padding: 4px 7px; border-left: 2px solid #E0A15E; background: rgba(7,9,13,.74);
+    color: #F4EFE4; font: 11px/1 "PingFang SC", sans-serif; letter-spacing: .12em; white-space: nowrap;
+  }
+  .label.mountain { border-left-color: #9FB6D8; color: #DCE6F2; }
+  .label.river { border-left-color: #6FA3B8; color: #CFE8F2; }
+  .label.city { border-left-color: #E0A15E; color: #FFD9A8; font-size: 12px; }
+  .label.point { border-left-color: #E0A15E; color: #FFD9A8; }
+  #endtitle {
+    position: absolute; left: 0; right: 0; bottom: 150px; z-index: 22; text-align: center;
+    color: #F4EFE4; opacity: 0; pointer-events: none;
+  }
+  #endtitle .big { font-family: "Songti SC", serif; font-size: 44px; letter-spacing: .22em; text-indent: .22em; }
+  #endtitle .small { margin-top: 12px; font: 400 11px/1 "Helvetica Neue", Arial, sans-serif; letter-spacing: .32em; color: #B9B4A8; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="hud">
+    <div id="hud-kicker">BEIJING / 01 GEOGRAPHY</div>
+    <div id="hud-title">山与平原</div>
+    <div id="hud-line">16,410 km²</div>
+    <div id="hud-meta">三面环山 · 东南平原</div>
+  </div>
+  <div id="endtitle">
+    <div class="big">北京</div>
+    <div class="small">三千年建城 · 八百年建都</div>
+  </div>
+</div>
+<script src="beijing-heightmap.js"></script>
+<script src="terrain-bundle.js"></script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 · 蜡笔绘本 · 月亮睡不着</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .stage { background: #E7DCC6; }
+  .page {
+    position: absolute; inset: 34px;
+    background: #FBF6EA;
+    border-radius: 3px;
+    box-shadow: 0 20px 55px rgba(60,40,20,.22), inset 0 0 0 1px rgba(120,90,50,.08);
+    overflow: hidden;
+  }
+  .crayon-texture {
+    position: absolute; inset: 0; z-index: 30; pointer-events: none;
+    opacity: .22; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23c)' opacity='.6'/%3E%3C/svg%3E");
+  }
+  .title {
+    position: absolute; left: 86px; top: 62px; z-index: 20;
+    font-family: "Kaiti SC", "STKaiti", "Chalkboard SE", serif;
+    font-size: 57px; letter-spacing: .06em;
+    color: #3A3328;
+    opacity: 0;
+    transform: rotate(-1deg);
+  }
+  .sub {
+    position: absolute; right: 110px; bottom: 62px; z-index: 20;
+    font-family: "Kaiti SC", "STKaiti", serif;
+    font-size: 22px; letter-spacing: .06em;
+    color: #5A4F3F;
+    text-align: right;
+    opacity: 0;
+  }
+  .svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 5; }
+  .turn {
+    position: absolute; top: -20px; right: -20px; width: 52%; height: 112%;
+    z-index: 40; background: #FBF6EA;
+    box-shadow: -18px 0 40px rgba(70,45,20,.2), inset 8px 0 0 rgba(140,100,60,.06);
+    transform-origin: left center;
+    transform: translateX(115%) rotate(2deg);
+    opacity: 0;
+  }
+  .turn::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 26px;
+    background: linear-gradient(90deg, rgba(120,85,45,.18), rgba(120,85,45,0));
+  }
+</style>
+</head>
+<body>
+<div class="stage grain">
+  <div class="page">
+    <div class="crayon-texture"></div>
+
+    <svg class="svg" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <filter id="crayon">
+          <feTurbulence type="fractalNoise" baseFrequency=".033" numOctaves="2" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+
+      <g filter="url(#crayon)" stroke-linecap="round" stroke-linejoin="round">
+        <!-- moon -->
+        <g id="moon" opacity="0">
+          <circle cx="936" cy="190" r="96" fill="#F2C14E" stroke="#D98A3A" stroke-width="7"/>
+          <circle cx="906" cy="158" r="15" fill="#E8B84A" opacity=".85"/>
+          <circle cx="966" cy="214" r="11" fill="#E8B84A" opacity=".8"/>
+          <circle cx="916" cy="232" r="8" fill="#E8B84A" opacity=".8"/>
+          <path d="M884 132 C900 118 922 110 944 112" fill="none" stroke="#F7DA8A" stroke-width="6" opacity=".85"/>
+        </g>
+
+        <!-- stars -->
+        <g id="stars" stroke-width="5" opacity="0">
+          <path d="M760 108 L782 108 M771 97 L771 119" stroke="#3B6EA5"/>
+          <path d="M1098 108 L1118 108 M1108 98 L1108 118" stroke="#D94F3D"/>
+          <path d="M1102 330 L1120 330 M1111 321 L1111 339" stroke="#F2C14E"/>
+          <path d="M760 330 L774 330 M767 323 L767 337" stroke="#5B8C5A"/>
+          <path d="M1160 240 L1174 240 M1167 233 L1167 247" stroke="#3B6EA5"/>
+          <path d="M700 220 L714 220 M707 213 L707 227" stroke="#F2C14E"/>
+        </g>
+
+        <!-- roof -->
+        <g id="roof" opacity="0">
+          <path d="M44 662 L306 468 L568 662 Z" fill="#8B5E3C" stroke="#6E4529" stroke-width="7"/>
+          <path d="M306 468 V662" stroke="#6E4529" stroke-width="6" opacity=".55"/>
+          <path d="M104 618 L306 504 L508 618" fill="none" stroke="#A9744A" stroke-width="5" opacity=".6"/>
+          <path d="M160 582 L306 486 L452 582" fill="none" stroke="#A9744A" stroke-width="5" opacity=".45"/>
+        </g>
+
+        <!-- child -->
+        <g id="child" opacity="0">
+          <path d="M300 522 L336 522 L352 596 L286 596 Z" fill="#D94F3D" stroke="#B23A2C" stroke-width="6"/>
+          <circle cx="320" cy="486" r="26" fill="#FBF6EA" stroke="#8B5E3C" stroke-width="6"/>
+          <path d="M300 470 C306 452 334 448 344 464" fill="none" stroke="#8B5E3C" stroke-width="7"/>
+          <path d="M290 540 L270 562 M350 540 L370 558" stroke="#8B5E3C" stroke-width="6"/>
+          <path d="M306 596 L298 620 M342 596 L350 620" stroke="#3B6EA5" stroke-width="7"/>
+          <circle cx="312" cy="486" r="2.6" fill="#3A3328"/>
+          <circle cx="330" cy="486" r="2.6" fill="#3A3328"/>
+          <path d="M315 498 C320 502 326 502 331 498" fill="none" stroke="#3A3328" stroke-width="3"/>
+        </g>
+
+        <!-- music notes -->
+        <g id="notes" opacity="0" fill="#3B6EA5" stroke="#3B6EA5" stroke-width="4">
+          <g id="note1">
+            <ellipse cx="470" cy="420" rx="11" ry="8" transform="rotate(-18 470 420)"/>
+            <path d="M480 418 V372" fill="none"/>
+            <path d="M480 372 C494 374 500 382 498 392" fill="none"/>
+          </g>
+          <g id="note2">
+            <ellipse cx="548" cy="356" rx="11" ry="8" transform="rotate(-18 548 356)" fill="#D94F3D" stroke="#D94F3D"/>
+            <path d="M558 354 V308" fill="none" stroke="#D94F3D"/>
+            <path d="M558 308 C572 310 578 318 576 328" fill="none" stroke="#D94F3D"/>
+          </g>
+          <g id="note3">
+            <ellipse cx="622" cy="300" rx="10" ry="7" transform="rotate(-18 622 300)" fill="#F2C14E" stroke="#D98A3A"/>
+            <path d="M631 298 V258" fill="none" stroke="#D98A3A"/>
+          </g>
+        </g>
+
+        <!-- grass -->
+        <g id="grass" stroke="#5B8C5A" stroke-width="6" fill="none" opacity="0">
+          <path d="M620 650 C626 626 636 612 650 602"/>
+          <path d="M640 654 C644 632 652 620 664 612"/>
+          <path d="M660 656 C666 638 676 626 690 618"/>
+        </g>
+      </g>
+    </svg>
+
+    <div class="title" id="title">月亮睡不着</div>
+    <div class="sub" id="sub">小女孩爬上屋顶，给它唱一首歌。</div>
+    <div class="turn" id="turn"></div>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  const end = mountEndCard("蜡笔绘本 · CRAYON BOOK");
+  const title = document.getElementById("title");
+  const sub = document.getElementById("sub");
+  const moon = document.getElementById("moon");
+  const stars = document.getElementById("stars");
+  const roof = document.getElementById("roof");
+  const child = document.getElementById("child");
+  const notes = document.getElementById("notes");
+  const note1 = document.getElementById("note1");
+  const note2 = document.getElementById("note2");
+  const note3 = document.getElementById("note3");
+  const grass = document.getElementById("grass");
+  const turn = document.getElementById("turn");
+
+  function seek(t) {
+    title.style.opacity = String(ramp(t, 0.3, 0.7));
+    title.style.transform = `rotate(-1deg) translateY(${(1 - ramp(t, 0.3, 0.7)) * 10}px)`;
+
+    const mp = ramp(t, 0.9, 0.9);
+    moon.style.opacity = String(mp);
+    moon.style.transform = `scale(${0.72 + 0.28 * mp})`;
+    moon.style.transformOrigin = "936px 190px";
+
+    const sp = ramp(t, 1.9, 0.6);
+    stars.style.opacity = String(sp);
+    stars.style.transform = `translateY(${(1 - sp) * 8}px)`;
+
+    const rp = ramp(t, 2.6, 0.8);
+    roof.style.opacity = String(rp);
+    roof.style.transform = `translateY(${(1 - rp) * 30}px)`;
+
+    const cp = ramp(t, 3.7, 0.7);
+    child.style.opacity = String(cp);
+    child.style.transform = `translateY(${(1 - cp) * 16}px)`;
+    child.style.transformOrigin = "320px 620px";
+
+    const np = ramp(t, 4.7, 0.6);
+    notes.style.opacity = String(np);
+    const float = easeInOut(clamp((t - 4.7) / 2.1, 0, 1));
+    note1.style.transform = `translate(${6 * float}px, ${-26 * float}px) rotate(${-4 * float}deg)`;
+    note2.style.transform = `translate(${2 * float}px, ${-38 * float}px) rotate(${3 * float}deg)`;
+    note3.style.transform = `translate(${-4 * float}px, ${-52 * float}px) rotate(${-2 * float}deg)`;
+
+    grass.style.opacity = String(ramp(t, 4.0, 0.6));
+
+    sub.style.opacity = String(ramp(t, 4.4, 0.6));
+
+    // page turn: a paper panel sweeps across, then the end card
+    const tp = easeInOut(clamp((t - 6.15) / 0.85, 0, 1));
+    turn.style.opacity = tp > 0 ? "1" : "0";
+    turn.style.transform = `translateX(${115 - 128 * tp}%) rotate(${2 - 4 * tp}deg)`;
+
+    end(t);
+  }
+
+  window.__preview = 5.6;
+  boot(seek, 8);
+</script>
+</body>
+</html>

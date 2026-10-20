@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 · 白板讲解 · RAG</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .stage { background: #E9E7DF; }
+  .board {
+    position: absolute; inset: 38px;
+    background: #F7F7F2;
+    border-radius: 8px;
+    box-shadow: 0 18px 50px rgba(0,0,0,.16), inset 0 0 0 1px rgba(0,0,0,.06);
+    overflow: hidden;
+  }
+  .board::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(80% 80% at 30% 20%, rgba(255,255,255,.5), transparent 60%);
+  }
+  .tag {
+    position: absolute; right: 76px; top: 64px; z-index: 5;
+    font: 500 11px/1 "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: .34em; color: #9A968A;
+    opacity: 0;
+  }
+  .svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; }
+  .labels text {
+    font-family: "Kaiti SC", "STKaiti", "Songti SC", serif;
+    fill: #1F2328;
+    opacity: 0;
+  }
+  .sticky {
+    position: absolute; right: 98px; top: 150px; z-index: 6;
+    width: 156px; padding: 16px 14px 18px;
+    background: #FFE08A;
+    box-shadow: 0 8px 16px rgba(0,0,0,.12);
+    transform: rotate(2.5deg) scale(.96);
+    font-family: "Kaiti SC", "STKaiti", serif;
+    font-size: 19px; line-height: 1.45; color: #3A3324;
+    opacity: 0;
+  }
+  .sticky::before {
+    content: ""; position: absolute; left: 50%; top: -9px; width: 42px; height: 18px;
+    margin-left: -21px; background: rgba(255,255,255,.55);
+    transform: rotate(-3deg);
+    box-shadow: 0 1px 2px rgba(0,0,0,.08);
+  }
+</style>
+</head>
+<body>
+<div class="stage grain">
+  <div class="board" id="board">
+    <div class="tag">白板讲解 · WHITEBOARD</div>
+    <div class="sticky" id="sticky">先检索，<br>再生成。</div>
+
+    <svg class="svg" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <filter id="rough">
+          <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/>
+        </filter>
+      </defs>
+
+      <g filter="url(#rough)" fill="none" stroke="#1F2328" stroke-width="4"
+         stroke-linecap="round" stroke-linejoin="round">
+        <!-- title underline -->
+        <path id="d-underline" pathLength="1" d="M104 196 C220 206 344 204 452 192" stroke="#E4572E" stroke-width="6"/>
+        <!-- document -->
+        <path id="d-doc" pathLength="1"
+              d="M120 252 H206 Q216 252 216 262 V382 Q216 392 206 392 H120 Q110 392 110 382 V262 Q110 252 120 252 Z"
+              fill="#FFFFFF" fill-opacity="0"/>
+        <path id="d-doc1" pathLength="1" d="M132 286 H196" stroke-width="3"/>
+        <path id="d-doc2" pathLength="1" d="M132 312 H196" stroke-width="3"/>
+        <path id="d-doc3" pathLength="1" d="M132 338 H176" stroke-width="3"/>
+        <!-- arrows -->
+        <path id="d-arrow1" pathLength="1" d="M228 322 C250 322 258 300 282 300"/>
+        <path id="d-head1" pathLength="1" d="M272 290 L284 300 L272 310"/>
+        <path id="d-arrow2" pathLength="1" d="M402 322 C430 322 440 338 466 338"/>
+        <path id="d-head2" pathLength="1" d="M456 328 L468 338 L456 348"/>
+        <!-- chunks -->
+        <path id="d-chunk1" pathLength="1" d="M292 268 H388 Q396 268 396 276 V300 Q396 308 388 308 H292 Q284 308 284 300 V276 Q284 268 292 268 Z" fill="#FFFFFF" fill-opacity="0"/>
+        <path id="d-chunk2" pathLength="1" d="M292 328 H388 Q396 328 396 336 V360 Q396 368 388 368 H292 Q284 368 284 360 V336 Q284 328 292 328 Z" fill="#FFFFFF" fill-opacity="0"/>
+        <path id="d-chunk3" pathLength="1" d="M292 388 H388 Q396 388 396 396 V420 Q396 428 388 428 H292 Q284 428 284 420 V396 Q284 388 292 388 Z" fill="#FFFFFF" fill-opacity="0"/>
+        <!-- vector db -->
+        <path id="d-db-top" pathLength="1" d="M500 300 C500 278 640 278 640 300 C640 322 500 322 500 300 Z" fill="#FFFFFF" fill-opacity="0"/>
+        <path id="d-db-body" pathLength="1" d="M500 300 V404 C500 426 640 426 640 404 V300"/>
+        <path id="d-db-band" pathLength="1" d="M500 336 C500 358 640 358 640 336" stroke-width="3" opacity=".55"/>
+        <path id="d-db-band2" pathLength="1" d="M500 372 C500 394 640 394 640 372" stroke-width="3" opacity=".55"/>
+        <!-- query -->
+        <path id="d-query" pathLength="1" d="M760 130 C802 130 836 164 836 206 C836 248 802 282 760 282 C718 282 684 248 684 206 C684 164 718 130 760 130 Z" fill="#FFFFFF" fill-opacity="0"/>
+        <path id="d-qmark" pathLength="1" d="M744 188 C744 176 754 168 766 168 C780 168 790 178 790 190 C790 202 780 208 772 214 C767 218 766 222 766 228" stroke="#2F6BFF" stroke-width="6"/>
+        <path id="d-qdot" pathLength="1" d="M766 244 L766 246" stroke="#2F6BFF" stroke-width="7"/>
+        <!-- query arrow -->
+        <path id="d-arrow3" pathLength="1" d="M718 292 C690 320 666 334 650 342" stroke="#2F6BFF"/>
+        <path id="d-head3" pathLength="1" d="M662 336 L648 343 L662 350" stroke="#2F6BFF"/>
+        <!-- db to llm -->
+        <path id="d-arrow4" pathLength="1" d="M570 430 V486" stroke="#1F2328"/>
+        <path id="d-head4" pathLength="1" d="M560 476 L570 488 L580 476" stroke="#1F2328"/>
+        <!-- llm -->
+        <path id="d-llm" pathLength="1" d="M478 496 H662 Q672 496 672 506 V576 Q672 586 662 586 H478 Q468 586 468 576 V506 Q468 496 478 496 Z" fill="#FFFFFF" fill-opacity="0"/>
+        <path id="d-llm1" pathLength="1" d="M520 526 H620" stroke="#2F6BFF" stroke-width="3"/>
+        <path id="d-llm2" pathLength="1" d="M520 552 H600" stroke="#2F6BFF" stroke-width="3"/>
+        <!-- llm to answer -->
+        <path id="d-arrow5" pathLength="1" d="M678 540 H752" stroke="#1F2328"/>
+        <path id="d-head5" pathLength="1" d="M742 530 L754 540 L742 550" stroke="#1F2328"/>
+        <!-- answer card -->
+        <path id="d-ans" pathLength="1" d="M760 486 H956 Q966 486 966 496 V586 Q966 596 956 596 H760 Q750 596 750 586 V496 Q750 486 760 486 Z" fill="#FFFFFF" fill-opacity="0"/>
+        <path id="d-ans1" pathLength="1" d="M776 520 H936" stroke="#1F2328" stroke-width="3"/>
+        <path id="d-ans2" pathLength="1" d="M776 546 H920" stroke="#1F2328" stroke-width="3"/>
+        <path id="d-ans3" pathLength="1" d="M776 572 H870" stroke="#1F2328" stroke-width="3"/>
+        <!-- signature circle -->
+        <path id="d-circle" pathLength="1" d="M98 152 C98 104 176 86 300 88 C408 90 470 114 472 152 C474 192 382 212 272 210 C172 208 98 192 98 152" stroke="#2F6BFF" stroke-width="5" opacity=".9"/>
+      </g>
+
+      <g class="labels" id="labels">
+        <text x="132" y="434" font-size="22">文档</text>
+        <text x="316" y="462" font-size="22">切块</text>
+        <text x="520" y="458" font-size="22">向量库</text>
+        <text x="722" y="326" font-size="22">问题</text>
+        <text x="548" y="620" font-size="22">大模型</text>
+        <text x="842" y="630" font-size="22">答案</text>
+      </g>
+    </svg>
+
+    <div style="position:absolute;left:104px;top:78px;z-index:4;">
+      <div style="font-family:'Chalkboard SE','Comic Sans MS','Kaiti SC','STKaiti',serif;font-size:88px;line-height:1;color:#1F2328;letter-spacing:.02em;">RAG</div>
+      <div style="margin-top:10px;font-family:'Kaiti SC','STKaiti',serif;font-size:25px;color:#4A4F55;letter-spacing:.12em;">检索增强生成</div>
+    </div>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  const end = mountEndCard("白板讲解 · WHITEBOARD");
+  const draw = [
+    ["d-underline", 0.8, 0.5],
+    ["d-doc", 1.1, 0.7], ["d-doc1", 1.7, 0.2], ["d-doc2", 1.82, 0.2], ["d-doc3", 1.94, 0.2],
+    ["d-arrow1", 2.05, 0.3], ["d-head1", 2.3, 0.18],
+    ["d-chunk1", 2.35, 0.3], ["d-chunk2", 2.55, 0.3], ["d-chunk3", 2.75, 0.3],
+    ["d-arrow2", 3.05, 0.3], ["d-head2", 3.3, 0.18],
+    ["d-db-top", 3.35, 0.45], ["d-db-body", 3.6, 0.5], ["d-db-band", 3.95, 0.25], ["d-db-band2", 4.1, 0.25],
+    ["d-query", 4.15, 0.5], ["d-qmark", 4.45, 0.35], ["d-qdot", 4.7, 0.15],
+    ["d-arrow3", 4.6, 0.3], ["d-head3", 4.85, 0.18],
+    ["d-arrow4", 4.95, 0.28], ["d-head4", 5.18, 0.18],
+    ["d-llm", 5.2, 0.5], ["d-llm1", 5.45, 0.22], ["d-llm2", 5.58, 0.22],
+    ["d-arrow5", 5.68, 0.28], ["d-head5", 5.9, 0.18],
+    ["d-ans", 5.95, 0.5], ["d-ans1", 6.2, 0.18], ["d-ans2", 6.32, 0.18], ["d-ans3", 6.44, 0.18],
+    ["d-circle", 6.0, 0.7],
+  ].map(([id, start, dur]) => ({ el: document.getElementById(id), start, dur }));
+
+  const labels = Array.from(document.querySelectorAll("#labels text")).map((el, i) => ({
+    el, start: [1.5, 2.75, 3.8, 4.55, 5.65, 6.3][i]
+  }));
+
+  const tag = document.querySelector(".tag");
+  const sticky = document.getElementById("sticky");
+
+  function seek(t) {
+    // board stays locked; a 1% push for life
+    const p = clamp(t / 7, 0, 1);
+    document.getElementById("board").style.transform = `scale(${1 + 0.008 * ease(p)})`;
+
+    for (const d of draw) {
+      const q = clamp((t - d.start) / d.dur, 0, 1);
+      d.el.style.strokeDasharray = "1";
+      d.el.style.strokeDashoffset = String(1 - q);
+      if (d.el.getAttribute("fill") && d.el.getAttribute("fill") !== "none") {
+        d.el.style.fillOpacity = String(q * 0.92);
+      }
+    }
+
+    for (const l of labels) {
+      l.el.style.opacity = String(ramp(t, l.start, 0.3));
+    }
+
+    tag.style.opacity = String(ramp(t, 0.4, 0.5));
+    sticky.style.opacity = String(ramp(t, 6.35, 0.4));
+    sticky.style.transform = `rotate(2.5deg) scale(${0.96 + 0.04 * ramp(t, 6.35, 0.4)})`;
+
+    end(t);
+  }
+
+  boot(seek, 8);
+</script>
+</body>
+</html>

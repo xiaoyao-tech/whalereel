@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 先看贡献指南
+    url: https://github.com/your-name/whalereel/blob/main/CONTRIBUTING.md
+    about: 加风格之前，请先读质量门槛和 7 步流程。

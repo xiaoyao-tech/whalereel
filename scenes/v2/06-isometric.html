@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 v2 · 俯视立体 · 快递 24 小时</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .stage { background: radial-gradient(90% 80% at 50% 35%, #FBF7EE 0%, #F4EFE4 55%, #E9E0D0 100%); }
+  .svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; }
+  .title {
+    position: absolute; left: 76px; top: 62px; z-index: 12;
+    font-family: "Songti SC", serif; font-size: 38px; letter-spacing: .12em; color: #2A241C; opacity: 0;
+  }
+  .title small { display: block; margin-top: 8px; font: 400 11px/1 "Helvetica Neue", Arial, sans-serif; letter-spacing: .28em; color: #8A8175; }
+  .note {
+    position: absolute; right: 76px; top: 66px; z-index: 12;
+    font: 400 11px/1.8 "Helvetica Neue", Arial, sans-serif; letter-spacing: .14em; color: #8A8175;
+    text-align: right; opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div class="stage grain vignette">
+  <svg class="svg" id="scene" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#FBF7EE"/><stop offset="1" stop-color="#EDE4D4"/>
+      </linearGradient>
+    </defs>
+    <g id="board"></g>
+    <g id="buildings"></g>
+    <g id="route"></g>
+    <g id="parcel"></g>
+    <g id="labels"></g>
+  </svg>
+  <div class="title" id="title">一个包裹的 24 小时<small>ISOMETRIC · 示意路线</small></div>
+  <div class="note" id="note">10s 风格测试<br>数字为示意，不代表真实物流</div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  const end = mountEndCard("俯视立体 · ISOMETRIC");
+  const NS = "http://www.w3.org/2000/svg";
+  const board = document.getElementById("board");
+  const buildings = document.getElementById("buildings");
+  const route = document.getElementById("route");
+  const parcelLayer = document.getElementById("parcel");
+  const labels = document.getElementById("labels");
+  const title = document.getElementById("title");
+  const note = document.getElementById("note");
+
+  const C = {
+    top: "#E8D6BE", left: "#C9A98A", right: "#B89374",
+    roof: "#B65C4A", roof2: "#A95545", green: "#8FAF7E",
+    blue: "#6FA3B8", base: "#E8E2D6", path: "#D9CBB5"
+  };
+
+  function poly(points, fill, stroke = "#00000016", sw = 1.2) {
+    return `<polygon points="${points}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}" stroke-linejoin="round"/>`;
+  }
+  function box(cx, cy, w, h, top = C.top, left = C.left, right = C.right) {
+    const hw = w, hd = w / 2;
+    const t = `${cx},${cy - hd} ${cx + hw},${cy} ${cx},${cy + hd} ${cx - hw},${cy}`;
+    const l = `${cx - hw},${cy} ${cx},${cy + hd} ${cx},${cy + hd + h} ${cx - hw},${cy + h}`;
+    const r = `${cx},${cy + hd} ${cx + hw},${cy} ${cx + hw},${cy + h} ${cx},${cy + hd + h}`;
+    return poly(t, top) + poly(l, left) + poly(r, right);
+  }
+  function roof(cx, cy, w, color = C.roof) {
+    const hw = w, hd = w / 2;
+    return `<polygon points="${cx},${cy - hd} ${cx + hw},${cy} ${cx},${cy + hd} ${cx - hw},${cy}"
+              fill="${color}" stroke="#8E3F33" stroke-width="1.6"/>
+            <path d="M${cx} ${cy - hd} L${cx} ${cy + hd}" stroke="#F2C14E" stroke-width="1.4" opacity=".45"/>`;
+  }
+
+  // board
+  board.innerHTML = `
+    <polygon points="640,250 1080,470 640,690 200,470" fill="${C.base}" stroke="#D4C8B4" stroke-width="2"/>
+    <polygon points="200,470 640,690 640,706 200,486" fill="#D8CCB8"/>
+    <polygon points="1080,470 640,690 640,706 1080,486" fill="#CFC2AC"/>
+    <ellipse cx="640" cy="706" rx="320" ry="24" fill="#000" opacity=".07"/>`;
+  // grid
+  let grid = "";
+  for (let i = 1; i < 10; i++) {
+    const t = i / 10;
+    grid += `<line x1="${640 + 440 * t}" y1="${250 + 220 * t}" x2="${200 + 440 * t}" y2="${470 + 220 * t}" stroke="#CFC2AC" stroke-width="1" opacity=".45"/>`;
+    grid += `<line x1="${640 - 440 * t}" y1="${250 + 220 * t}" x2="${1080 - 440 * t}" y2="${470 + 220 * t}" stroke="#CFC2AC" stroke-width="1" opacity=".45"/>`;
+  }
+  board.innerHTML += grid;
+
+  // zones: warehouse, sorting, plane, city/door
+  buildings.innerHTML = `
+    ${box(400, 500, 90, 62, "#E8D6BE", "#C9A98A", "#B89374")}${roof(400, 455, 110, C.roof)}
+    ${box(640, 560, 70, 50, "#F0E6D4", "#D4BFA2", "#C4AE91")}${roof(640, 525, 88, C.roof2)}
+    ${box(860, 470, 72, 54, "#DDE7EC", "#B9CCD5", "#A6BBC6")}${roof(860, 438, 88, "#6FA3B8")}
+    ${box(1000, 610, 54, 42, "#E8D6BE", "#C9A98A", "#B89374")}${roof(1000, 586, 66, C.roof)}
+    ${box(300, 590, 52, 38, "#DCE8D4", "#B7C9AC", "#A5B99A")}${roof(300, 568, 64, C.roof2)}
+  `;
+
+  // route line
+  const routePts = [[400, 470], [520, 520], [640, 530], [760, 500], [860, 440], [940, 500], [1000, 580]];
+  const routeD = routePts.map((p, i) => `${i === 0 ? "M" : "L"}${p[0]} ${p[1]}`).join(" ");
+  route.innerHTML = `
+    <path id="routePath" pathLength="1" d="${routeD}" fill="none" stroke="#B65C4A" stroke-width="4"
+          stroke-dasharray="1" stroke-dashoffset="1" opacity=".8"/>
+    <circle cx="400" cy="470" r="5" fill="#B65C4A"/><circle cx="1000" cy="580" r="5" fill="#B65C4A"/>`;
+
+  // parcel cube
+  function cube(cx, cy, s) {
+    const t = `${cx},${cy - s} ${cx + s},${cy} ${cx},${cy + s} ${cx - s},${cy}`;
+    const l = `${cx - s},${cy} ${cx},${cy + s} ${cx},${cy + s + s} ${cx - s},${cy + s}`;
+    const r = `${cx},${cy + s} ${cx + s},${cy} ${cx + s},${cy + s} ${cx},${cy + s + s}`;
+    return `<polygon points="${t}" fill="#E0A15E" stroke="#8E5A2E"/><polygon points="${l}" fill="#B87333"/><polygon points="${r}" fill="#D08A45"/>`;
+  }
+  parcelLayer.innerHTML = `<g id="parcelCube" transform="translate(400 450)">${cube(0, 0, 16)}</g>`;
+  const parcel = document.getElementById("parcelCube");
+
+  // labels
+  const labelData = [
+    { x: 330, y: 620, t: "02:00", n: "仓库" },
+    { x: 560, y: 640, t: "04:00", n: "分拣" },
+    { x: 800, y: 400, t: "08:00", n: "干线" },
+    { x: 1010, y: 650, t: "14:00", n: "签收" }
+  ];
+  labels.innerHTML = labelData.map(d => `
+    <g class="lbl" opacity="0">
+      <circle cx="${d.x}" cy="${d.y - 8}" r="4" fill="#B65C4A"/>
+      <text x="${d.x + 12}" y="${d.y - 4}" font-family="PingFang SC, sans-serif" font-size="14" fill="#3A3328">${d.t} ${d.n}</text>
+    </g>`).join("");
+  const labelEls = Array.from(labels.children);
+
+  function lerpRoute(p) {
+    const n = routePts.length - 1;
+    const x = clamp(p, 0, 0.9999) * n;
+    const i = Math.floor(x), f = x - i;
+    const a = routePts[i], b = routePts[i + 1] || routePts[i];
+    return { x: a[0] + (b[0] - a[0]) * f, y: a[1] + (b[1] - a[1]) * f };
+  }
+
+  function seek(t) {
+    title.style.opacity = String(ramp(t, 0.4, 0.7));
+    note.style.opacity = String(ramp(t, 1.0, 0.5));
+
+    const rp = easeInOut(clamp((t - 1.2) / 6.6, 0, 1));
+    const path = document.getElementById("routePath");
+    path.style.strokeDashoffset = String(1 - rp);
+
+    const pos = lerpRoute(rp);
+    parcel.setAttribute("transform", `translate(${pos.x} ${pos.y - 18})`);
+
+    labelEls.forEach((el, i) => {
+      const q = ramp(t, 1.4 + i * 1.1, 0.4);
+      el.style.opacity = String(q);
+    });
+
+    // camera push/pull
+    const cam = easeInOut(clamp(t / 9, 0, 1));
+    const z = 1 + 0.035 * cam;
+    document.getElementById("scene").style.transform = `scale(${z})`;
+    document.getElementById("scene").style.transformOrigin = "640px 420px";
+
+    end(t);
+  }
+
+  boot(seek, 10);
+</script>
+</body>
+</html>

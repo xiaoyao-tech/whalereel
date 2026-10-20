@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 · 北京 · 双奥</title>
+<style>
+  html, body { margin: 0; background: #06080c; overflow: hidden; }
+  #stage { position: relative; width: 1280px; height: 720px; overflow: hidden; background: #06080c; font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif; }
+  #stage::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 30; background: radial-gradient(110% 90% at 50% 45%, transparent 42%, rgba(0,0,0,.62) 100%); }
+  #hud { position: absolute; left: 0; top: 0; z-index: 20; width: 520px; padding: 30px 60px 30px 58px; color: #F4EFE4; background: linear-gradient(90deg, rgba(6,8,12,.94) 0%, rgba(6,8,12,.68) 62%, rgba(6,8,12,0) 100%); }
+  #hud-kicker { font: 500 10px/1 "Helvetica Neue", Arial, sans-serif; letter-spacing: .32em; color: #E0A15E; }
+  #hud-title { margin-top: 14px; font-family: "Songti SC", serif; font-size: 38px; letter-spacing: .1em; line-height: 1.1; }
+  #hud-line { margin-top: 10px; font-family: "Songti SC", serif; font-size: 18px; letter-spacing: .06em; color: #F6F0E3; }
+  #hud-meta { margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(244,239,228,.16); font: 400 10px/1.8 "Helvetica Neue", Arial, sans-serif; color: #8F8A7E; }
+  .label { padding: 5px 8px; border-left: 2px solid #E0A15E; background: rgba(6,8,12,.8); color: #F4EFE4; font: 12px/1.2 "PingFang SC", sans-serif; letter-spacing: .08em; white-space: nowrap; }
+  .label b { color: #E0A15E; font-weight: 500; }
+  .label.soft { border-left-color: #9FB6D8; color: #CFE0F2; font-size: 11px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="hud">
+    <div id="hud-kicker">BEIJING / 06 DOUBLE OLYMPICS</div>
+    <div id="hud-title">双奥</div>
+    <div id="hud-line">2008 夏奥 · 2022 冬奥</div>
+    <div id="hud-meta">鸟巢 · 水立方 · 奥林匹克公园</div>
+  </div>
+</div>
+<script src="oly-bundle.js"></script>
+</body>
+</html>

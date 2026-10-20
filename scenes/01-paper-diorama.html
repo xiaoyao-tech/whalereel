@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 · 立体纸雕 · 潭柘寺</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .stage { background: #100B08; }
+  .box {
+    position: absolute; inset: 42px;
+    overflow: hidden;
+    border: 10px solid #3A2418;
+    border-radius: 4px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.65), inset 0 0 0 1px #8A5A3C, inset 0 0 40px rgba(255,190,120,.08);
+    background: #1A0F0A;
+  }
+  .sky {
+    position: absolute; inset: 0;
+    background: radial-gradient(70% 62% at 52% 42%, #FFE6BA 0%, #F6BC7C 22%, #C4764D 48%, #53291D 78%, #1E100A 100%);
+  }
+  .glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(34% 40% at 54% 44%, rgba(255,236,190,.55), transparent 70%);
+    mix-blend-mode: screen;
+  }
+  .layer { position: absolute; inset: 0; will-change: transform; }
+  .layer svg { width: 100%; height: 100%; display: block; }
+  .layer.far svg { filter: drop-shadow(0 -1px 0 rgba(255,236,200,.28)) drop-shadow(0 5px 9px rgba(0,0,0,.32)); }
+  .layer.mid svg { filter: drop-shadow(0 -1px 0 rgba(255,226,180,.22)) drop-shadow(0 7px 11px rgba(0,0,0,.36)); }
+  .layer.temple svg { filter: drop-shadow(0 -1px 0 rgba(255,226,180,.3)) drop-shadow(0 10px 14px rgba(0,0,0,.42)); }
+  .layer.fg svg { filter: drop-shadow(0 6px 10px rgba(0,0,0,.5)); }
+
+  .title {
+    position: absolute; left: 78px; top: 66px; z-index: 20;
+    color: #F8E9CE;
+    font-family: "Songti SC", "STSong", serif;
+    font-size: 58px; letter-spacing: .12em;
+    text-shadow: 0 3px 18px rgba(40,16,6,.55);
+    opacity: 0;
+  }
+  .title small {
+    display: block; margin-top: 10px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 11px; letter-spacing: .42em; opacity: .62;
+  }
+  .sub {
+    position: absolute; left: 82px; bottom: 70px; z-index: 20;
+    color: #F1D7AE;
+    font-family: "Songti SC", "STSong", serif;
+    font-size: 23px; letter-spacing: .08em;
+    text-shadow: 0 2px 12px rgba(40,16,6,.6);
+    opacity: 0;
+  }
+  .seal {
+    position: absolute; right: 76px; bottom: 68px; z-index: 21;
+    width: 62px; height: 62px;
+    border: 2px solid #C0583E;
+    color: #E07A5B;
+    display: grid; place-items: center;
+    font-family: "Songti SC", serif;
+    font-size: 18px; line-height: 1.05;
+    letter-spacing: .04em;
+    opacity: 0;
+    transform: rotate(-3deg);
+  }
+  .figure {
+    position: absolute; left: 0; top: 0; z-index: 15;
+    width: 18px; height: 38px;
+    transform-origin: bottom center;
+    opacity: 0;
+  }
+  .figure i {
+    position: absolute; left: 4px; top: 0;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #2A140C; box-shadow: 0 0 0 1px rgba(255,196,136,.28);
+  }
+  .figure b {
+    position: absolute; left: 3px; top: 6px;
+    width: 10px; height: 30px;
+    border-radius: 4px 4px 2px 2px;
+    background: #2A140C; box-shadow: 0 0 0 1px rgba(255,196,136,.28);
+  }
+  .dust { position: absolute; inset: 0; z-index: 18; pointer-events: none; }
+  .dust i {
+    position: absolute; width: 2px; height: 2px; border-radius: 50%;
+    background: #FFE2B0; opacity: .55;
+  }
+</style>
+</head>
+<body>
+<div class="stage grain vignette">
+  <div class="box">
+    <div class="sky"></div>
+    <div class="glow" id="glow"></div>
+
+    <div class="layer far" id="far">
+      <svg viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+        <defs><filter id="pe1"><feTurbulence type="fractalNoise" baseFrequency="0.009" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/></filter></defs>
+        <path filter="url(#pe1)" d="M0 438 L142 332 L258 396 L386 292 L520 404 L652 320 L802 412 L958 310 L1112 402 L1280 330 L1280 720 L0 720 Z"
+              fill="#6B4634" stroke="#C58E61" stroke-width="2" opacity=".82"/>
+      </svg>
+    </div>
+
+    <div class="layer mid" id="mid">
+      <svg viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+        <defs><filter id="pe2"><feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4"/></filter></defs>
+        <path filter="url(#pe2)" d="M0 512 L118 438 L248 492 L398 406 L542 498 L700 424 L862 506 L1012 436 L1164 506 L1280 454 L1280 720 L0 720 Z"
+              fill="#452A1F" stroke="#B87A52" stroke-width="2" opacity=".96"/>
+      </svg>
+    </div>
+
+    <div class="layer temple" id="temple">
+      <svg viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+        <defs><filter id="pe3"><feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/></filter></defs>
+        <g filter="url(#pe3)">
+        <!-- ground -->
+        <path d="M0 566 L1280 566 L1280 720 L0 720 Z" fill="#2A1A13"/>
+        <!-- path -->
+        <path d="M590 720 L700 720 L724 566 L616 566 Z" fill="#D2A36C" opacity=".34"/>
+        <!-- gate -->
+        <ellipse cx="351" cy="580" rx="92" ry="11" fill="#120A06" opacity=".45"/>
+        <rect x="286" y="512" width="130" height="66" fill="#8A4832"/>
+        <path d="M246 520 L351 462 L456 520 L434 534 L351 484 L268 534 Z" fill="#3B1E16"/>
+        <path d="M246 520 L351 462 L456 520" fill="none" stroke="#C9845A" stroke-width="1.4" opacity=".5"/>
+        <rect x="304" y="530" width="10" height="48" fill="#2B150F"/>
+        <rect x="388" y="530" width="10" height="48" fill="#2B150F"/>
+        <rect x="340" y="540" width="20" height="38" fill="#2B150F"/>
+        <!-- main hall -->
+        <ellipse cx="668" cy="566" rx="186" ry="16" fill="#120A06" opacity=".5"/>
+        <rect x="522" y="458" width="292" height="108" fill="#A45A3F"/>
+        <path d="M470 468 L668 352 L866 468 L836 486 L668 392 L500 486 Z" fill="#5C2C21"/>
+        <path d="M470 468 L668 352 L866 468" fill="none" stroke="#FFC894" stroke-width="2" opacity=".62"/>
+        <rect x="634" y="494" width="68" height="72" fill="#2A140E"/>
+        <rect x="566" y="498" width="34" height="38" fill="#3A1C14"/>
+        <rect x="736" y="498" width="34" height="38" fill="#3A1C14"/>
+        <path d="M548 462 L788 462" stroke="#C9845A" stroke-width="1.2" opacity=".4"/>
+        <!-- trees -->
+        <g fill="#263B2F">
+          <ellipse cx="918" cy="474" rx="52" ry="62"/>
+          <ellipse cx="882" cy="492" rx="34" ry="40"/>
+          <ellipse cx="952" cy="498" rx="30" ry="36"/>
+          <rect x="912" y="520" width="8" height="52" fill="#1B120D"/>
+        </g>
+        <g fill="#1F332A">
+          <ellipse cx="196" cy="506" rx="44" ry="52"/>
+          <ellipse cx="226" cy="522" rx="28" ry="34"/>
+          <rect x="192" y="544" width="7" height="44" fill="#1B120D"/>
+        </g>
+        <!-- stone steps -->
+        <path d="M612 566 L724 566 L712 584 L624 584 Z" fill="#8E6A4B" opacity=".55"/>
+        <path d="M624 584 L712 584 L704 600 L632 600 Z" fill="#8E6A4B" opacity=".42"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="layer fg" id="fg"></div>
+
+    <div class="figure" id="figure"><i></i><b></b></div>
+    <div class="dust" id="dust"></div>
+
+    <div class="title" id="title">潭柘寺<small>TANZHE TEMPLE · BEIJING</small></div>
+    <div class="sub" id="sub">先有潭柘寺，后有北京城</div>
+    <div class="seal" id="seal">潭<br>柘</div>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  const end = mountEndCard("立体纸雕 · PAPER DIORAMA");
+  const world = document.querySelector(".box");
+  const far = document.getElementById("far");
+  const mid = document.getElementById("mid");
+  const temple = document.getElementById("temple");
+  const fg = document.getElementById("fg");
+  const glow = document.getElementById("glow");
+  const title = document.getElementById("title");
+  const sub = document.getElementById("sub");
+  const seal = document.getElementById("seal");
+  const figure = document.getElementById("figure");
+
+  // deterministic dust
+  const dust = document.getElementById("dust");
+  const motes = [];
+  for (let i = 0; i < 26; i++) {
+    const d = document.createElement("i");
+    const x = (i * 137.5) % 1180 + 40;
+    const y = (i * 89.3) % 560 + 100;
+    d.style.left = x + "px";
+    d.style.top = y + "px";
+    d.style.opacity = String(0.25 + ((i * 7) % 10) / 22);
+    dust.appendChild(d);
+    motes.push({ el: d, x, y, phase: i * 0.7 });
+  }
+
+  function seek(t) {
+    const p = clamp(t / 7, 0, 1);
+    const push = ease(p);
+
+    // camera: slow push-in
+    world.style.transform = `scale(${1 + 0.052 * push}) translateY(${-5 * push}px)`;
+    far.style.transform = `translateY(${3 * push}px)`;
+    mid.style.transform = `translateY(${6 * push}px)`;
+    temple.style.transform = `translateY(${9 * push}px)`;
+    fg.style.transform = `translateY(${14 * push}px)`;
+
+    // light shift from dawn to dusk
+    const warm = 1 - 0.35 * easeInOut(clamp((t - 3.2) / 3.6, 0, 1));
+    glow.style.opacity = String(0.55 + 0.25 * warm);
+    glow.style.background = `radial-gradient(34% 40% at ${51 + 3 * Math.sin(p * 3.14)}% 44%, rgba(255,236,190,${0.5 * warm}), transparent 70%)`;
+
+    // title / sub / seal
+    title.style.opacity = String(ramp(t, 0.5, 0.9));
+    title.style.transform = `translateY(${(1 - ramp(t, 0.5, 0.9)) * 10}px)`;
+    sub.style.opacity = String(ramp(t, 2.2, 0.9) * (1 - ramp(t, 6.2, 0.5)));
+    sub.style.transform = `translateY(${(1 - ramp(t, 2.2, 0.9)) * 8}px)`;
+    seal.style.opacity = String(ramp(t, 5.9, 0.5) * (1 - ramp(t, 6.6, 0.4)));
+    seal.style.transform = `rotate(-3deg) scale(${0.9 + 0.1 * ramp(t, 5.9, 0.5)})`;
+
+    // tiny figure walks along the path
+    const walk = easeInOut(clamp((t - 2.4) / 3.8, 0, 1));
+    const fx = 596 + 76 * walk;
+    const fy = 626 - 52 * walk + Math.sin(walk * 18) * 1.4;
+    figure.style.transform = `translate(${fx}px, ${fy}px)`;
+    figure.style.opacity = String(ramp(t, 2.3, 0.7) * (1 - ramp(t, 6.3, 0.5)));
+
+    // dust drift
+    for (const m of motes) {
+      const dy = -10 * ease(p) + Math.sin(m.phase + t * 0.7) * 2;
+      m.el.style.transform = `translate(${Math.sin(m.phase + t * 0.3) * 3}px, ${dy}px)`;
+    }
+
+    end(t);
+  }
+
+  boot(seek, 8);
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 · 片尾</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .stage { background: #0B1220; color: #F4EFE4; }
+  .center {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .brand {
+    font-family: "Songti SC", "STSong", serif;
+    font-size: 64px; letter-spacing: .18em; text-indent: .18em;
+    line-height: 1.4; opacity: 0;
+  }
+  .brand em { font-style: normal; color: #E8B07A; }
+  .line { margin-top: 30px; height: 1px; width: 0; background: rgba(244,239,228,.3); }
+  .meta {
+    margin-top: 26px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 11px; letter-spacing: .42em; text-indent: .42em;
+    color: #B9BECD; opacity: 0;
+  }
+  .tag {
+    margin-top: 48px;
+    font-family: "Songti SC", "STSong", serif;
+    font-size: 20px; letter-spacing: .14em;
+    color: #E6DECD; opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div class="stage grain">
+  <div class="center">
+    <div class="brand" id="brand">六种风格，<em>全部开源</em>。</div>
+    <div class="line" id="line"></div>
+    <div class="meta" id="meta">WHALEREEL · MIT · 2026</div>
+    <div class="tag" id="tag">下一座城，等你来拍。</div>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  const brand = document.getElementById("brand");
+  const line = document.getElementById("line");
+  const meta = document.getElementById("meta");
+  const tag = document.getElementById("tag");
+
+  function seek(t) {
+    const bp = ramp(t, 0.2, 0.7);
+    brand.style.opacity = String(bp);
+    brand.style.transform = `translateY(${(1 - bp) * 14}px)`;
+
+    const lp = easeInOut(clamp((t - 0.7) / 0.6, 0, 1));
+    line.style.width = `${300 * lp}px`;
+
+    const mp = ramp(t, 1.0, 0.5);
+    meta.style.opacity = String(mp * 0.7);
+
+    const tp = ramp(t, 1.5, 0.6);
+    tag.style.opacity = String(tp);
+    tag.style.transform = `translateY(${(1 - tp) * 8}px)`;
+  }
+
+  window.__preview = 2.2;
+  boot(seek, 3);
+</script>
+</body>
+</html>

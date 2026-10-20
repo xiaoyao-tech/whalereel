@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 v2 · 水墨 · 富春山居图</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .stage { background: radial-gradient(100% 90% at 38% 30%, #FBF6EC 0%, #F4EFE4 55%, #E9E0D0 100%); }
+  .fiber {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: .25;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.6' numOctaves='3'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23f)' opacity='.35'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+  .svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; }
+  .mist {
+    position: absolute; left: -10%; width: 120%; height: 140px; z-index: 8;
+    background: linear-gradient(180deg, rgba(244,239,228,0), rgba(244,239,228,.9) 45%, rgba(244,239,228,.9) 55%, rgba(244,239,228,0));
+    filter: blur(16px);
+  }
+  .m1 { top: 350px; opacity: .5; } .m2 { top: 470px; opacity: .4; }
+  .title {
+    position: absolute; right: 92px; top: 62px; z-index: 12;
+    writing-mode: vertical-rl; text-orientation: upright;
+    font-family: "Songti SC", "STSong", serif;
+    font-size: 38px; letter-spacing: .2em; color: #1A1A1A; opacity: 0;
+  }
+  .sub { position: absolute; left: 92px; top: 88px; z-index: 12; font-family: "Songti SC", serif; font-size: 13px; letter-spacing: .3em; color: #8A8175; opacity: 0; }
+  .seal {
+    position: absolute; left: 112px; bottom: 76px; z-index: 12;
+    width: 54px; height: 54px; border: 2px solid #B03A2E; color: #B03A2E;
+    display: grid; place-items: center; font-family: "Songti SC", serif; font-size: 16px; line-height: 1.1;
+    opacity: 0; transform: rotate(-2deg);
+  }
+  .splitLabel {
+    position: absolute; z-index: 12; font-family: "Songti SC", serif;
+    font-size: 16px; letter-spacing: .12em; color: #3A342C; opacity: 0;
+  }
+  .date {
+    position: absolute; z-index: 12; font: 400 11px/1 "SFMono-Regular", Menlo, monospace;
+    letter-spacing: .18em; color: #8A8175; opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div class="stage grain vignette">
+  <div class="fiber"></div>
+
+  <svg class="svg" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <filter id="blur14"><feGaussianBlur stdDeviation="14"/></filter>
+      <filter id="blur9"><feGaussianBlur stdDeviation="9"/></filter>
+      <filter id="blur5"><feGaussianBlur stdDeviation="5"/></filter>
+      <clipPath id="leftClip"><rect x="0" y="0" width="640" height="720"/></clipPath>
+      <clipPath id="rightClip"><rect x="640" y="0" width="640" height="720"/></clipPath>
+    </defs>
+
+    <g id="leftHalf" clip-path="url(#leftClip)">
+      <g>
+        <path d="M0 382 C130 300 230 336 330 284 C430 232 530 304 630 262 C730 220 830 302 930 272 C1030 242 1130 304 1280 252 L1280 540 L0 540 Z"
+              fill="#7B8E9C" opacity=".42" filter="url(#blur14)"/>
+        <path d="M0 462 C160 382 282 432 402 382 C522 332 622 422 762 372 C902 322 1042 412 1280 352 L1280 640 L0 640 Z"
+              fill="#2C3E50" opacity=".32" filter="url(#blur9)"/>
+        <path d="M0 566 C180 506 300 546 440 506 C580 466 680 526 820 496 C960 466 1100 526 1280 486 L1280 720 L0 720 Z"
+              fill="#141414" opacity=".24" filter="url(#blur5)"/>
+        <!-- river lines -->
+        <g stroke="#141414" stroke-width="1.6" opacity=".28" fill="none">
+          <path d="M0 600 C180 590 300 610 460 600 C560 594 610 604 640 600"/>
+          <path d="M0 626 C160 616 280 636 430 624 C540 616 600 628 640 622"/>
+          <path d="M0 654 C150 646 260 662 400 652 C520 644 590 656 640 650"/>
+        </g>
+        <!-- boat -->
+        <g id="boat" opacity="0">
+          <path d="M500 612 C520 626 560 628 582 612 L572 606 L510 606 Z" fill="#141414" opacity=".82"/>
+          <path d="M540 606 V576 L552 596 Z" fill="#141414" opacity=".65"/>
+          <path d="M540 606 L526 590" stroke="#141414" stroke-width="2" opacity=".55"/>
+        </g>
+      </g>
+    </g>
+
+    <g id="rightHalf" clip-path="url(#rightClip)">
+      <g>
+        <path d="M0 382 C130 300 230 336 330 284 C430 232 530 304 630 262 C730 220 830 302 930 272 C1030 242 1130 304 1280 252 L1280 540 L0 540 Z"
+              fill="#7B8E9C" opacity=".42" filter="url(#blur14)"/>
+        <path d="M0 462 C160 382 282 432 402 382 C522 332 622 422 762 372 C902 322 1042 412 1280 352 L1280 640 L0 640 Z"
+              fill="#2C3E50" opacity=".32" filter="url(#blur9)"/>
+        <path d="M0 566 C180 506 300 546 440 506 C580 466 680 526 820 496 C960 466 1100 526 1280 486 L1280 720 L0 720 Z"
+              fill="#141414" opacity=".24" filter="url(#blur5)"/>
+        <g stroke="#141414" stroke-width="1.6" opacity=".28" fill="none">
+          <path d="M640 600 C700 596 760 610 880 600 C1010 590 1140 610 1280 598"/>
+          <path d="M640 626 C720 620 780 636 900 624 C1040 612 1160 632 1280 620"/>
+          <path d="M640 654 C740 648 800 662 920 652 C1060 642 1170 660 1280 650"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- tear / split line -->
+    <g id="tear" opacity="0">
+      <path d="M640 80 C634 200 648 320 638 440 C630 540 646 630 640 700" fill="none" stroke="#F4EFE4" stroke-width="8" opacity=".85"/>
+      <path d="M640 80 C634 200 648 320 638 440 C630 540 646 630 640 700" fill="none" stroke="#B9AC96" stroke-width="1.2" opacity=".6" filter="url(#blur5)"/>
+    </g>
+  </svg>
+
+  <div class="mist m1" id="mist1"></div>
+  <div class="mist m2" id="mist2"></div>
+  <div class="sub" id="sub">元 · 黄公望 · 约 1350</div>
+  <div class="title" id="title">富春山居图</div>
+  <div class="seal" id="seal">富春</div>
+
+  <div class="splitLabel" id="labL" style="left:420px;top:330px;">剩山图</div>
+  <div class="splitLabel" id="labR" style="left:806px;top:330px;">无用师卷</div>
+  <div class="date" id="dateL" style="left:420px;top:360px;">1650 · 火</div>
+  <div class="date" id="dateR" style="left:806px;top:360px;">2011 · 合璧</div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  const end = mountEndCard("水墨 · INK WASH");
+  const leftHalf = document.getElementById("leftHalf");
+  const rightHalf = document.getElementById("rightHalf");
+  const tear = document.getElementById("tear");
+  const boat = document.getElementById("boat");
+  const title = document.getElementById("title");
+  const sub = document.getElementById("sub");
+  const seal = document.getElementById("seal");
+  const labL = document.getElementById("labL");
+  const labR = document.getElementById("labR");
+  const dateL = document.getElementById("dateL");
+  const dateR = document.getElementById("dateR");
+  const mist1 = document.getElementById("mist1");
+  const mist2 = document.getElementById("mist2");
+
+  function seek(t) {
+    // mountains emerge
+    const mp = ramp(t, 0.3, 1.8);
+    leftHalf.style.opacity = String(mp);
+    rightHalf.style.opacity = String(mp);
+
+    const bp = ramp(t, 1.8, 0.8);
+    boat.style.opacity = String(bp);
+    boat.setAttribute("transform", `translate(${8 * (1 - bp)} 0)`);
+
+    sub.style.opacity = String(ramp(t, 1.4, 0.7));
+    title.style.opacity = String(ramp(t, 2.2, 0.8));
+
+    // split
+    const sp = easeInOut(clamp((t - 3.8) / 1.6, 0, 1));
+    leftHalf.setAttribute("transform", `translate(${-24 * sp} 0)`);
+    rightHalf.setAttribute("transform", `translate(${24 * sp} 0)`);
+    tear.style.opacity = String(sp);
+
+    const lp = ramp(t, 4.4, 0.5);
+    labL.style.opacity = String(lp);
+    labR.style.opacity = String(lp);
+    dateL.style.opacity = String(ramp(t, 5.0, 0.5));
+    dateR.style.opacity = String(ramp(t, 5.3, 0.5));
+
+    // mist drift
+    mist1.style.transform = `translateX(${-30 + 14 * ease(t / 8)}px)`;
+    mist2.style.transform = `translateX(${20 - 10 * ease(t / 8)}px)`;
+
+    const sp2 = ramp(t, 7.2, 0.5);
+    seal.style.opacity = String(sp2);
+    seal.style.transform = `rotate(-2deg) scale(${0.9 + 0.1 * sp2})`;
+
+    end(t);
+  }
+
+  boot(seek, 10);
+</script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>鲸片 WhaleReel · 一句话，六种风格</title>
+<style>
+  :root {
+    --navy: #0B1220;
+    --navy2: #111A2E;
+    --cream: #F4EFE4;
+    --muted: #8D94A6;
+    --line: rgba(244, 239, 228, .1);
+    --red: #C0583E;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--navy);
+    color: var(--cream);
+    font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 34px 0 20px;
+  }
+  header img { width: 232px; height: auto; display: block; }
+  nav { display: flex; gap: 26px; font-size: 13px; letter-spacing: .08em; color: var(--muted); }
+  nav a { text-decoration: none; }
+  nav a:hover { color: var(--cream); }
+
+  .hero {
+    display: grid; grid-template-columns: 1.25fr .75fr; gap: 40px;
+    align-items: end;
+    padding: 64px 0 54px;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow {
+    font-size: 11px; letter-spacing: .38em; color: var(--muted);
+    margin-bottom: 22px; text-transform: uppercase;
+  }
+  h1 {
+    margin: 0;
+    font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+    font-size: clamp(42px, 5.6vw, 72px);
+    line-height: 1.08;
+    letter-spacing: .03em;
+    font-weight: 600;
+  }
+  h1 em { font-style: normal; color: #E8B07A; }
+  .hero p {
+    margin: 22px 0 0; max-width: 520px;
+    color: #B9BECD; font-size: 16px; line-height: 1.9;
+  }
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .stat { background: var(--navy); padding: 20px 16px; }
+  .stat b {
+    display: block; font-family: "Songti SC", serif;
+    font-size: 34px; font-weight: 600; letter-spacing: .02em;
+  }
+  .stat span { display: block; margin-top: 8px; font-size: 11px; letter-spacing: .18em; color: var(--muted); }
+
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 54px 0 24px;
+  }
+  .section-head h2 {
+    margin: 0; font-family: "Songti SC", serif;
+    font-size: 26px; font-weight: 600; letter-spacing: .08em;
+  }
+  .section-head span { font-size: 12px; letter-spacing: .16em; color: var(--muted); }
+
+  .trailer { padding-top: 8px; }
+  .trailer video {
+    width: 100%; display: block; background: #000;
+    border: 1px solid var(--line); border-radius: 5px;
+  }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .card {
+    background: var(--navy2);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: transform .35s ease, border-color .35s ease;
+  }
+  .card:hover { transform: translateY(-4px); border-color: rgba(244,239,228,.24); }
+  .media { position: relative; aspect-ratio: 16 / 9; background: #080D18; overflow: hidden; }
+  .media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .num {
+    position: absolute; left: 14px; top: 12px; z-index: 2;
+    font: 500 11px/1 "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: .2em; color: rgba(11,18,32,.7);
+    background: rgba(244,239,228,.86);
+    padding: 6px 8px; border-radius: 2px;
+  }
+  .meta { padding: 18px 18px 20px; }
+  .meta h3 {
+    margin: 0; font-family: "Songti SC", serif;
+    font-size: 24px; font-weight: 600; letter-spacing: .06em;
+  }
+  .meta h3 span {
+    margin-left: 10px; font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 10px; letter-spacing: .22em; color: var(--muted);
+    font-weight: 400; vertical-align: 3px;
+  }
+  .meta p { margin: 9px 0 0; font-size: 13px; color: #9FA6B8; letter-spacing: .04em; }
+  .dots { display: flex; gap: 7px; margin-top: 16px; }
+  .dots i {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--c);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.12);
+  }
+
+  .how { padding: 66px 0 20px; border-top: 1px solid var(--line); margin-top: 64px; }
+  .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .step { padding: 24px 0 0; border-top: 1px solid var(--line); }
+  .step b {
+    display: block; font: 500 11px/1 "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: .24em; color: var(--red); margin-bottom: 16px;
+  }
+  .step h3 {
+    margin: 0 0 10px; font-family: "Songti SC", serif;
+    font-size: 22px; font-weight: 600;
+  }
+  .step p { margin: 0; color: #9FA6B8; font-size: 14px; line-height: 1.85; }
+
+  .prompt {
+    margin: 58px 0 0; padding: 26px 28px;
+    border: 1px solid var(--line);
+    background: #0E1626;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  }
+  .prompt code {
+    font-family: "SFMono-Regular", Menlo, monospace;
+    font-size: 14px; color: #D9D3C6; line-height: 1.7;
+  }
+  .prompt button {
+    flex: none; cursor: pointer;
+    background: var(--cream); color: var(--navy);
+    border: 0; padding: 11px 18px;
+    font-size: 12px; letter-spacing: .12em;
+  }
+  .prompt button:hover { background: #fff; }
+
+  footer {
+    margin-top: 70px; padding: 34px 0 44px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; gap: 24px;
+    color: var(--muted); font-size: 12px; letter-spacing: .06em;
+  }
+  footer b { color: var(--cream); font-weight: 500; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; gap: 30px; }
+    .grid { grid-template-columns: 1fr; }
+    .how-grid { grid-template-columns: 1fr; }
+    header img { width: 168px; }
+    nav { display: none; }
+    .prompt { flex-direction: column; align-items: flex-start; }
+    footer { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="../assets/logo-light.svg" alt="鲸片 WhaleReel">
+    <nav>
+      <a href="#styles">六种风格</a>
+      <a href="#how">怎么用</a>
+      <a href="../README.md">GitHub</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">WhaleReel · A video skill for DeepSeek</div>
+      <h1>一句话，<br>六种风格，<br><em>直接出片</em>。</h1>
+      <p>给 DeepSeek 一句话，它自己选风格、写脚本、写代码、渲染成片。没有视频模型，没有 GPU，每一帧都是代码画的。</p>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><b>6</b><span>STYLES</span></div>
+      <div class="stat"><b>4</b><span>CASES</span></div>
+      <div class="stat"><b>0</b><span>VIDEO MODEL</span></div>
+    </div>
+  </section>
+
+  <section class="trailer">
+    <div class="section-head" style="padding-top:36px">
+      <h2>30 秒，看完六种风格</h2>
+      <span>六支样片混剪</span>
+    </div>
+    <video src="../renders/00-trailer-v2.mp4" poster="../previews/00-trailer-v2.jpg" controls muted playsinline preload="metadata"></video>
+  </section>
+
+  <div class="section-head" id="styles">
+    <h2>六种风格</h2>
+    <span>每一个都是一份可复用的契约</span>
+  </div>
+
+  <section class="grid">
+    <article class="card">
+      <div class="media">
+        <div class="num">01</div>
+        <video src="../renders/cases/dossier.mp4" poster="../renders/cases/dossier.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      </div>
+      <div class="meta">
+        <h3>档案卷宗<span>REDACTED DOSSIER</span></h3>
+        <p>历史人物 / 案件 / 制度 / 调查</p>
+        <div class="dots"><i style="--c:#EDE3CB"></i><i style="--c:#F7EFDD"></i><i style="--c:#1B1611"></i><i style="--c:#A82E1C"></i><i style="--c:#15110D"></i><i style="--c:#8A7A63"></i></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="media">
+        <div class="num">02</div>
+        <video src="../renders/cases/pen-wash.mp4" poster="../renders/cases/pen-wash.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      </div>
+      <div class="meta">
+        <h3>钢笔淡彩<span>PEN & WASH</span></h3>
+        <p>情绪 / 乡愁 / 城市漫游 / 歌曲意象</p>
+        <div class="dots"><i style="--c:#F5EEDE"></i><i style="--c:#2E2622"></i><i style="--c:#8EA6C4"></i><i style="--c:#C89274"></i><i style="--c:#D97757"></i><i style="--c:#6F8A55"></i></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="media">
+        <div class="num">03</div>
+        <video src="../renders/cases/white-model.mp4" poster="../renders/cases/white-model.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      </div>
+      <div class="meta">
+        <h3>白模投影<span>WHITE MODEL</span></h3>
+        <p>城市 / 区域 / 规划 / 人口</p>
+        <div class="dots"><i style="--c:#F3F3F1"></i><i style="--c:#0C0D10"></i><i style="--c:#E8A33D"></i><i style="--c:#5B8DEF"></i><i style="--c:#C9CDD4"></i><i style="--c:#1A1C22"></i></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="media">
+        <div class="num">04</div>
+        <video src="../renders/01-tanzhe-45s.mp4" poster="../previews/01-tanzhe-45s.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      </div>
+      <div class="meta">
+        <h3>立体纸雕<span>PAPER DIORAMA</span></h3>
+        <p>景区 / 古建 / 地标 / 节日</p>
+        <div class="dots"><i style="--c:#F3EBDD"></i><i style="--c:#C9A77C"></i><i style="--c:#FFB86B"></i><i style="--c:#4E6E5D"></i><i style="--c:#B4462F"></i><i style="--c:#1E1A17"></i></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="media">
+        <div class="num">05</div>
+        <video src="../renders/02-whiteboard.mp4" poster="../previews/02-whiteboard.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      </div>
+      <div class="meta">
+        <h3>白板讲解<span>WHITEBOARD</span></h3>
+        <p>知识 / 原理 / 流程 / 课程</p>
+        <div class="dots"><i style="--c:#F7F7F2"></i><i style="--c:#1F2328"></i><i style="--c:#2F6BFF"></i><i style="--c:#E4572E"></i><i style="--c:#FFE08A"></i><i style="--c:#C0392B"></i></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="media">
+        <div class="num">06</div>
+        <video src="../renders/04-ink-wash.mp4" poster="../previews/04-ink-wash.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      </div>
+      <div class="meta">
+        <h3>水墨<span>INK WASH</span></h3>
+        <p>山水 / 古寺 / 诗词 / 品牌片头</p>
+        <div class="dots"><i style="--c:#F4EFE4"></i><i style="--c:#141414"></i><i style="--c:#2C3E50"></i><i style="--c:#8A9BA8"></i><i style="--c:#A67C52"></i><i style="--c:#B03A2E"></i></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="how" id="how">
+    <div class="section-head" style="padding-top:0">
+      <h2>一句话怎么用</h2>
+      <span>输入一句话，剩下交给 skill</span>
+    </div>
+    <div class="how-grid">
+      <div class="step">
+        <b>01 / 说</b>
+        <h3>给一句话</h3>
+        <p>主题、时长、画幅、给谁看。没有脚本、没有素材，也可以开始。</p>
+      </div>
+      <div class="step">
+        <b>02 / 选</b>
+        <h3>自动选风格</h3>
+        <p>景区走纸雕，知识走白板，情绪走一笔画，文化走水墨，儿童走蜡笔，空间走等距。</p>
+      </div>
+      <div class="step">
+        <b>03 / 出</b>
+        <h3>写代码，渲染</h3>
+        <p>DeepSeek 写场景代码，Playwright 逐帧截图，ffmpeg 合成。可改、可复现。</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <code>用鲸片做一条 &lt;主题&gt;，45 秒，16:9，给 &lt;受众&gt; 看。</code>
+      <button id="copy">复制这句话</button>
+    </div>
+  </section>
+
+  <footer>
+    <div><b>鲸片 WhaleReel</b> · 一句话，六种风格，直接出片。</div>
+    <div>没有视频模型。每一帧都是代码画的。</div>
+    <div>MIT · 2026</div>
+  </footer>
+</div>
+
+<script>
+  const btn = document.getElementById("copy");
+  btn.addEventListener("click", async () => {
+    const text = "用鲸片做一条 <主题>，45 秒，16:9，给 <受众> 看。";
+    try {
+      await navigator.clipboard.writeText(text);
+      btn.textContent = "已复制";
+      setTimeout(() => (btn.textContent = "复制这句话"), 1600);
+    } catch {
+      btn.textContent = "手动复制上方句子";
+    }
+  });
+
+  // pause offscreen videos to keep the page light
+  const videos = Array.from(document.querySelectorAll("video:not([controls])"));
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      const v = e.target;
+      if (e.isIntersecting) v.play().catch(() => {});
+      else v.pause();
+    }
+  }, { threshold: 0.15 });
+  videos.forEach((v) => io.observe(v));
+</script>
+</body>
+</html>

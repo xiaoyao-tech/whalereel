@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>北京老城 · 白模投影 30s · 旁白 / 波光 / 音乐</title>
+<style>
+  :root { --bg:#06080C; --cream:#F4EFE4; --muted:#969CAB; --line:rgba(244,239,228,.12); --amber:#E0A15E; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--cream); font-family:"PingFang SC","Helvetica Neue",Arial,sans-serif; }
+  .wrap { max-width:1180px; margin:0 auto; padding:32px 24px 54px; }
+  header { display:flex; align-items:baseline; justify-content:space-between; gap:20px; padding-bottom:16px; border-bottom:1px solid var(--line); }
+  h1 { margin:0; font-family:"Songti SC",serif; font-size:30px; font-weight:600; letter-spacing:.1em; }
+  header span { color:var(--muted); font-size:11px; letter-spacing:.18em; }
+  video { width:100%; display:block; margin:24px 0 0; background:#000; border:1px solid var(--line); }
+  .sub { margin:12px 0 0; color:var(--muted); font-size:12px; line-height:1.8; }
+  .grid { display:grid; grid-template-columns:1.05fr .95fr; gap:26px; margin-top:26px; }
+  h2 { font-family:"Songti SC",serif; font-size:20px; font-weight:600; margin:0 0 12px; letter-spacing:.06em; }
+  p, li, td { color:#B9BECD; font-size:13px; line-height:1.9; }
+  ul { margin:0; padding-left:18px; }
+  .card { border:1px solid var(--line); padding:18px 20px; background:#0B1220; }
+  .tag { color:var(--amber); font-size:11px; letter-spacing:.2em; }
+  table { width:100%; border-collapse:collapse; }
+  td { padding:7px 0; border-bottom:1px solid rgba(244,239,228,.07); vertical-align:top; }
+  td:first-child { width:64px; color:var(--amber); font:11px/1.8 "SFMono-Regular",Menlo,monospace; }
+  a { color:var(--amber); text-decoration:none; }
+  footer { margin-top:26px; padding-top:16px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; line-height:1.8; }
+  code { color:#D8D2C4; }
+  @media (max-width:820px) { .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>北京老城 · 白模投影 30s</h1>
+    <span>旁白 / 波光 / 音乐 · 11,308 OSM FOOTPRINTS</span>
+  </header>
+
+  <video src="renders/v4/01-beijing-3d-final.mp4" poster="previews/v4/01-beijing-3d-final.jpg" controls preload="metadata" playsinline></video>
+  <div class="sub">有声版：7 句旁白 + 自建氛围音乐；永定门 / 天安门 / 故宫 / 景山 / 鼓楼亮起时，地面波光向外扩散。建议戴耳机。</div>
+
+  <div class="grid">
+    <section class="card">
+      <div class="tag">SCRIPT</div>
+      <h2>旁白</h2>
+      <table>
+        <tr><td>0.5s</td><td>北京，一座把时间叠进中轴线的城。</td></tr>
+        <tr><td>4.15s</td><td>永定门往北，七点八公里，七百年。</td></tr>
+        <tr><td>8.2s</td><td>天安门，皇城正门，这座城的客厅。</td></tr>
+        <tr><td>12.2s</td><td>故宫，明清皇宫，中轴线上最重的一笔。</td></tr>
+        <tr><td>16.4s</td><td>景山，南望故宫，北望鼓楼。</td></tr>
+        <tr><td>20.0s</td><td>鼓楼，钟鼓声曾决定这座城的作息。</td></tr>
+        <tr><td>23.8s</td><td>两千一百八十三万人，仍沿着这条线生活。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <div class="tag">DATA / CREDIT</div>
+      <h2>数据与制作</h2>
+      <ul>
+        <li>建筑 footprint：BBBike Beijing OSM extract（2026-10-17），<b>ODbL</b>，© OpenStreetMap contributors</li>
+        <li>中轴 7.8 km / 15 处遗产：<a href="http://www.ncha.gov.cn/art/2024/7/29/art_2792_190677.html">国家文物局</a></li>
+        <li>2,183.2 万：<a href="https://www.beijing.gov.cn/zhengce/zhengcefagui/202503/t20250320_4039431.html">北京市 2024 年统计公报</a></li>
+        <li>旁白：macOS Tingting（zh_CN），rate 180</li>
+        <li>音乐：自建 30s 氛围底（Dm–B♭–F–C pad + 地点钟声），无外部版权</li>
+        <li>高度：OSM height/levels 优先，缺失按 9m 示意；模型非测绘</li>
+      </ul>
+    </section>
+  </div>
+
+  <footer>
+    成片：<code>renders/v4/01-beijing-3d-final.mp4</code> · 旁白/音乐说明：<a href="examples/beijing-vo.md">examples/beijing-vo.md</a> · 数据说明：<a href="examples/beijing-data.md">examples/beijing-data.md</a><br>
+    2.5D 版已废弃。当前版：Three.js + 真实 footprint + 连续相机 + 3D 波光；还不是最终投影光 shader 版。
+  </footer>
+</div>
+</body>
+</html>

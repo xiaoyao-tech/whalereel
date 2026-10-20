@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 · 俯视立体 · 潭柘寺导览</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .stage {
+    background:
+      radial-gradient(90% 80% at 50% 35%, #FBF7EE 0%, #F4EFE4 55%, #E9E0D0 100%);
+  }
+  .svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; }
+  .label {
+    position: absolute; z-index: 12;
+    font-family: "PingFang SC", "Helvetica Neue", sans-serif;
+    font-size: 15px; letter-spacing: .12em;
+    color: #3A3328;
+    padding-left: 13px;
+    opacity: 0;
+    white-space: nowrap;
+  }
+  .label::before {
+    content: ""; position: absolute; left: 0; top: 50%;
+    width: 6px; height: 6px; margin-top: -3px;
+    border-radius: 50%; background: #B65C4A;
+    box-shadow: 0 0 0 3px rgba(182,92,74,.16);
+  }
+  .tag {
+    position: absolute; left: 86px; top: 72px; z-index: 12;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 11px; letter-spacing: .38em;
+    color: #9A8F7C;
+    opacity: 0;
+  }
+  .title {
+    position: absolute; left: 84px; bottom: 66px; z-index: 12;
+    font-family: "Songti SC", "STSong", serif;
+    font-size: 42px; letter-spacing: .14em;
+    color: #2A241C;
+    opacity: 0;
+  }
+  .title small {
+    display: block; margin-top: 9px;
+    font-family: "PingFang SC", sans-serif;
+    font-size: 12px; letter-spacing: .3em; color: #8A8175;
+  }
+</style>
+</head>
+<body>
+<div class="stage grain vignette">
+  <svg class="svg" id="scene" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <filter id="soft"><feGaussianBlur stdDeviation="2.2"/></filter>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#FBF7EE"/>
+        <stop offset="1" stop-color="#EDE4D4"/>
+      </linearGradient>
+    </defs>
+
+    <g id="camera">
+      <g id="base"></g>
+      <g id="grid"></g>
+      <g id="terrain"></g>
+      <g id="buildings"></g>
+      <g id="trees"></g>
+      <g id="people"></g>
+    </g>
+    <g id="leaders"></g>
+  </svg>
+
+  <div class="tag" id="tag">俯视立体 · ISOMETRIC DIORAMA</div>
+  <div class="title" id="title">潭柘寺<small>TANZHE TEMPLE · MINIATURE</small></div>
+
+  <div class="label" id="l-gate" style="left:300px;top:500px;">山门</div>
+  <div class="label" id="l-hall" style="left:700px;top:268px;">大雄宝殿</div>
+  <div class="label" id="l-tree" style="left:968px;top:458px;">帝王树</div>
+  <div class="label" id="l-pav" style="left:408px;top:402px;">流杯亭</div>
+  <div class="label" id="l-back" style="left:1024px;top:286px;">后山</div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  const end = mountEndCard("俯视立体 · ISOMETRIC DIORAMA");
+  const svgNS = "http://www.w3.org/2000/svg";
+  const buildings = document.getElementById("buildings");
+  const trees = document.getElementById("trees");
+  const people = document.getElementById("people");
+  const leaders = document.getElementById("leaders");
+
+  const C = {
+    top: "#E8D6BE", left: "#C9A98A", right: "#B89374",
+    roof: "#B65C4A", roofDark: "#8E3F33",
+    green: "#8FAF7E", green2: "#7C9C6C",
+    trunk: "#7A5A3A", water: "#6FA3B8",
+    path: "#D9CBB5", base: "#E8E2D6"
+  };
+
+  function poly(points, fill, stroke = "#00000016", sw = 1.5) {
+    return `<polygon points="${points}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}" stroke-linejoin="round"/>`;
+  }
+
+  function box(cx, cy, w, h, top = C.top, left = C.left, right = C.right) {
+    const hw = w, hd = w / 2;
+    const topFace = `${cx},${cy - hd} ${cx + hw},${cy} ${cx},${cy + hd} ${cx - hw},${cy}`;
+    const leftFace = `${cx - hw},${cy} ${cx},${cy + hd} ${cx},${cy + hd + h} ${cx - hw},${cy + h}`;
+    const rightFace = `${cx},${cy + hd} ${cx + hw},${cy} ${cx + hw},${cy + h} ${cx},${cy + hd + h}`;
+    return poly(topFace, top) + poly(leftFace, left) + poly(rightFace, right);
+  }
+
+  function roof(cx, cy, w, color = C.roof) {
+    const hw = w, hd = w / 2;
+    return `<polygon points="${cx},${cy - hd} ${cx + hw},${cy} ${cx},${cy + hd} ${cx - hw},${cy}"
+              fill="${color}" stroke="${C.roofDark}" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M${cx} ${cy - hd} L${cx} ${cy + hd}" stroke="#F2C14E" stroke-width="1.8" opacity=".45"/>`;
+  }
+
+  function building(cx, cy, w, h, roofW, start, roofColor = C.roof) {
+    const g = document.createElementNS(svgNS, "g");
+    g.dataset.start = start;
+    g.dataset.base = String(cy + w / 2 + h);
+    g.innerHTML = box(cx, cy, w, h) + roof(cx, cy - h * 0.12, roofW, roofColor);
+    buildings.appendChild(g);
+    return g;
+  }
+
+  function tree(cx, cy, s, start) {
+    const g = document.createElementNS(svgNS, "g");
+    g.dataset.start = start;
+    g.dataset.base = String(cy + s * 0.7);
+    g.innerHTML = `
+      <rect x="${cx - 3}" y="${cy}" width="6" height="${s * 0.75}" fill="${C.trunk}"/>
+      <polygon points="${cx},${cy - s} ${cx + s * 0.55},${cy - s * 0.38} ${cx},${cy + s * 0.12} ${cx - s * 0.55},${cy - s * 0.38}" fill="${C.green}"/>
+      <polygon points="${cx},${cy - s * 0.66} ${cx + s * 0.42},${cy - s * 0.18} ${cx},${cy + s * 0.24} ${cx - s * 0.42},${cy - s * 0.18}" fill="${C.green2}"/>`;
+    trees.appendChild(g);
+    return g;
+  }
+
+  // base plate + thickness
+  document.getElementById("base").innerHTML = `
+    <polygon points="160,350 640,590 640,612 160,372" fill="#D8CCB8" stroke="#00000010" stroke-width="1.5"/>
+    <polygon points="1120,350 640,590 640,612 1120,372" fill="#CFC2AC" stroke="#00000010" stroke-width="1.5"/>
+    <polygon points="160,350 640,110 1120,350 640,590" fill="${C.base}" stroke="#D4C8B4" stroke-width="2"/>
+    <ellipse cx="640" cy="628" rx="300" ry="26" fill="#000000" opacity=".07" filter="url(#soft)"/>`;
+
+  // isometric grid
+  const grid = document.getElementById("grid");
+  for (let i = 1; i < 10; i++) {
+    const t = i / 10;
+    const a = { x: 640 + 480 * t, y: 110 + 240 * t };
+    const b = { x: 160 + 480 * t, y: 350 + 240 * t };
+    const c = { x: 640 - 480 * t, y: 110 + 240 * t };
+    const d = { x: 1120 - 480 * t, y: 350 + 240 * t };
+    grid.innerHTML += `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="#CFC2AC" stroke-width="1" opacity=".55"/>
+                       <line x1="${c.x}" y1="${c.y}" x2="${d.x}" y2="${d.y}" stroke="#CFC2AC" stroke-width="1" opacity=".55"/>`;
+  }
+
+  // terrain plateau
+  document.getElementById("terrain").innerHTML = `
+    <polygon points="330,430 640,275 950,430 640,585" fill="#A9C096" opacity=".6"/>
+    <polygon points="400,430 640,310 880,430 640,550" fill="#9DBA88" opacity=".55"/>
+    <ellipse cx="820" cy="505" rx="58" ry="26" fill="${C.water}" opacity=".55"/>
+    <ellipse cx="820" cy="505" rx="58" ry="26" fill="none" stroke="#5C8FA6" stroke-width="1.5" opacity=".6"/>
+    <path d="M600 575 L690 575 L706 520 L672 486 L632 486 L604 526 Z" fill="${C.path}" opacity=".9"/>
+    <path d="M640 575 C624 540 630 512 646 490" fill="none" stroke="#C9B99F" stroke-width="3" opacity=".7"/>
+    <polygon points="900,334 960,292 1020,334 960,376" fill="#7C9C6C" opacity=".95"/>
+    <polygon points="900,334 960,376 960,396 900,354" fill="#6B8A5C" opacity=".85"/>
+    <polygon points="1020,334 960,376 960,396 1020,354" fill="#5F7C52" opacity=".85"/>`;
+
+  // main hall
+  building(640, 382, 88, 74, 112, 2.6, "#B65C4A");
+  // rear hall
+  building(800, 342, 62, 52, 82, 3.2, "#A95545");
+  // side pavilion (流杯亭)
+  building(500, 452, 46, 38, 62, 3.7, "#C06A52");
+  // gate
+  building(410, 520, 40, 34, 54, 4.1, "#A95545");
+
+  // trees
+  tree(724, 500, 42, 4.3);
+  tree(904, 458, 52, 4.5);
+  tree(344, 474, 38, 4.6);
+  tree(700, 326, 34, 4.7);
+  tree(966, 382, 38, 4.8);
+  tree(540, 362, 30, 4.9);
+  // wooded hill at 后山
+  tree(928, 332, 24, 4.55);
+  tree(962, 314, 20, 4.65);
+  tree(994, 340, 22, 4.75);
+
+  // tiny people
+  const walkers = [];
+  [
+    { x: 646, y: 556, c: "#D94F3D" },
+    { x: 630, y: 530, c: "#2F6BFF" },
+    { x: 664, y: 510, c: "#5B8C5A" }
+  ].forEach((p, i) => {
+    const g = document.createElementNS(svgNS, "g");
+    g.innerHTML = `<circle cx="${p.x}" cy="${p.y - 9}" r="3.4" fill="${p.c}"/>
+                   <rect x="${p.x - 2}" y="${p.y - 5}" width="4" height="8" rx="2" fill="${p.c}"/>`;
+    people.appendChild(g);
+    walkers.push({ g, x: p.x, y: p.y, i });
+  });
+
+  // leader lines
+  const leaderData = [
+    [350, 512, 402, 520],
+    [700, 286, 662, 360],
+    [948, 452, 908, 430],
+    [444, 428, 482, 448],
+    [1004, 300, 974, 330]
+  ];
+  leaders.innerHTML = leaderData.map(([x1, y1, x2, y2]) =>
+    `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#B65C4A" stroke-width="1.2" opacity="0"/>
+     <circle cx="${x2}" cy="${y2}" r="3" fill="#B65C4A" opacity="0"/>`
+  ).join("");
+  const leaderEls = Array.from(leaders.children);
+
+  const labels = ["l-gate", "l-hall", "l-tree", "l-pav", "l-back"].map(id => document.getElementById(id));
+  const labelStarts = [4.7, 4.9, 5.2, 5.4, 5.7];
+
+  function setBuild(g, t) {
+    const start = Number(g.dataset.start);
+    const base = Number(g.dataset.base);
+    const p = ramp(t, start, 0.6);
+    g.style.opacity = String(p);
+    const cx = g.querySelector("polygon") ? 640 : 640;
+    // scale vertically around the base; use the group's own bbox center x
+    const bb = g.getBBox();
+    const ox = bb.x + bb.width / 2;
+    if (p <= 0.001) {
+      g.setAttribute("transform", `translate(${ox} ${base}) scale(1 0.01) translate(${-ox} ${-base})`);
+    } else {
+      g.setAttribute("transform", `translate(${ox} ${base}) scale(1 ${0.15 + 0.85 * p}) translate(${-ox} ${-base})`);
+    }
+  }
+
+  function seek(t) {
+    const p = clamp(t / 7, 0, 1);
+    const z = 1 + 0.06 * ease(p);
+    document.getElementById("camera").setAttribute(
+      "transform", `translate(640 360) scale(${z}) translate(-640 -360) translate(0 ${-4 * ease(p)})`
+    );
+
+    const bp = ramp(t, 0.2, 0.8);
+    document.getElementById("base").style.opacity = String(bp);
+    document.getElementById("grid").style.opacity = String(ramp(t, 0.6, 0.8));
+    document.getElementById("terrain").style.opacity = String(ramp(t, 1.4, 0.9));
+
+    for (const g of buildings.children) setBuild(g, t);
+    for (const g of trees.children) setBuild(g, t);
+
+    // tiny people drift up the path
+    for (const w of walkers) {
+      const wp = easeInOut(clamp((t - 5.1 - w.i * 0.15) / 1.6, 0, 1));
+      const dx = Math.sin(wp * 8 + w.i) * 3;
+      w.g.setAttribute("transform", `translate(${dx} ${-18 * wp})`);
+      w.g.style.opacity = String(ramp(t, 5.0, 0.5) * (1 - ramp(t, 6.7, 0.3)));
+    }
+
+    labels.forEach((el, i) => {
+      const q = ramp(t, labelStarts[i], 0.35);
+      el.style.opacity = String(q);
+      el.style.transform = `translateX(${(1 - q) * -6}px)`;
+    });
+    leaderEls.forEach((el, i) => {
+      const q = ramp(t, labelStarts[i], 0.35);
+      el.style.opacity = String(q * 0.75);
+    });
+
+    document.getElementById("tag").style.opacity = String(ramp(t, 0.5, 0.6));
+    document.getElementById("title").style.opacity = String(ramp(t, 1.0, 0.8));
+
+    end(t);
+  }
+
+  boot(seek, 8);
+</script>
+</body>
+</html>

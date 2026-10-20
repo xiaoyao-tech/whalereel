@@ -1,0 +1,103 @@
+:root {
+  --navy: #0B1220;
+  --paper: #F4EFE4;
+  --ink: #1B1B1B;
+  --red: #B03A2E;
+  --blue: #2F6BFF;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+.stage {
+  position: relative;
+  width: 1280px;
+  height: 720px;
+  overflow: hidden;
+  color: var(--ink);
+  font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.serif { font-family: "Songti SC", "STSong", "Noto Serif SC", serif; }
+.kai { font-family: "Kaiti SC", "STKaiti", "Songti SC", serif; }
+.sans { font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif; }
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: .055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E");
+}
+
+.vignette::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 55;
+  pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 45%, transparent 45%, rgba(0, 0, 0, .18) 100%);
+}
+
+.endcard {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--navy);
+  color: var(--paper);
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.endcard .inner { text-align: center; }
+
+.endcard .whale {
+  width: 82px;
+  height: 82px;
+  margin: 0 auto 22px;
+  opacity: .92;
+}
+
+.endcard .brand {
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 62px;
+  letter-spacing: .22em;
+  text-indent: .22em;
+  line-height: 1;
+}
+
+.endcard .en {
+  margin-top: 16px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: .52em;
+  text-indent: .52em;
+  opacity: .55;
+}
+
+.endcard .style {
+  margin-top: 36px;
+  font-size: 15px;
+  letter-spacing: .18em;
+  opacity: .42;
+}
+
+.cap {
+  position: absolute;
+  z-index: 20;
+  font-family: "Songti SC", "STSong", serif;
+  color: var(--ink);
+  opacity: 0;
+  will-change: opacity, transform;
+}

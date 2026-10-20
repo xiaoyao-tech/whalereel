@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>北京 · 白模投影 30s</title>
+<style>
+  :root { --navy:#07090D; --cream:#F4EFE4; --muted:#9AA1B2; --line:rgba(244,239,228,.12); --amber:#E0A15E; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--navy); color:var(--cream); font-family:"PingFang SC","Helvetica Neue",Arial,sans-serif; }
+  .wrap { max-width:1180px; margin:0 auto; padding:32px 24px 54px; }
+  header { display:flex; align-items:baseline; justify-content:space-between; gap:20px; padding-bottom:16px; border-bottom:1px solid var(--line); }
+  h1 { margin:0; font-family:"Songti SC",serif; font-size:30px; font-weight:600; letter-spacing:.1em; }
+  header span { color:var(--muted); font-size:11px; letter-spacing:.18em; }
+  video { width:100%; display:block; margin:24px 0 0; background:#000; border:1px solid var(--line); }
+  .sub { margin:12px 0 0; color:var(--muted); font-size:12px; line-height:1.8; }
+  .grid { display:grid; grid-template-columns:1.1fr .9fr; gap:26px; margin-top:26px; }
+  h2 { font-family:"Songti SC",serif; font-size:20px; font-weight:600; margin:0 0 12px; letter-spacing:.06em; }
+  p, li { color:#B9BECD; font-size:13px; line-height:1.9; }
+  ul { margin:0; padding-left:18px; }
+  .card { border:1px solid var(--line); padding:18px 20px; background:#0E1626; }
+  .tag { color:var(--amber); font-size:11px; letter-spacing:.2em; }
+  a { color:var(--amber); text-decoration:none; }
+  footer { margin-top:26px; padding-top:16px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; line-height:1.8; }
+  @media (max-width:820px) { .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>北京 · 白模投影 30s</h1>
+    <span>WHITE MODEL · 30s · 1280×720 / 24fps</span>
+  </header>
+
+  <video src="renders/v3/01-beijing.mp4" poster="previews/v3/01-beijing.jpg" controls autoplay muted loop playsinline></video>
+  <div class="sub">简化城市模型，非测绘。数据层为真实来源；城市体块、建筑高度、环路几何、地标位置为示意。</div>
+
+  <div class="grid">
+    <section class="card">
+      <div class="tag">LOOK FOR</div>
+      <h2>30 秒里有什么</h2>
+      <ul>
+        <li><b>0–5s</b> 暗房、投影仪、白色北京模型</li>
+        <li><b>5–10s</b> 地形：16,410 km²，西北高、东南低、三面环山</li>
+        <li><b>10–16.5s</b> 中轴 7.8 km / 15 处遗产；二环—六环</li>
+        <li><b>16.5–21s</b> 天际线：中国尊 528 m</li>
+        <li><b>21–26s</b> 人口：1949 年 420.1 万 → 2024 年 2,183.2 万</li>
+        <li><b>26–29s</b> 光：14:00 的长影子</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <div class="tag">DATA</div>
+      <h2>数据来源</h2>
+      <ul>
+        <li><a href="https://www.beijing.gov.cn/zhengce/zhengcefagui/202503/t20250320_4039431.html">北京市 2024 年统计公报</a>：2,183.2 万</li>
+        <li><a href="https://tjj.beijing.gov.cn/zxfbu/202002/t20200216_1640725.html">北京市统计局（2009）</a>：1949 年 420.1 万</li>
+        <li><a href="https://www.beijing.gov.cn/renwen/bjgk/bjgk/mj/201512/t20151230_1872568.html">北京市规划和自然资源委员会</a>：16,410 km²</li>
+        <li><a href="http://www.ncha.gov.cn/art/2024/7/29/art_2792_190677.html">国家文物局</a>：中轴 7.8 km / 15 处 / 589 公顷</li>
+        <li><a href="https://www.beijing.gov.cn/renwen/bjgk/bjgk/dx/201512/t20151230_1872551.html">北京市统计局·地形</a>：三面环山</li>
+        <li><a href="http://www.china.org.cn/bjzt/chinese/2016-06/02/content_38586695.htm">china.org.cn</a>：中国尊 528 m</li>
+      </ul>
+    </section>
+  </div>
+
+  <footer>
+    文件：<code>renders/v3/01-beijing.mp4</code> · 数据说明：<a href="examples/beijing-data.md">examples/beijing-data.md</a><br>
+    模型由程序生成，不是 OSM/CAD/测绘数据；不用于测量、报批或导航。
+  </footer>
+</div>
+</body>
+</html>

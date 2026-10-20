@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 v2 · 产品拆解 · 吹风机</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .stage { background: radial-gradient(70% 70% at 50% 38%, #1C1F25 0%, #0B0C0F 62%, #060709 100%); }
+  .svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; }
+  .title {
+    position: absolute; left: 70px; top: 58px; z-index: 10;
+    color: #F1EFE9; opacity: 0;
+  }
+  .title b { display: block; font-family: "Songti SC", serif; font-size: 30px; letter-spacing: .08em; font-weight: 600; }
+  .title span { display: block; margin-top: 8px; font: 400 11px/1 "Helvetica Neue", Arial, sans-serif; letter-spacing: .28em; color: #8B8F98; }
+  .note {
+    position: absolute; left: 70px; bottom: 46px; z-index: 10;
+    font: 400 11px/1.8 "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: .12em; color: #777C86; opacity: 0;
+  }
+  .readout {
+    position: absolute; right: 66px; top: 64px; z-index: 10;
+    text-align: right; color: #F1EFE9; opacity: 0;
+  }
+  .readout b { font: 500 11px/1 "Helvetica Neue", Arial, sans-serif; letter-spacing: .24em; color: #FF6B3D; }
+  .readout p { margin: 10px 0 0; font: 400 12px/1.7 "Helvetica Neue", Arial, sans-serif; color: #9A9FA8; }
+</style>
+</head>
+<body>
+<div class="stage grain">
+  <div class="title"><b>一台吹风机，七层</b><span>EXPLODED TEARDOWN · 结构示意</span></div>
+  <div class="readout"><b>CONCEPT / 2.5D TEST</b><p>概念机型 · 非厂商图纸<br>数字以规格书为准</p></div>
+  <div class="note">10s 风格测试 · 最终版用 Three.js 做 PBR 爆炸</div>
+
+  <svg class="svg" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="shell" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#4A4F57"/><stop offset=".5" stop-color="#2C3036"/><stop offset="1" stop-color="#17191D"/>
+      </linearGradient>
+      <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#C9CDD4"/><stop offset="1" stop-color="#6C727C"/>
+      </linearGradient>
+      <linearGradient id="copper" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#D9925B"/><stop offset="1" stop-color="#8B4A2A"/>
+      </linearGradient>
+      <filter id="shadow"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity=".45"/></filter>
+    </defs>
+
+    <!-- dashed axis + dimension -->
+    <line x1="270" y1="470" x2="980" y2="470" stroke="#3B4048" stroke-width="1.2" stroke-dasharray="4 8" opacity="0" id="axis"/>
+    <g id="dim" opacity="0" stroke="#FF6B3D" stroke-width="1.2">
+      <line x1="360" y1="610" x2="930" y2="610"/>
+      <line x1="360" y1="602" x2="360" y2="618"/>
+      <line x1="930" y1="602" x2="930" y2="618"/>
+      <text x="645" y="600" text-anchor="middle" fill="#FF6B3D" stroke="none"
+            font-family="SFMono-Regular, Menlo, monospace" font-size="12" letter-spacing="2">尺寸待核</text>
+    </g>
+
+    <!-- internals, back to front -->
+    <g id="p-filter" filter="url(#shadow)">
+      <rect x="300" y="306" width="54" height="82" rx="6" fill="#202328" stroke="#555B64" stroke-width="2"/>
+      <g stroke="#88909A" stroke-width="1.4">
+        <line x1="312" y1="318" x2="312" y2="376"/><line x1="322" y1="318" x2="322" y2="376"/>
+        <line x1="332" y1="318" x2="332" y2="376"/><line x1="342" y1="318" x2="342" y2="376"/>
+      </g>
+    </g>
+
+    <g id="p-fan" filter="url(#shadow)">
+      <circle cx="430" cy="346" r="52" fill="#171A1F" stroke="#7E858F" stroke-width="2"/>
+      <g fill="#9BA2AC" opacity=".9">
+        <path d="M430 346 L430 306 C446 310 454 324 450 340 Z"/>
+        <path d="M430 346 L466 366 C456 380 440 382 428 372 Z"/>
+        <path d="M430 346 L430 386 C414 382 406 368 410 352 Z"/>
+        <path d="M430 346 L394 326 C404 312 420 310 432 320 Z"/>
+      </g>
+      <circle cx="430" cy="346" r="7" fill="#D5D9DF"/>
+    </g>
+
+    <g id="p-motor" filter="url(#shadow)">
+      <rect x="500" y="312" width="92" height="68" rx="12" fill="#333840" stroke="#8F96A0" stroke-width="2"/>
+      <rect x="512" y="324" width="68" height="44" rx="8" fill="url(#metal)"/>
+      <circle cx="546" cy="346" r="14" fill="#20242A" stroke="#B7BDC6" stroke-width="1.5"/>
+      <text x="546" y="350" text-anchor="middle" fill="#E8E3D8" font-size="9" font-family="Helvetica">M</text>
+    </g>
+
+    <g id="p-heater" filter="url(#shadow)">
+      <rect x="610" y="312" width="92" height="68" rx="6" fill="#1C1F24" stroke="#8F96A0" stroke-width="2"/>
+      <g stroke="url(#copper)" stroke-width="4" fill="none" opacity=".95">
+        <path d="M622 330 H690 M622 342 H690 M622 354 H690 M622 366 H690"/>
+      </g>
+      <rect x="636" y="322" width="40" height="48" rx="4" fill="none" stroke="#C46B3B" stroke-width="1.4" opacity=".7"/>
+    </g>
+
+    <g id="p-thermo" filter="url(#shadow)">
+      <rect x="720" y="322" width="42" height="48" rx="5" fill="#2A2E34" stroke="#8F96A0" stroke-width="1.5"/>
+      <circle cx="741" cy="346" r="11" fill="#B87333" stroke="#E0A15E" stroke-width="1"/>
+      <path d="M741 336 V346" stroke="#2A1A12" stroke-width="2"/>
+    </g>
+
+    <g id="p-nozzle" filter="url(#shadow)">
+      <path d="M790 318 H860 Q890 318 900 346 Q890 374 860 374 H790 Z" fill="#3A3F47" stroke="#9BA2AC" stroke-width="2"/>
+      <path d="M790 330 H858 Q878 330 884 346 Q878 362 858 362 H790 Z" fill="#14161A" opacity=".8"/>
+    </g>
+
+    <!-- outer shell + handle, moves up when exploded -->
+    <g id="p-shell" filter="url(#shadow)">
+      <rect x="356" y="268" width="428" height="118" rx="34" fill="url(#shell)" stroke="#666D77" stroke-width="2"/>
+      <rect x="420" y="380" width="78" height="164" rx="26" fill="url(#shell)" stroke="#666D77" stroke-width="2"/>
+      <rect x="436" y="398" width="12" height="118" rx="6" fill="#0F1114" opacity=".55"/>
+      <circle cx="458" cy="500" r="9" fill="#1A1D22" stroke="#FF6B3D" stroke-width="1.4" opacity=".8"/>
+      <rect x="700" y="300" width="34" height="54" rx="6" fill="#1A1D22" stroke="#7E858F" stroke-width="1.5"/>
+      <g fill="#8F96A0" opacity=".8">
+        <circle cx="386" cy="300" r="3"/><circle cx="386" cy="316" r="3"/><circle cx="386" cy="332" r="3"/>
+        <circle cx="386" cy="348" r="3"/><circle cx="386" cy="364" r="3"/>
+      </g>
+    </g>
+
+    <!-- labels -->
+    <g id="labels" font-family="PingFang SC, sans-serif" font-size="13" fill="#E8E3D8" opacity="0">
+      <g stroke="#FF6B3D" stroke-width="1" opacity=".7">
+        <line x1="430" y1="294" x2="430" y2="266"/>
+        <line x1="546" y1="312" x2="546" y2="282"/><line x1="656" y1="312" x2="656" y2="282"/>
+        <line x1="741" y1="322" x2="741" y2="292"/><line x1="846" y1="318" x2="846" y2="288"/>
+      </g>
+      <text x="304" y="256" fill="#FF6B3D" font-family="SFMono-Regular, Menlo, monospace" font-size="10">02</text>
+      <text x="330" y="256">滤网</text>
+      <text x="360" y="252" fill="#FF6B3D" font-family="SFMono-Regular, Menlo, monospace" font-size="10">03</text>
+      <text x="384" y="252">风扇</text>
+      <text x="526" y="268" fill="#FF6B3D" font-family="SFMono-Regular, Menlo, monospace" font-size="10">04</text>
+      <text x="550" y="268">电机</text>
+      <text x="636" y="268" fill="#FF6B3D" font-family="SFMono-Regular, Menlo, monospace" font-size="10">05</text>
+      <text x="660" y="268">加热丝</text>
+      <text x="721" y="278" fill="#FF6B3D" font-family="SFMono-Regular, Menlo, monospace" font-size="10">06</text>
+      <text x="744" y="278">温控</text>
+      <text x="826" y="274" fill="#FF6B3D" font-family="SFMono-Regular, Menlo, monospace" font-size="10">07</text>
+      <text x="850" y="274">风嘴</text>
+    </g>
+  </svg>
+</div>
+
+<script src="common.js"></script>
+<script>
+  const end = mountEndCard("产品拆解 · TEARDOWN");
+  const title = document.querySelector(".title");
+  const note = document.querySelector(".note");
+  const readout = document.querySelector(".readout");
+  const axis = document.getElementById("axis");
+  const dim = document.getElementById("dim");
+  const labels = document.getElementById("labels");
+  const shell = document.getElementById("p-shell");
+  const parts = ["p-filter","p-fan","p-motor","p-heater","p-thermo","p-nozzle"].map(id => document.getElementById(id));
+
+  // assembled (closed) vs exploded offsets
+  const shellClosed = { x: 0, y: 0 };
+  const shellOpen = { x: 0, y: -330 };
+  const closed = [0, 0, 0, 0, 0, 0];
+  const open = [-12, 0, 0, 0, 0, 0];
+
+  function seek(t) {
+    title.style.opacity = String(ramp(t, 0.3, 0.6));
+    readout.style.opacity = String(ramp(t, 1.2, 0.5));
+    note.style.opacity = String(ramp(t, 7.5, 0.5));
+
+    // shell lifts first
+    const sp = easeInOut(clamp((t - 1.2) / 1.4, 0, 1));
+    const sy = shellClosed.y + (shellOpen.y - shellClosed.y) * sp;
+    shell.setAttribute("transform", `translate(${shellOpen.x} ${sy})`);
+
+    // internals fade in as the shell lifts
+    parts.forEach((el, i) => {
+      const p = easeInOut(clamp((t - 1.6 - i * 0.18) / 0.9, 0, 1));
+      el.style.opacity = String(p);
+      el.setAttribute("transform", `translate(${open[i] * (1 - p)} 0)`);
+    });
+
+    labels.style.opacity = String(ramp(t, 2.8, 0.6) * (1 - ramp(t, 6.8, 0.5)));
+    axis.style.opacity = String(ramp(t, 2.2, 0.6));
+    dim.style.opacity = String(ramp(t, 7.2, 0.5));
+
+    // close: shell returns, internals fade
+    const cp = easeInOut(clamp((t - 7.0) / 1.3, 0, 1));
+    if (cp > 0) {
+      shell.setAttribute("transform", `translate(${shellOpen.x} ${sy + 330 * cp})`);
+      parts.forEach((el) => { el.style.opacity = String(1 - cp); });
+    }
+
+    end(t);
+  }
+
+  boot(seek, 10);
+</script>
+</body>
+</html>

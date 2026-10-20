@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>鲸片 · 一笔画 · 拖延</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .stage {
+    background:
+      radial-gradient(90% 80% at 40% 40%, #FBF6EC 0%, #F6F1E7 55%, #EDE4D4 100%);
+  }
+  .svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; }
+  .verse {
+    position: absolute; left: 82px; top: 78px; z-index: 5;
+    font-family: "Songti SC", "STSong", serif;
+    color: #3A342C;
+    font-size: 31px;
+    line-height: 1.75;
+    letter-spacing: .08em;
+    opacity: 0;
+  }
+  .verse p { margin: 0; opacity: 0; }
+  .verse p:nth-child(2) { margin-left: 26px; }
+  .verse p:nth-child(3) { margin-left: 58px; }
+  .dot {
+    position: absolute; z-index: 6;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: #C8553D;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+  }
+  .note {
+    position: absolute; right: 86px; bottom: 74px; z-index: 5;
+    font-family: "Songti SC", "STSong", serif;
+    font-size: 15px; letter-spacing: .28em;
+    color: #8A8175;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div class="stage grain vignette">
+  <svg class="svg" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+    <path id="line" pathLength="1" fill="none" stroke="#1B1B1B" stroke-width="4"
+          stroke-linecap="round" stroke-linejoin="round"
+          d="M 240 420
+             C 260 360 310 330 360 345
+             C 390 354 402 378 400 402
+             C 424 408 434 424 414 434
+             C 426 448 416 464 396 464
+             C 408 480 400 500 376 504
+             C 356 508 340 520 330 540
+             C 380 580 470 610 550 580
+             C 630 550 690 480 660 420
+             C 630 360 540 350 500 400
+             C 460 450 500 510 550 500
+             C 590 492 610 460 590 440
+             C 610 420 650 400 690 410
+             C 670 420 660 430 670 440
+             C 710 430 750 440 770 460
+             C 820 520 790 600 720 620
+             C 620 650 520 620 460 570
+             C 400 520 410 450 460 420
+             C 500 396 550 400 580 430" />
+  </svg>
+
+  <div class="verse" id="verse">
+    <p id="v1">想做的事，</p>
+    <p id="v2">总说明天。</p>
+    <p id="v3">今天先这样。</p>
+  </div>
+
+  <div class="dot" id="dot" style="left:580px;top:430px;"></div>
+  <div class="note" id="note">ONE LINE · 一笔画</div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  const end = mountEndCard("一笔画 · ONE LINE");
+  const line = document.getElementById("line");
+  const verse = document.getElementById("verse");
+  const v1 = document.getElementById("v1");
+  const v2 = document.getElementById("v2");
+  const v3 = document.getElementById("v3");
+  const dot = document.getElementById("dot");
+  const note = document.getElementById("note");
+
+  const L = line.getTotalLength();
+  line.style.strokeDasharray = "1";
+
+  function seek(t) {
+    // one continuous stroke; slows down at the end
+    const p = easeInOut(clamp((t - 0.35) / 6.15, 0, 1));
+    line.style.strokeDashoffset = String(1 - p);
+
+    verse.style.opacity = String(ramp(t, 1.0, 0.6));
+    v1.style.opacity = String(ramp(t, 1.1, 0.5));
+    v2.style.opacity = String(ramp(t, 3.0, 0.5));
+    v3.style.opacity = String(ramp(t, 4.9, 0.5));
+
+    const dp = ramp(t, 6.5, 0.4);
+    dot.style.opacity = String(dp);
+    dot.style.transform = `translate(-50%, -50%) scale(${0.6 + 0.4 * dp})`;
+
+    note.style.opacity = String(ramp(t, 5.6, 0.5));
+
+    end(t);
+  }
+
+  boot(seek, 8);
+</script>
+</body>
+</html>
