@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "description": "鲸片 WhaleReel — 一句话生成六种风格的代码渲染短片：档案卷宗 / 钢笔淡彩 / 白模投影 / 立体纸雕 / 白板讲解 / 水墨",
-  "homepage": "https://github.com/your-name/whalereel",
+  "homepage": "https://github.com/xiaoyao-tech/whalereel",
   "scripts": {
     "render": "node render/render.mjs",
     "render:demos": "node scripts/render-demos.mjs",

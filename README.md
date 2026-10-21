@@ -156,7 +156,7 @@ bash scripts/install-harness.sh   # -> ~/.dsh/skills/whalereel
 ### 方式 A：装进 DeepSeek Harness（推荐）
 
 ```bash
-git clone <你的仓库地址> whalereel
+git clone https://github.com/xiaoyao-tech/whalereel.git whalereel
 cd whalereel
 bash scripts/install-harness.sh
 # 默认安装到 ~/.dsh/skills/whalereel

@@ -60,7 +60,7 @@ It will:
 ### Install in DeepSeek Harness (recommended)
 
 ```bash
-git clone <your-repo-url> whalereel
+git clone https://github.com/xiaoyao-tech/whalereel.git whalereel
 cd whalereel
 bash scripts/install-harness.sh
 # -> ~/.dsh/skills/whalereel
